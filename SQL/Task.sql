@@ -56,7 +56,7 @@ WHERE i.ram = j.ram and i.speed = j.speed and i.code > j.code;
 SELECT model, speed FROM mystore.laptop WHERE speed < (SELECT MIN(speed) FROM mystore.pc); 
 
 # Задание: 18
-SELECT maker FROM  mystore.product AS prod INNER JOIN mystore.printer AS print USING(model) WHERE price = (SELECT MIN(price) FROM mystore.printer) AND color ='y';
+SELECT maker FROM  mystore.product AS prod INNER JOIN mystore.printer AS print USING(model) WHERE price = (SELECT MIN(price) FROM mystore.printer WHERE color ='y');
 
 # Задание: 19
 SELECT maker, AVG(screen) AS screen FROM mystore.product AS prod INNER JOIN mystore.laptop AS lap ON prod.model = lap.model GROUP BY maker;
@@ -71,20 +71,8 @@ SELECT prod.maker, MAX(pc.price) AS max_price FROM  mystore.product AS prod INNE
 SELECT speed, AVG(price) FROM mystore.pc WHERE speed > 600 GROUP BY speed;
 
 # Задание: 23 
-SELECT DISTINCT maker FROM (
-SELECT maker FROM mystore.product INNER JOIN mystore.pc USING(model) WHERE speed >= 750  
-UNION
-SELECT maker FROM mystore.product INNER JOIN mystore.laptop USING(model) WHERE speed >= 750) AS x 
-LEFT JOIN  (
-SELECT maker FROM mystore.product INNER JOIN mystore.pc USING(model)  WHERE speed < 750  
-UNION
-SELECT maker FROM mystore.product INNER JOIN mystore.laptop USING(model)  WHERE speed < 750) AS y USING(maker) WHERE y.maker is NULL;
-
-/*
-SELECT DISTINCT maker FROM mystore.product 
-WHERE model IN (SELECT model FROM mystore.pc WHERE speed >= 750 UNION SELECT model FROM mystore.laptop WHERE speed >= 750) 
-AND maker NOT IN (SELECT DISTINCT maker FROM mystore.product WHERE type NOT LIKE 'Printer' AND model IN (SELECT model FROM mystore.laptop WHERE speed < 750 UNION SELECT model FROM mystore.pc WHERE speed <750));
-*/
+SELECT DISTINCT maker FROM mystore.product JOIN mystore.pc USING(model) WHERE speed >=750 AND maker
+IN (SELECT DISTINCT maker FROM mystore.product JOIN mystore.laptop USING(model) WHERE speed >=750 );
 
 # Задание: 24 
 SELECT * FROM (
