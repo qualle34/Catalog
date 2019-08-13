@@ -11,7 +11,7 @@ SELECT model, ram, screen FROM mystore.laptop WHERE price > 1000;
 SELECT * FROM mystore.printer WHERE color LIKE 'y';
 
 # Задание: 5
-SELECT * FROM mystore.pc WHERE price < 600 AND cd LIKE '12x' OR price < 600  AND cd LIKE '24x';
+SELECT model, speed, hd FROM mystore.pc WHERE (cd LIKE '12x' OR cd LIKE '24x') AND price < 600;
 
 # Задание: 6 
 SELECT prod.maker, lap.speed FROM mystore.product AS prod INNER JOIN mystore.laptop AS lap WHERE prod.model = lap.model AND lap.hd >= 100;
@@ -23,9 +23,8 @@ SELECT model, price FROM mystore.product INNER JOIN mystore.pc USING(model) WHER
 UNION
 SELECT model, price FROM mystore.product INNER JOIN mystore.printer USING(model) WHERE maker like 'HP';
 
-
 # Задание: 8
-SELECT DISTINCT maker FROM mystore.product WHERE maker NOT IN (SELECT maker FROM mystore.product WHERE type LIKE 'Laptop') and maker IN (SELECT maker FROM mystore.product WHERE type LIKE 'PC');
+SELECT DISTINCT maker FROM mystore.product WHERE type LIKE 'PC' AND maker NOT IN (SELECT DISTINCT maker FROM mystore.product WHERE type LIKE 'Laptop');
 
 # Задание: 9 
 SELECT prod.maker FROM mystore.product AS prod INNER JOIN mystore.pc AS pc WHERE prod.model = pc.model AND pc.speed >= 450;
@@ -40,7 +39,7 @@ SELECT AVG(speed) AS average_speed FROM mystore.pc;
 SELECT AVG(speed) AS average_speed FROM mystore.laptop WHERE price > 1000;
 
 # Задание: 13 
-SELECT AVG(speed) AS average_speed FROM mystore.pc WHERE model IN (SELECT model FROM mystore.product WHERE maker LIKE 'ASUS');
+SELECT AVG(speed) AS average_speed FROM mystore.product INNER JOIN mystore.pc USING(model) WHERE maker LIKE 'ASUS';
 
 # Задание: 14
 SELECT speed, AVG(price) AS average_price FROM mystore.pc GROUP BY speed;
@@ -57,7 +56,7 @@ WHERE i.ram = j.ram and i.speed = j.speed and i.code > j.code;
 SELECT model, speed FROM mystore.laptop WHERE speed < (SELECT MIN(speed) FROM mystore.pc); 
 
 # Задание: 18
-SELECT prod.maker FROM  mystore.product AS prod INNER JOIN mystore.printer AS print WHERE prod.model = print.model and price = (SELECT MIN(price) FROM mystore.printer);
+SELECT maker FROM  mystore.product AS prod INNER JOIN mystore.printer AS print USING(model) WHERE price = (SELECT MIN(price) FROM mystore.printer) AND color ='y';
 
 # Задание: 19
 SELECT maker, AVG(screen) AS screen FROM mystore.product AS prod INNER JOIN mystore.laptop AS lap ON prod.model = lap.model GROUP BY maker;
@@ -72,19 +71,28 @@ SELECT prod.maker, MAX(pc.price) AS max_price FROM  mystore.product AS prod INNE
 SELECT speed, AVG(price) FROM mystore.pc WHERE speed > 600 GROUP BY speed;
 
 # Задание: 23 
+SELECT DISTINCT maker FROM (
+SELECT maker FROM mystore.product INNER JOIN mystore.pc USING(model) WHERE speed >= 750  
+UNION
+SELECT maker FROM mystore.product INNER JOIN mystore.laptop USING(model) WHERE speed >= 750) AS x 
+LEFT JOIN  (
+SELECT maker FROM mystore.product INNER JOIN mystore.pc USING(model)  WHERE speed < 750  
+UNION
+SELECT maker FROM mystore.product INNER JOIN mystore.laptop USING(model)  WHERE speed < 750) AS y USING(maker) WHERE y.maker is NULL;
+
+/*
 SELECT DISTINCT maker FROM mystore.product 
 WHERE model IN (SELECT model FROM mystore.pc WHERE speed >= 750 UNION SELECT model FROM mystore.laptop WHERE speed >= 750) 
-AND maker NOT IN (SELECT DISTINCT maker FROM mystore.product WHERE type NOT LIKE 'Printer' 
-AND model IN  (SELECT model FROM mystore.laptop WHERE speed < 750 UNION SELECT model FROM mystore.pc WHERE speed <750));
-
+AND maker NOT IN (SELECT DISTINCT maker FROM mystore.product WHERE type NOT LIKE 'Printer' AND model IN (SELECT model FROM mystore.laptop WHERE speed < 750 UNION SELECT model FROM mystore.pc WHERE speed <750));
+*/
 
 # Задание: 24 
-SELECT type, model FROM mystore.product WHERE model in (SELECT model FROM mystore.pc WHERE price = (SELECT MAX(price) FROM mystore.pc))
+SELECT * FROM (
+SELECT model, price FROM mystore.pc 
+UNION 
+SELECT model, price FROM mystore.laptop
 UNION
-SELECT type, model FROM mystore.product WHERE model in (SELECT model FROM mystore.laptop WHERE price = (SELECT MAX(price) FROM mystore.laptop))
-UNION
-SELECT type, model FROM mystore.product WHERE model in (SELECT model FROM mystore.printer WHERE price = (SELECT MAX(price) FROM mystore.printer));
-
+SELECT model, price FROM mystore.printer) AS x ORDER BY price DESC LIMIT 1 ;
 
 # Задание: 25
 SELECT DISTINCT maker FROM mystore.product WHERE maker IN (SELECT maker FROM mystore.product WHERE type='printer')
