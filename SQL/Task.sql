@@ -56,7 +56,7 @@ WHERE i.ram = j.ram and i.speed = j.speed and i.code > j.code;
 SELECT model, speed FROM mystore.laptop WHERE speed < (SELECT MIN(speed) FROM mystore.pc); 
 
 # Задание: 18
-SELECT maker FROM  mystore.product AS prod INNER JOIN mystore.printer AS print USING(model) WHERE price = (SELECT MIN(price) FROM mystore.printer WHERE color ='y');
+SELECT DISTINCT maker FROM mystore.product AS prod INNER JOIN mystore.printer AS print USING(model) WHERE color = 'y' AND price = (SELECT MIN(price) FROM mystore.printer WHERE color ='y');
 
 # Задание: 19
 SELECT maker, AVG(screen) AS screen FROM mystore.product AS prod INNER JOIN mystore.laptop AS lap ON prod.model = lap.model GROUP BY maker;
