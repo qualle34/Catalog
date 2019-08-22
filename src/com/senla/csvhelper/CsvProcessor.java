@@ -3,13 +3,13 @@ package com.senla.csvhelper;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-public class CsvProcessor {
+class CsvProcessor {
 
     private String separator;
     private String filename;
     private String data = "";
 
-    public void writeObject(Object obj) throws Exception {
+    void writeObject(Object obj) throws Exception {
 
         Class cls = obj.getClass();
         scan(cls);
@@ -41,7 +41,7 @@ public class CsvProcessor {
         write();
     }
 
-    public Object readObject(Object obj, int row) throws Exception {
+    Object readObject(Object obj, int row) throws Exception {
         Class cls = obj.getClass();
         scan(cls);
         for (Field field : cls.getDeclaredFields()) {
@@ -77,13 +77,23 @@ public class CsvProcessor {
                         }
 
                     } else {
-                         // don't ready
+                        if (!read(filename, col, row).equals("null")) {
+                            Class subClass = field.getType();
+                            Object subObject = subClass.newInstance();
+
+                            Field subField = subClass.getDeclaredField(csvProperty.keyField());
+                            subField.setAccessible(true);
+                            subField.set(subObject, Integer.valueOf(read(filename, col, row)));
+
+                            field.set(obj, subObject);
+                        }
                     }
                 }
             }
         }
         return obj;
     }
+
 
     private void scan(Class<?> cls) {
         if (cls.isAnnotationPresent(CsvEntity.class)) {

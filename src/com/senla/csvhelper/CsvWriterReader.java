@@ -14,9 +14,11 @@ class CsvWriterReader {
 
         FileWriter writer = null;
         BufferedWriter bw = null;
+        File file = new File(filename);
 
         try {
-            writer = new FileWriter(filename, true);
+            file.createNewFile();
+            writer = new FileWriter(file, true);
             bw = new BufferedWriter(writer);
             bw.write(line + "\n");
 
@@ -25,8 +27,11 @@ class CsvWriterReader {
 
         } finally {
             try {
-                bw.close();
-                writer.close();
+                if (bw != null)
+                    bw.close();
+
+                if (writer != null)
+                    writer.close();
 
             } catch (IOException e) {
                 System.out.println("Error");
@@ -56,9 +61,9 @@ class CsvWriterReader {
             System.out.println("Error");
 
         } finally {
-
             try {
-                br.close();
+                if (br != null)
+                    br.close();
 
             } catch (IOException e) {
                 System.out.println("Error");

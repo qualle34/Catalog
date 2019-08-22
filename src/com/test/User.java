@@ -33,8 +33,18 @@ public class User {
         this.dog = dog;
     }
 
+    public Dog getDog() {
+        return dog;
+    }
+
+    public void setDog(Dog dog) {
+        this.dog = dog;
+    }
+
     @Override
     public String toString() {
         return id + " " + name + " " + password;
     }
+
+
 }
