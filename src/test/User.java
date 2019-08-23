@@ -1,4 +1,4 @@
-package com.test;
+package test;
 
 import com.senla.csvhelper.CsvEntity;
 import com.senla.csvhelper.CsvProperty;

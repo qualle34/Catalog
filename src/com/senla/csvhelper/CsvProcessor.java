@@ -78,13 +78,13 @@ class CsvProcessor {
         int i = 1;
 
         while (i < hashMap.size()) {
-            list.add(getObject(cls, hashMap.get(i+1), separator));
+            list.add(getObject(cls, hashMap.get(i + 1), separator));
             i++;
         }
         return list;
     }
 
-    private Object getObject(Class cls, String str, String separator) throws Exception {
+    private Object getObject(Class cls, String str, String separator) throws IllegalAccessException, NoSuchFieldException, InstantiationException {
         Object obj = cls.newInstance();
 
         for (Field field : cls.getDeclaredFields()) {
@@ -121,15 +121,11 @@ class CsvProcessor {
                     } else {
                         if (!lineRipper(str, separator, col).equals("null")) {
                             Class subClass = field.getType();
-                            Object subObject = subClass.newInstance();
 
                             Field subField = subClass.getDeclaredField(csvProperty.keyField());
-                            subField.setAccessible(true);
+                            Integer id = Integer.valueOf(lineRipper(str, separator, col));
 
-                            LinkedList list = readSubList(subClass);
-
-                            subField.set(subObject, Integer.valueOf(lineRipper(str, separator, col)));
-                            field.set(obj, subObject);
+                            field.set(obj, getObjById(subClass, subField, id));
                         } else {
                             field.set(obj, null);
                         }
@@ -138,6 +134,21 @@ class CsvProcessor {
             }
         }
         return obj;
+    }
+
+    private Object getObjById(Class cls, Field field, Integer id) throws IllegalAccessException {
+
+        LinkedList list = readSubList(cls);
+        field.setAccessible(true);
+        Object trueObject = null;
+
+        for (Object obj : list) {
+            if (id == field.get(obj)) {
+                trueObject = obj;
+                break;
+            }
+        }
+        return trueObject;
     }
 
     private LinkedList<Object> readSubList(Class cls) {
@@ -149,7 +160,6 @@ class CsvProcessor {
         }
         return list;
     }
-
 
     private void makeHeader(Object obj) {
 
