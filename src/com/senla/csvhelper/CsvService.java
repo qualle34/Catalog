@@ -26,17 +26,14 @@ public class CsvService {
         }
     }
 
-    public LinkedList<Object> read(Object obj) {
+    public LinkedList<Object> read(Class cls) {
         CsvProcessor processor = new CsvProcessor();
-        LinkedList<Object> list = new LinkedList<>();
-
-            try {
-              list = processor.readList(obj);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+        LinkedList<Object> list = null;
+        try {
+            list = processor.readList(cls);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
 }

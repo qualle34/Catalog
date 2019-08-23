@@ -61,9 +61,8 @@ class CsvProcessor {
         write(filename, dataLine, separator);
     }
 
-    LinkedList<Object> readList(Object obj) throws Exception {
+    LinkedList<Object> readList(Class cls) throws Exception {
 
-        Class cls = obj.getClass();
         String separator = "";
         String filename = "";
         if (cls.isAnnotationPresent(CsvEntity.class)) {
@@ -72,23 +71,21 @@ class CsvProcessor {
             filename = csvEntity.filename();
         }
         CsvWriterReader writerReader = new CsvWriterReader(filename);
+
         HashMap<Integer, String> hashMap = writerReader.read();
         LinkedList<Object> list = new LinkedList<>();
 
         int i = 1;
 
         while (i < hashMap.size()) {
-
-            Object Object = getObject(obj, hashMap.get(i + 1), separator);
-            System.out.println(Object.toString());
-            list.add(Object);
+            list.add(getObject(cls, hashMap.get(i+1), separator));
             i++;
         }
         return list;
     }
 
-    private Object getObject(Object obj, String str, String separator) throws Exception {
-        Class cls = obj.getClass();
+    private Object getObject(Class cls, String str, String separator) throws Exception {
+        Object obj = cls.newInstance();
 
         for (Field field : cls.getDeclaredFields()) {
             for (Annotation annotation : field.getDeclaredAnnotations()) {
@@ -128,8 +125,10 @@ class CsvProcessor {
 
                             Field subField = subClass.getDeclaredField(csvProperty.keyField());
                             subField.setAccessible(true);
-                            subField.set(subObject, Integer.valueOf(lineRipper(str, separator, col)));
 
+                            LinkedList list = readSubList(subClass);
+
+                            subField.set(subObject, Integer.valueOf(lineRipper(str, separator, col)));
                             field.set(obj, subObject);
                         } else {
                             field.set(obj, null);
@@ -140,6 +139,17 @@ class CsvProcessor {
         }
         return obj;
     }
+
+    private LinkedList<Object> readSubList(Class cls) {
+        LinkedList<Object> list = null;
+        try {
+            list = readList(cls);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 
     private void makeHeader(Object obj) {
 

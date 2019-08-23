@@ -4,6 +4,7 @@ import com.senla.csvhelper.CsvService;
 
 import java.util.LinkedList;
 
+
 public class Test {
 
     public static void main(String[] args) {
@@ -14,7 +15,6 @@ public class Test {
         User user2 = new User(2, "Jon", "435");
         User user3 = new User(3, "Den", "2345", dog1);
 
-
         LinkedList<Object> users = new LinkedList<>();
         users.add(user1);
         users.add(user2);
@@ -23,11 +23,20 @@ public class Test {
         CsvService csvService = new CsvService();
         csvService.write(users);
 
-
 //        CsvService csvService = new CsvService();
-//        LinkedList users2 = csvService.read(new User());
-//        System.out.println(users2.toString());
+//        LinkedList users = csvService.read(User.class);
+//        LinkedList<User> users2 = new LinkedList<>();
+//
+//        for (Object obj : users) {
+//            User user = (User) obj;
+//            users2.add(user);
+//        }
+//
+//        for(User user : users2){
+//            System.out.println(user.toString());
+//        }
 
     }
+
 
 }

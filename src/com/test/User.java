@@ -12,9 +12,10 @@ public class User {
     @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String name;
 
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
     private String password;
 
-    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 2, keyField = "id")
+    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 3, keyField = "id")
     private Dog dog;
 
     public User() {
