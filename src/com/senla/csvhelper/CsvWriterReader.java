@@ -10,9 +10,11 @@ import java.util.HashMap;
 
 class CsvWriterReader {
 
+    private String directory;
     private String filename;
 
-    CsvWriterReader(String filename) {
+    CsvWriterReader(String directory, String filename) {
+        this.directory = directory;
         this.filename = filename;
     }
 
@@ -20,19 +22,22 @@ class CsvWriterReader {
 
         FileWriter writer = null;
         BufferedWriter bw = null;
-        File file = new File(filename);
+        File dir = new File(directory);
+        File file = new File(directory, filename);
 
         try {
+            if (!dir.exists()){
+                dir.mkdir();
+            }
             if (!file.exists()) {
                 file.createNewFile();
             }
-
             writer = new FileWriter(file, true);
             bw = new BufferedWriter(writer);
             bw.write(line + "\n");
 
         } catch (IOException e) {
-            System.out.println("Error");
+            e.printStackTrace();
 
         } finally {
             try {
@@ -43,7 +48,7 @@ class CsvWriterReader {
                     writer.close();
 
             } catch (IOException e) {
-                System.out.println("Error");
+                e.printStackTrace();
             }
         }
     }
@@ -62,7 +67,7 @@ class CsvWriterReader {
 
     private String readLine(int row) {
 
-        File file = new File(filename);
+        File file = new File(directory, filename);
         BufferedReader br = null;
 
         try {
@@ -79,7 +84,7 @@ class CsvWriterReader {
             }
 
         } catch (IOException e) {
-            System.out.println("Error");
+            e.printStackTrace();
 
         } finally {
             try {
@@ -87,7 +92,7 @@ class CsvWriterReader {
                     br.close();
 
             } catch (IOException e) {
-                System.out.println("Error");
+                e.printStackTrace();
             }
         }
         return null;

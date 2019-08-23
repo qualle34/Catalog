@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(value= RetentionPolicy.RUNTIME)
 public @interface CsvEntity {
 
-    String filename();
+    String directoryName();
     String valuesSeparator() default ",";
     String entityId() default "";
 }

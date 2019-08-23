@@ -16,16 +16,6 @@ public class CsvService {
         }
     }
 
-    public void write(Object obj) {
-        CsvProcessor processor = new CsvProcessor();
-
-        try {
-            processor.writeObject(obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public LinkedList<Object> read(Class cls) {
         CsvProcessor processor = new CsvProcessor();
         LinkedList<Object> list = null;

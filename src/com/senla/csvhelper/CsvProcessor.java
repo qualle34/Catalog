@@ -20,11 +20,13 @@ class CsvProcessor {
         Class cls = obj.getClass();
         HashMap<Integer, String> dataLine = new HashMap<>();
         String separator = "";
-        String filename = "";
+        String filename = cls.getSimpleName() + ".csv";
+        String directory = "";
+
         if (cls.isAnnotationPresent(CsvEntity.class)) {
             CsvEntity csvEntity = (CsvEntity) cls.getDeclaredAnnotation(CsvEntity.class);
             separator = csvEntity.valuesSeparator();
-            filename = csvEntity.filename();
+            directory = csvEntity.directoryName();
         }
 
         for (Field field : cls.getDeclaredFields()) {
@@ -58,19 +60,21 @@ class CsvProcessor {
                 }
             }
         }
-        write(filename, dataLine, separator);
+        write(directory, filename, dataLine, separator);
     }
 
     LinkedList<Object> readList(Class cls) throws Exception {
 
         String separator = "";
-        String filename = "";
+        String filename = cls.getSimpleName() + ".csv";
+        String directory = "";
+
         if (cls.isAnnotationPresent(CsvEntity.class)) {
             CsvEntity csvEntity = (CsvEntity) cls.getDeclaredAnnotation(CsvEntity.class);
             separator = csvEntity.valuesSeparator();
-            filename = csvEntity.filename();
+            directory = csvEntity.directoryName();
         }
-        CsvWriterReader writerReader = new CsvWriterReader(filename);
+        CsvWriterReader writerReader = new CsvWriterReader(directory ,filename);
 
         HashMap<Integer, String> hashMap = writerReader.read();
         LinkedList<Object> list = new LinkedList<>();
@@ -167,12 +171,13 @@ class CsvProcessor {
         HashMap<Integer, String> header = new HashMap<>();
         String line = "";
         String separator = "";
-        String filename = "";
+        String filename = cls.getSimpleName() + ".csv";
+        String directory = "";
 
         if (cls.isAnnotationPresent(CsvEntity.class)) {
             CsvEntity csvEntity = (CsvEntity) cls.getDeclaredAnnotation(CsvEntity.class);
             separator = csvEntity.valuesSeparator();
-            filename = csvEntity.filename();
+            directory = csvEntity.directoryName();
         }
 
         for (Field field : cls.getDeclaredFields()) {
@@ -192,11 +197,11 @@ class CsvProcessor {
         for (int i = 0; i <= header.size() - 1; i++) {
             line += header.get(i) + separator;
         }
-        CsvWriterReader writerReader = new CsvWriterReader(filename);
+        CsvWriterReader writerReader = new CsvWriterReader(directory, filename);
         writerReader.write(line.substring(0, line.length() - separator.length()));
     }
 
-    private void write(String filename, HashMap<Integer, String> dataLine, String separator) {
+    private void write(String directory, String filename, HashMap<Integer, String> dataLine, String separator) {
         String line = "";
 
         for (int i = 0; i <= dataLine.size() - 1; i++) {
@@ -204,7 +209,7 @@ class CsvProcessor {
             line += dataLine.get(i) + separator;
         }
 
-        CsvWriterReader writerReader = new CsvWriterReader(filename);
+        CsvWriterReader writerReader = new CsvWriterReader(directory, filename);
         writerReader.write(line.substring(0, line.length() - separator.length()));
         dataLine.clear();
     }
