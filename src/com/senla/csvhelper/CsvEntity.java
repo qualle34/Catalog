@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 public @interface CsvEntity {
 
     String filename();
-    String valuesSeparator();
+    String valuesSeparator() default ",";
     String entityId() default "";
 }

@@ -6,10 +6,10 @@ import com.senla.csvhelper.CsvProperty;
 @CsvEntity(filename = "dog.csv", valuesSeparator = ",")
 public class Dog {
 
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
     private int id;
 
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String name;
 
     public Dog() {
@@ -24,8 +24,16 @@ public class Dog {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

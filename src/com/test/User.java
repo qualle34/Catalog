@@ -6,15 +6,15 @@ import com.senla.csvhelper.CsvProperty;
 @CsvEntity(filename = "user.csv", valuesSeparator = ",")
 public class User {
 
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
     private int id;
 
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String name;
 
     private String password;
 
-    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 3, keyField = "id")
+    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 2, keyField = "id")
     private Dog dog;
 
     public User() {
@@ -33,6 +33,30 @@ public class User {
         this.dog = dog;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Dog getDog() {
         return dog;
     }
@@ -43,7 +67,13 @@ public class User {
 
     @Override
     public String toString() {
-        return id + " " + name + " " + password;
+        String line;
+        if (dog != null) {
+            line = id + " " + name + " " + password + " " + dog.toString();
+        } else {
+            line = id + " " + name + " " + password;
+        }
+        return line;
     }
 
 

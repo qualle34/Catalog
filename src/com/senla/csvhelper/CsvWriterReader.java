@@ -1,6 +1,7 @@
 package com.senla.csvhelper;
 
 import java.io.*;
+import java.util.HashMap;
 
 class CsvWriterReader {
 
@@ -17,7 +18,10 @@ class CsvWriterReader {
         File file = new File(filename);
 
         try {
-            file.createNewFile();
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
             writer = new FileWriter(file, true);
             bw = new BufferedWriter(writer);
             bw.write(line + "\n");
@@ -39,7 +43,19 @@ class CsvWriterReader {
         }
     }
 
-    String read(int row) {
+    HashMap<Integer, String> read() {
+        HashMap<Integer, String> objects = new HashMap<>();
+        int i = 1;
+
+        while (readLine(i) != null) {
+            objects.put(i, readLine(i));
+            i++;
+        }
+
+        return objects;
+    }
+
+    private String readLine(int row) {
 
         File file = new File(filename);
         BufferedReader br = null;
