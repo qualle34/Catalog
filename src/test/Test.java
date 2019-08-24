@@ -25,7 +25,6 @@ public class Test {
 
 
 
-
         CsvService csvService = new CsvService();
         LinkedList users = csvService.read(User.class);
         LinkedList<User> users2 = new LinkedList<>();
@@ -38,6 +37,7 @@ public class Test {
         for(User user : users2){
             System.out.println(user.toString());
         }
+
 
     }
 

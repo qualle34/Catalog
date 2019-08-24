@@ -74,7 +74,7 @@ class CsvProcessor {
             separator = csvEntity.valuesSeparator();
             directory = csvEntity.directoryName();
         }
-        CsvWriterReader writerReader = new CsvWriterReader(directory ,filename);
+        CsvWriterReader writerReader = new CsvWriterReader(directory, filename);
 
         HashMap<Integer, String> hashMap = writerReader.read();
         LinkedList<Object> list = new LinkedList<>();
@@ -100,27 +100,8 @@ class CsvProcessor {
                     field.setAccessible(true);
 
                     if (csvProperty.propertyType().equals(CsvProperty.Type.SimpleProperty)) {
-                        if (field.getType() == String.class) {
-                            field.set(obj, String.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == boolean.class || field.getType() == Boolean.class) {
-                            field.set(obj, Boolean.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == byte.class || field.getType() == Byte.class) {
-                            field.set(obj, Byte.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == char.class || field.getType() == Character.class) {
-                            field.set(obj, lineRipper(str, separator, col).charAt(0));
-                        } else if (field.getType() == short.class || field.getType() == Short.class) {
-                            field.set(obj, Short.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == int.class || field.getType() == Integer.class) {
-                            field.set(obj, Integer.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == long.class || field.getType() == Long.class) {
-                            field.set(obj, Long.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == float.class || field.getType() == Float.class) {
-                            field.set(obj, Float.valueOf(lineRipper(str, separator, col)));
-                        } else if (field.getType() == double.class || field.getType() == Double.class) {
-                            field.set(obj, Double.valueOf(lineRipper(str, separator, col)));
-                        } else {
-                            field.set(obj, "unknown type");
-                        }
+
+                        guessType(field, obj, lineRipper(str, separator, col));
 
                     } else {
                         if (!lineRipper(str, separator, col).equals("null")) {
@@ -140,8 +121,33 @@ class CsvProcessor {
         return obj;
     }
 
-    private Object getObjById(Class cls, Field field, Integer id) throws IllegalAccessException {
+    private void guessType(Field field, Object obj, String value) throws IllegalAccessException {
+        field.setAccessible(true);
 
+        if (field.getType() == String.class) {
+            field.set(obj, value);
+        } else if (field.getType() == boolean.class || field.getType() == Boolean.class) {
+            field.set(obj, Boolean.valueOf(value));
+        } else if (field.getType() == byte.class || field.getType() == Byte.class) {
+            field.set(obj, Byte.valueOf(value));
+        } else if (field.getType() == char.class || field.getType() == Character.class) {
+            field.set(obj, value.charAt(0));
+        } else if (field.getType() == short.class || field.getType() == Short.class) {
+            field.set(obj, Short.valueOf(value));
+        } else if (field.getType() == int.class || field.getType() == Integer.class) {
+            field.set(obj, Integer.valueOf(value));
+        } else if (field.getType() == long.class || field.getType() == Long.class) {
+            field.set(obj, Long.valueOf(value));
+        } else if (field.getType() == float.class || field.getType() == Float.class) {
+            field.set(obj, Float.valueOf(value));
+        } else if (field.getType() == double.class || field.getType() == Double.class) {
+            field.set(obj, Double.valueOf(value));
+        } else {
+            field.set(obj, "unknown type");
+        }
+    }
+
+    private Object getObjById(Class cls, Field field, Integer id) throws IllegalAccessException {
         LinkedList list = readSubList(cls);
         field.setAccessible(true);
         Object trueObject = null;
@@ -166,7 +172,6 @@ class CsvProcessor {
     }
 
     private void makeHeader(Object obj) {
-
         Class cls = obj.getClass();
         HashMap<Integer, String> header = new HashMap<>();
         String line = "";

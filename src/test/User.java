@@ -3,7 +3,7 @@ package test;
 import com.senla.csvhelper.CsvEntity;
 import com.senla.csvhelper.CsvProperty;
 
-@CsvEntity(directoryName = "D://data", valuesSeparator = ",")
+@CsvEntity(directoryName = "D://data", valuesSeparator = ";")
 public class User {
 
     @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
