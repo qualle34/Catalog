@@ -37,7 +37,7 @@ public class Test {
         for(User user : users2){
             System.out.println(user.toString());
         }
+
+
     }
-
-
 }

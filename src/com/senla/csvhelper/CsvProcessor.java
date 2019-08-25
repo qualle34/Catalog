@@ -7,14 +7,7 @@ import java.util.LinkedList;
 
 class CsvProcessor {
 
-    private boolean isHeaderExists;
-
     void writeObject(Object obj) throws Exception {
-
-//        if (!isHeaderExists) {
-//            makeHeader(obj);
-//            isHeaderExists = true;
-//        }
 
         Class cls = obj.getClass();
         HashMap<Integer, String> dataLine = new HashMap<>();
@@ -55,7 +48,7 @@ class CsvProcessor {
                 }
             }
         }
-        write(directory, filename, dataLine, separator);
+        write(directory, filename, dataLine, makeHeader(obj) ,separator);
     }
 
     LinkedList<Object> readList(Class cls) throws Exception {
@@ -74,7 +67,7 @@ class CsvProcessor {
         HashMap<Integer, String> hashMap = writerReader.read();
         LinkedList<Object> list = new LinkedList<>();
 
-        int i = 0;
+        int i = 1;
 
         while (i < hashMap.size()) {
             list.add(getObject(cls, hashMap.get(i + 1), separator));
@@ -166,18 +159,15 @@ class CsvProcessor {
         return list;
     }
 
-    private void makeHeader(Object obj) {
+    private String makeHeader(Object obj) {
         Class cls = obj.getClass();
         HashMap<Integer, String> header = new HashMap<>();
         String line = "";
         String separator = "";
-        String filename = cls.getSimpleName() + ".csv";
-        String directory = "";
 
         if (cls.isAnnotationPresent(CsvEntity.class)) {
             CsvEntity csvEntity = (CsvEntity) cls.getDeclaredAnnotation(CsvEntity.class);
             separator = csvEntity.valuesSeparator();
-            directory = csvEntity.directoryName();
         }
 
         for (Field field : cls.getDeclaredFields()) {
@@ -197,11 +187,11 @@ class CsvProcessor {
         for (int i = 0; i <= header.size() - 1; i++) {
             line += header.get(i) + separator;
         }
-        CsvWriterReader writerReader = new CsvWriterReader(directory, filename);
-        writerReader.write(line.substring(0, line.length() - separator.length()));
+
+        return line.substring(0, line.length() - separator.length());
     }
 
-    private void write(String directory, String filename, HashMap<Integer, String> dataLine, String separator) {
+    private void write(String directory, String filename, HashMap<Integer, String> dataLine, String header, String separator) {
         String line = "";
 
         for (int i = 0; i <= dataLine.size() - 1; i++) {
@@ -210,7 +200,7 @@ class CsvProcessor {
         }
 
         CsvWriterReader writerReader = new CsvWriterReader(directory, filename);
-        writerReader.write(line.substring(0, line.length() - separator.length()));
+        writerReader.write(line.substring(0, line.length() - separator.length()), header);
         dataLine.clear();
     }
 

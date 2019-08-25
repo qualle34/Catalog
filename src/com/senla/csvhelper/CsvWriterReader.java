@@ -18,7 +18,7 @@ class CsvWriterReader {
         this.filename = filename;
     }
 
-    void write(String line) {
+    void write(String line, String header) {
 
         FileWriter writer = null;
         BufferedWriter bw = null;
@@ -26,12 +26,14 @@ class CsvWriterReader {
         File file = new File(directory, filename);
 
         try {
-            if (!dir.exists()){
+            if (!dir.exists()) {
                 dir.mkdir();
             }
             if (!file.exists()) {
                 file.createNewFile();
+                write(header, "");
             }
+
             writer = new FileWriter(file, true);
             bw = new BufferedWriter(writer);
             bw.write(line + "\n");
