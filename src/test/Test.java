@@ -9,8 +9,10 @@ public class Test {
 
     public static void main(String[] args) {
 
-//        Dog dog1 = new Dog(1, "deni");
-//        Dog dog2 = new Dog(2, "karli");
+//        Label label1 = new Label(1, "dan's");
+//        Label label2 = new Label(2, "karl's");
+//        Dog dog1 = new Dog(1, "deni", label1);
+//        Dog dog2 = new Dog(2, "karli", label2);
 //        User user1 = new User(1, "Karl", "1234", dog2);
 //        User user2 = new User(2, "Jon", "435");
 //        User user3 = new User(3, "Den", "2345", dog1);
@@ -22,8 +24,6 @@ public class Test {
 //
 //        CsvService csvService = new CsvService();
 //        csvService.write(users);
-
-
 
         CsvService csvService = new CsvService();
         LinkedList users = csvService.read(User.class);
@@ -37,8 +37,6 @@ public class Test {
         for(User user : users2){
             System.out.println(user.toString());
         }
-
-
     }
 
 

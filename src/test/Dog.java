@@ -12,12 +12,21 @@ public class Dog {
     @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String name;
 
+    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 2, keyField = "idf")
+    private Label label;
+
     public Dog() {
     }
 
     public Dog(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Dog(int id, String name, Label label) {
+        this.id = id;
+        this.name = name;
+        this.label = label;
     }
 
     public int getId() {
@@ -38,6 +47,10 @@ public class Dog {
 
     @Override
     public String toString() {
-        return id + " " + name;
+        String line = id + " " + name;
+        if (label != null) {
+            line += " " + label.toString();
+        }
+        return line;
     }
 }

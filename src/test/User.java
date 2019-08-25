@@ -68,14 +68,10 @@ public class User {
 
     @Override
     public String toString() {
-        String line;
+        String line = id + " " + name + " " + password;
         if (dog != null) {
-            line = id + " " + name + " " + password + " " + dog.toString();
-        } else {
-            line = id + " " + name + " " + password;
+            line += dog.toString();
         }
         return line;
     }
-
-
 }

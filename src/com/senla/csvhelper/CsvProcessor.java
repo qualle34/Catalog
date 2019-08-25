@@ -8,14 +8,13 @@ import java.util.LinkedList;
 class CsvProcessor {
 
     private boolean isHeaderExists;
-    private boolean isSubHeaderExists;
 
     void writeObject(Object obj) throws Exception {
 
-        if (!isHeaderExists) {
-            makeHeader(obj);
-            isHeaderExists = true;
-        }
+//        if (!isHeaderExists) {
+//            makeHeader(obj);
+//            isHeaderExists = true;
+//        }
 
         Class cls = obj.getClass();
         HashMap<Integer, String> dataLine = new HashMap<>();
@@ -48,10 +47,6 @@ class CsvProcessor {
                             subField.setAccessible(true);
                             dataLine.put(col, String.valueOf(subField.get(subObj)));
 
-                            if (!isSubHeaderExists) {
-                                makeHeader(subObj);
-                                isSubHeaderExists = true;
-                            }
                             writeObject(subObj);
                         } else {
                             dataLine.put(col, String.valueOf("null"));
@@ -79,7 +74,7 @@ class CsvProcessor {
         HashMap<Integer, String> hashMap = writerReader.read();
         LinkedList<Object> list = new LinkedList<>();
 
-        int i = 1;
+        int i = 0;
 
         while (i < hashMap.size()) {
             list.add(getObject(cls, hashMap.get(i + 1), separator));
