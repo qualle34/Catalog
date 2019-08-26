@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-class CsvProcessor {
-
-    void writeObject(Object obj) throws Exception {
+class CsvProcessor implements iCsvProcessor {
+    @Override
+    public void writeObject(Object obj) throws Exception {
 
         Class cls = obj.getClass();
         HashMap<Integer, String> dataLine = new HashMap<>();
@@ -50,10 +50,11 @@ class CsvProcessor {
                 }
             }
         }
-        write(directory, filename, dataLine, makeHeader(cls, separator) ,separator);
+        write(directory, filename, dataLine, makeHeader(cls, separator), separator);
     }
 
-    List<Object> readList(Class cls) throws Exception {
+    @Override
+    public List<Object> readList(Class cls) throws Exception {
 
         String separator = "";
         String filename = cls.getSimpleName() + ".csv";
@@ -78,7 +79,7 @@ class CsvProcessor {
         return list;
     }
 
-    private Object getObject(Class cls, String str, String separator) throws IllegalAccessException, NoSuchFieldException, InstantiationException {
+    private Object getObject(Class cls, String str, String separator) throws Exception {
         Object obj = cls.newInstance();
 
         for (Field field : cls.getDeclaredFields()) {
@@ -137,7 +138,7 @@ class CsvProcessor {
         }
     }
 
-    private Object getObjById(Class cls, Field field, Integer id) throws IllegalAccessException {
+    private Object getObjById(Class cls, Field field, Integer id) throws Exception {
         List list = readSubList(cls);
         field.setAccessible(true);
         Object trueObject = null;
@@ -151,14 +152,8 @@ class CsvProcessor {
         return trueObject;
     }
 
-    private List<Object> readSubList(Class cls) {
-        List<Object> list = null;
-        try {
-            list = readList(cls);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
+    private List<Object> readSubList(Class cls) throws Exception {
+        return readList(cls);
     }
 
     private String makeHeader(Class cls, String separator) {
