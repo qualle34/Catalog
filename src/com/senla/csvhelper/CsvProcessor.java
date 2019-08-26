@@ -1,5 +1,8 @@
 package com.senla.csvhelper;
 
+import com.senla.csvhelper.annotation.CsvEntity;
+import com.senla.csvhelper.annotation.CsvProperty;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -7,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-class CsvProcessor implements iCsvProcessor {
+class CsvProcessor implements ICsvProcessor {
     @Override
     public void writeObject(Object obj) throws Exception {
 

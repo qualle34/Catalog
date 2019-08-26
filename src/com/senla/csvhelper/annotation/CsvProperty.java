@@ -1,4 +1,4 @@
-package com.senla.csvhelper;
+package com.senla.csvhelper.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -2,7 +2,7 @@ package com.senla.csvhelper;
 
 import java.util.List;
 
-interface iCsvProcessor {
+interface ICsvProcessor {
 
     void writeObject(Object obj) throws Exception;
 

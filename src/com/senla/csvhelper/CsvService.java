@@ -20,7 +20,7 @@ public class CsvService {
     }
 
     public void write(List<Object> list) {
-        iCsvProcessor processor = new CsvProcessor();
+        ICsvProcessor processor = new CsvProcessor();
         for (Object obj : list) {
             try {
                 processor.writeObject(obj);
@@ -31,7 +31,7 @@ public class CsvService {
     }
 
     public List<Object> read(Class cls) {
-        iCsvProcessor processor = new CsvProcessor();
+        ICsvProcessor processor = new CsvProcessor();
         List<Object> list = null;
         try {
             list = processor.readList(cls);

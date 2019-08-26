@@ -1,7 +1,7 @@
 package test;
 
-import com.senla.csvhelper.CsvEntity;
-import com.senla.csvhelper.CsvProperty;
+import com.senla.csvhelper.annotation.CsvEntity;
+import com.senla.csvhelper.annotation.CsvProperty;
 
 @CsvEntity(directoryName = "D://data", valuesSeparator = ";")
 public class Dog {
