@@ -4,6 +4,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 class CsvProcessor {
 
@@ -42,16 +44,16 @@ class CsvProcessor {
 
                             writeObject(subObj);
                         } else {
-                            dataLine.put(col, String.valueOf("null"));
+                            dataLine.put(col, "null");
                         }
                     }
                 }
             }
         }
-        write(directory, filename, dataLine, makeHeader(obj) ,separator);
+        write(directory, filename, dataLine, makeHeader(cls, separator) ,separator);
     }
 
-    LinkedList<Object> readList(Class cls) throws Exception {
+    List<Object> readList(Class cls) throws Exception {
 
         String separator = "";
         String filename = cls.getSimpleName() + ".csv";
@@ -64,7 +66,7 @@ class CsvProcessor {
         }
         CsvWriterReader writerReader = new CsvWriterReader(directory, filename);
 
-        HashMap<Integer, String> hashMap = writerReader.read();
+        Map<Integer, String> hashMap = writerReader.read();
         LinkedList<Object> list = new LinkedList<>();
 
         int i = 1;
@@ -136,7 +138,7 @@ class CsvProcessor {
     }
 
     private Object getObjById(Class cls, Field field, Integer id) throws IllegalAccessException {
-        LinkedList list = readSubList(cls);
+        List list = readSubList(cls);
         field.setAccessible(true);
         Object trueObject = null;
 
@@ -149,8 +151,8 @@ class CsvProcessor {
         return trueObject;
     }
 
-    private LinkedList<Object> readSubList(Class cls) {
-        LinkedList<Object> list = null;
+    private List<Object> readSubList(Class cls) {
+        List<Object> list = null;
         try {
             list = readList(cls);
         } catch (Exception e) {
@@ -159,16 +161,9 @@ class CsvProcessor {
         return list;
     }
 
-    private String makeHeader(Object obj) {
-        Class cls = obj.getClass();
+    private String makeHeader(Class cls, String separator) {
         HashMap<Integer, String> header = new HashMap<>();
-        String line = "";
-        String separator = "";
-
-        if (cls.isAnnotationPresent(CsvEntity.class)) {
-            CsvEntity csvEntity = (CsvEntity) cls.getDeclaredAnnotation(CsvEntity.class);
-            separator = csvEntity.valuesSeparator();
-        }
+        StringBuilder line = new StringBuilder();
 
         for (Field field : cls.getDeclaredFields()) {
             for (Annotation annotation : field.getDeclaredAnnotations()) {
@@ -185,18 +180,18 @@ class CsvProcessor {
         }
 
         for (int i = 0; i <= header.size() - 1; i++) {
-            line += header.get(i) + separator;
+            line.append(header.get(i)).append(separator);
         }
 
         return line.substring(0, line.length() - separator.length());
     }
 
     private void write(String directory, String filename, HashMap<Integer, String> dataLine, String header, String separator) {
-        String line = "";
+        StringBuilder line = new StringBuilder();
 
         for (int i = 0; i <= dataLine.size() - 1; i++) {
 
-            line += dataLine.get(i) + separator;
+            line.append(dataLine.get(i)).append(separator);
         }
 
         CsvWriterReader writerReader = new CsvWriterReader(directory, filename);

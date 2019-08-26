@@ -1,10 +1,10 @@
 package com.senla.csvhelper;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class CsvService {
 
-    public void write(LinkedList<Object> list) {
+    public void write(List<Object> list) {
         CsvProcessor processor = new CsvProcessor();
 
         for (Object obj : list) {
@@ -16,9 +16,9 @@ public class CsvService {
         }
     }
 
-    public LinkedList<Object> read(Class cls) {
+    public List<Object> read(Class cls) {
         CsvProcessor processor = new CsvProcessor();
-        LinkedList<Object> list = null;
+        List<Object> list = null;
         try {
             list = processor.readList(cls);
         } catch (Exception e) {

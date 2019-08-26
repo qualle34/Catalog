@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.HashMap;
+import java.util.Map;
 
 class CsvWriterReader {
 
@@ -19,84 +20,47 @@ class CsvWriterReader {
     }
 
     void write(String line, String header) {
-
-        FileWriter writer = null;
-        BufferedWriter bw = null;
         File dir = new File(directory);
         File file = new File(directory, filename);
 
-        try {
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
-            if (!file.exists()) {
-                file.createNewFile();
-                write(header, "");
-            }
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
 
-            writer = new FileWriter(file, true);
-            bw = new BufferedWriter(writer);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            write(header, "");
+        }
+
+        try(FileWriter writer = new FileWriter(file, true); BufferedWriter bw = new BufferedWriter(writer)) {
+
             bw.write(line + "\n");
 
         } catch (IOException e) {
             e.printStackTrace();
-
-        } finally {
-            try {
-                if (bw != null)
-                    bw.close();
-
-                if (writer != null)
-                    writer.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    HashMap<Integer, String> read() {
-        HashMap<Integer, String> objects = new HashMap<>();
-        int i = 1;
-
-        while (readLine(i) != null) {
-            objects.put(i, readLine(i));
-            i++;
-        }
-
-        return objects;
-    }
-
-    private String readLine(int row) {
-
+    Map<Integer, String> read() {
+        Map<Integer, String> objects = new HashMap<>();
         File file = new File(directory, filename);
-        BufferedReader br = null;
+        int i = 1;
+        String line;
 
-        try {
-            br = new BufferedReader(new FileReader(file));
-            String line;
-            int lineCounter = 1;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
             while ((line = br.readLine()) != null) {
-
-                if (lineCounter == row) {
-                    return line;
-                }
-                lineCounter++;
+                objects.put(i, line);
+                i++;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-
-        } finally {
-            try {
-                if (br != null)
-                    br.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
-        return null;
+        return objects;
     }
 }

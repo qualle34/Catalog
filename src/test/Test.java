@@ -3,6 +3,7 @@ package test;
 import com.senla.csvhelper.CsvService;
 
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class Test {
@@ -25,8 +26,9 @@ public class Test {
 //        CsvService csvService = new CsvService();
 //        csvService.write(users);
 
+
         CsvService csvService = new CsvService();
-        LinkedList users = csvService.read(User.class);
+        List users = csvService.read(User.class);
         LinkedList<User> users2 = new LinkedList<>();
 
         for (Object obj : users) {
@@ -37,7 +39,5 @@ public class Test {
         for(User user : users2){
             System.out.println(user.toString());
         }
-
-
     }
 }
