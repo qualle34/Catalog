@@ -12,7 +12,7 @@ public class Dog {
     @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String name;
 
-    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 2, keyField = "idf")
+    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 2, keyField = "id")
     private Label label;
 
     public Dog() {
@@ -43,6 +43,14 @@ public class Dog {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public void setLabel(Label label) {
+        this.label = label;
     }
 
     @Override

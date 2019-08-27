@@ -7,24 +7,24 @@ import com.senla.csvhelper.annotation.CsvProperty;
 public class Label {
 
     @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
-    private int idf;
+    private int id;
     @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String owner;
 
     public Label() {
     }
 
-    public Label(int idf, String owner) {
-        this.idf = idf;
+    public Label(int id, String owner) {
+        this.id = id;
         this.owner = owner;
     }
 
-    public int getIdf() {
-        return idf;
+    public int getId() {
+        return id;
     }
 
-    public void setIdf(int idf) {
-        this.idf = idf;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getOwner() {
@@ -37,6 +37,6 @@ public class Label {
 
     @Override
     public String toString() {
-        return idf + " " + owner;
+        return id + " " + owner;
     }
 }

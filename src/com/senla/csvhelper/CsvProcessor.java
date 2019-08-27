@@ -10,9 +10,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-class CsvProcessor implements ICsvProcessor {
+class CsvProcessor implements IProcessor {
+
     @Override
-    public void writeObject(Object obj) throws Exception {
+    public void write(Object obj) throws Exception {
 
         Class cls = obj.getClass();
         HashMap<Integer, String> dataLine = new HashMap<>();
@@ -45,7 +46,7 @@ class CsvProcessor implements ICsvProcessor {
                             subField.setAccessible(true);
                             dataLine.put(col, String.valueOf(subField.get(subObj)));
 
-                            writeObject(subObj);
+                            write(subObj);
                         } else {
                             dataLine.put(col, "null");
                         }
@@ -53,11 +54,11 @@ class CsvProcessor implements ICsvProcessor {
                 }
             }
         }
-        write(directory, filename, dataLine, makeHeader(cls, separator), separator);
+        writeLine(directory, filename, dataLine, makeHeader(cls, separator), separator);
     }
 
     @Override
-    public List<Object> readList(Class cls) throws Exception {
+    public List<Object> read(Class cls) throws Exception {
 
         String separator = "";
         String filename = cls.getSimpleName() + ".csv";
@@ -156,7 +157,7 @@ class CsvProcessor implements ICsvProcessor {
     }
 
     private List<Object> readSubList(Class cls) throws Exception {
-        return readList(cls);
+        return read(cls);
     }
 
     private String makeHeader(Class cls, String separator) {
@@ -184,7 +185,7 @@ class CsvProcessor implements ICsvProcessor {
         return line.substring(0, line.length() - separator.length());
     }
 
-    private void write(String directory, String filename, HashMap<Integer, String> dataLine, String header, String separator) {
+    private void writeLine(String directory, String filename, HashMap<Integer, String> dataLine, String header, String separator) {
         StringBuilder line = new StringBuilder();
 
         for (int i = 0; i <= dataLine.size() - 1; i++) {

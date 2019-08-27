@@ -1,6 +1,5 @@
 package com.senla.csvhelper;
 
-import java.io.FileInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,24 +9,15 @@ import java.io.BufferedWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 class CsvWriterReader {
 
-    private static Logger LOGGER;
+    private static Logger LOG = Logger.getLogger(CsvWriterReader.class.getName());
 
     private String directory;
     private String filename;
 
-    static {
-        try (FileInputStream ins = new FileInputStream("logging.properties")) {
-            LogManager.getLogManager().readConfiguration(ins);
-            LOGGER = Logger.getLogger(CsvWriterReader.class.getName());
-        } catch (Exception ignore) {
-            ignore.printStackTrace();
-        }
-    }
 
     CsvWriterReader(String directory, String filename) {
         this.directory = directory;
@@ -46,7 +36,7 @@ class CsvWriterReader {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                LOGGER.log(Level.WARNING, "Create file error: " + e.getMessage());
+                LOG.log(Level.WARNING, "Create file error: " + e.getMessage());
             }
             write(header, "");
         }
@@ -56,7 +46,7 @@ class CsvWriterReader {
             bw.write(line + "\n");
 
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Writing into file error: " + e.getMessage());
+            LOG.log(Level.WARNING, "Writing into file error: " + e.getMessage());
         }
     }
 
@@ -74,7 +64,7 @@ class CsvWriterReader {
             }
 
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Reading from file error: " + e.getMessage());
+            LOG.log(Level.WARNING, "Reading from file error: " + e.getMessage());
         }
         return objects;
     }

@@ -9,6 +9,13 @@ public class Test {
 
     public static void main(String[] args) {
 
+        testWrite();
+
+       // testRead();
+    }
+
+    private static void testWrite() {
+
         Label label1 = new Label(1, "dan's");
         Label label2 = new Label(2, "karl's");
         Dog dog1 = new Dog(1, "deni", label1);
@@ -24,19 +31,21 @@ public class Test {
 
         CsvService csvService = new CsvService();
         csvService.write(users);
+    }
 
+    private static void testRead() {
 
-//        CsvService csvService = new CsvService();
-//        List users = csvService.read(User.class);
-//        LinkedList<User> users2 = new LinkedList<>();
-//
-//        for (Object obj : users) {
-//            User user = (User) obj;
-//            users2.add(user);
-//        }
-//
-//        for(User user : users2){
-//            System.out.println(user.toString());
-//        }
+        CsvService csvService = new CsvService();
+        List users = csvService.read(User.class);
+        LinkedList<User> users2 = new LinkedList<>();
+
+        for (Object obj : users) {
+            User user = (User) obj;
+            users2.add(user);
+        }
+
+        for (User user : users2) {
+            System.out.println(user.toString());
+        }
     }
 }
