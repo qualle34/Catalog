@@ -6,6 +6,9 @@ public class Product {
     private String model;
     private String type;
 
+    public Product() {
+    }
+
     public Product(String maker, String model, String type) {
         this.maker = maker;
         this.model = model;
@@ -38,7 +41,6 @@ public class Product {
 
     @Override
     public String toString() {
-
         return maker + " " + model + " " + type;
     }
 }

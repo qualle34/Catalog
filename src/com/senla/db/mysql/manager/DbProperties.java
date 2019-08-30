@@ -1,4 +1,4 @@
-package com.senla.db.dao.mysql.servise;
+package com.senla.db.mysql.manager;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.senla.db.dao.mysql.servise;
+package com.senla.db.mysql.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 class ConnectionManager {
 
     private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
-    private Connection connection;
+    private static Connection connection;
 
     ConnectionManager() {
         DbProperties prop = new DbProperties();
