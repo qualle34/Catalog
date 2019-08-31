@@ -1,4 +1,4 @@
-package com.senla.db.mysql.manager;
+package com.senla.db.mysqldao.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class ConnectionManager {
+public class ConnectionManager {
 
     private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
     private static Connection connection;
 
-    ConnectionManager() {
+    public ConnectionManager() {
         DbProperties prop = new DbProperties();
         String url = prop.getUrl() + prop.getParameters();
 
@@ -28,11 +28,11 @@ class ConnectionManager {
         }
     }
 
-    Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 
-    void closeConnection() {
+    public void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();

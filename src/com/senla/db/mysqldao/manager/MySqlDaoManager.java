@@ -1,4 +1,4 @@
-package com.senla.db.mysql.manager;
+package com.senla.db.mysqldao.manager;
 
 import java.sql.*;
 

@@ -1,19 +1,22 @@
-package com.senla.db.mysql;
+package com.senla.db.mysqldao;
 
 import com.senla.db.dao.IProductDao;
 import com.senla.db.entity.Product;
-import com.senla.db.mysql.manager.MySqlDaoManager;
+import com.senla.db.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ProductDao extends MySqlDaoManager implements IProductDao {
+public class ProductDao implements IProductDao {
 
+    private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
     private Connection connection;
 
-    public ProductDao() {
-        connection = MySqlDaoManager.getConnection();
+    public ProductDao(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ProductDao extends MySqlDaoManager implements IProductDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "GetAll error: " + e.getMessage());
         }
         return productList;
     }
@@ -49,7 +52,7 @@ public class ProductDao extends MySqlDaoManager implements IProductDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Add error: " + e.getMessage());
         }
         return result;
     }
@@ -67,7 +70,7 @@ public class ProductDao extends MySqlDaoManager implements IProductDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Get error: " + e.getMessage());
         }
         return product;
     }
@@ -86,7 +89,7 @@ public class ProductDao extends MySqlDaoManager implements IProductDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Update error: " + e.getMessage());
         }
         return result;
     }
@@ -103,7 +106,7 @@ public class ProductDao extends MySqlDaoManager implements IProductDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Delete error: " + e.getMessage());
         }
         return result;
     }

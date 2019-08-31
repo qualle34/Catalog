@@ -1,19 +1,22 @@
-package com.senla.db.mysql;
+package com.senla.db.mysqldao;
 
 import com.senla.db.dao.IPrinterDao;
 import com.senla.db.entity.Printer;
-import com.senla.db.mysql.manager.MySqlDaoManager;
+import com.senla.db.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PrinterDao implements IPrinterDao {
 
+    private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
     private Connection connection;
 
-    public PrinterDao() {
-        connection = MySqlDaoManager.getConnection();
+    public PrinterDao(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class PrinterDao implements IPrinterDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "GetAll error: " + e.getMessage());
         }
         return printerList;
     }
@@ -51,7 +54,7 @@ public class PrinterDao implements IPrinterDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Add error: " + e.getMessage());
         }
         return result;
     }
@@ -70,7 +73,7 @@ public class PrinterDao implements IPrinterDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Get error: " + e.getMessage());
         }
         return printer;
     }
@@ -91,7 +94,7 @@ public class PrinterDao implements IPrinterDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Update error: " + e.getMessage());
         }
         return result;
     }
@@ -108,7 +111,7 @@ public class PrinterDao implements IPrinterDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Delete error: " + e.getMessage());
         }
         return result;
     }

@@ -1,20 +1,23 @@
-package com.senla.db.mysql;
+package com.senla.db.mysqldao;
 
 import com.senla.db.dao.IRequestHandlerDao;
 import com.senla.db.entity.Pc;
 import com.senla.db.entity.Product;
-import com.senla.db.mysql.manager.MySqlDaoManager;
+import com.senla.db.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RequestHandlerDao implements IRequestHandlerDao {
 
+    private static final Logger LOG = Logger.getLogger(ConnectionManager.class.getName());
     private Connection connection;
 
-    public RequestHandlerDao() {
-        connection = MySqlDaoManager.getConnection();
+    public RequestHandlerDao(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class RequestHandlerDao implements IRequestHandlerDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Error in method (getPcByPriceLowerThan()): " + e.getMessage());
         }
         return pcList;
     }
@@ -39,8 +42,7 @@ public class RequestHandlerDao implements IRequestHandlerDao {
     @Override
     public List<Product> getProductBySpeedAboveThan(int speed) {
         List<Product> productList = new LinkedList<>();
-        String query = "\n" +
-                "SELECT product.maker, product.model, product.type FROM mystore.product JOIN mystore.pc USING(model) " +
+        String query = "SELECT product.maker, product.model, product.type FROM mystore.product JOIN mystore.pc USING(model) " +
                 "WHERE speed >= ? AND maker IN (SELECT maker FROM mystore.product JOIN mystore.laptop USING(model) WHERE speed >= ?);";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -53,7 +55,7 @@ public class RequestHandlerDao implements IRequestHandlerDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Error in method (getProductBySpeedAboveThan()): " + e.getMessage());
         }
         return productList;
     }
@@ -71,7 +73,7 @@ public class RequestHandlerDao implements IRequestHandlerDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Error in method (getPrinterMakers()): " + e.getMessage());
         }
         return productList;
     }

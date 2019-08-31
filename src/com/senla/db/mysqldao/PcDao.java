@@ -1,19 +1,22 @@
-package com.senla.db.mysql;
+package com.senla.db.mysqldao;
 
 import com.senla.db.dao.IPcDao;
-import com.senla.db.mysql.manager.MySqlDaoManager;
 import com.senla.db.entity.Pc;
+import com.senla.db.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class PcDao extends MySqlDaoManager implements IPcDao {
+public class PcDao implements IPcDao {
 
+    private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
     private Connection connection;
 
-    public PcDao() {
-        connection = MySqlDaoManager.getConnection();
+    public PcDao(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class PcDao extends MySqlDaoManager implements IPcDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "GetAll error: " + e.getMessage());
         }
         return pcList;
     }
@@ -53,7 +56,7 @@ public class PcDao extends MySqlDaoManager implements IPcDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Add error: " + e.getMessage());
         }
         return result;
     }
@@ -71,7 +74,7 @@ public class PcDao extends MySqlDaoManager implements IPcDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Get error: " + e.getMessage());
         }
         return pc;
     }
@@ -94,7 +97,7 @@ public class PcDao extends MySqlDaoManager implements IPcDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Update error: " + e.getMessage());
         }
         return result;
     }
@@ -111,7 +114,7 @@ public class PcDao extends MySqlDaoManager implements IPcDao {
 
         } catch (SQLException e) {
             result = false;
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "Delete error: " + e.getMessage());
         }
         return result;
     }
