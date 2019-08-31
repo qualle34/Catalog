@@ -10,6 +10,7 @@ import com.senla.db.mysqldao.manager.ConnectionManager;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 public class Service {
 
@@ -32,15 +33,44 @@ public class Service {
         requestHandlerDao = new RequestHandlerDao(connection);
     }
 
-    public void getAllRequests() {
-        List<Pc> pcList = requestHandlerDao.getPcByPriceLowerThan(500);
-        System.out.println(pcList.toString());
-
+    public void printMakerBySpeedAboveThan() {
         List<Product> productList = requestHandlerDao.getProductBySpeedAboveThan(750);
-        System.out.println(productList.toString());
+        for (Product product : productList) {
+            System.out.println(product.getMaker());
+        }
+    }
 
+    public void printPcByPriceLowerThan() {
+        List<Pc> pcList = requestHandlerDao.getPcByPriceLowerThan(500);
+        for (Pc pc : pcList) {
+            System.out.println(pc.toString());
+        }
+    }
+
+    public void printPcGroupBySpeed() {
+        Map<Integer, List<Pc>> groupBySpeed = requestHandlerDao.getPcPriceGroupBySpeed();
+
+        for (Map.Entry<Integer, List<Pc>> entry : groupBySpeed.entrySet()) {
+            double avgPrice = 0;
+            for (Pc pc : entry.getValue()) {
+                avgPrice += pc.getPrice();
+            }
+            avgPrice = avgPrice / (entry.getValue().size());
+
+            System.out.println(entry.getKey() + " " + avgPrice);
+        }
+    }
+
+    public void printPrinterMakers() {
         List<Product> prodPrinterList = requestHandlerDao.getPrinterMakers();
-        System.out.println(prodPrinterList.toString());
+        for (Product product : prodPrinterList) {
+            System.out.println(product.getMaker());
+        }
+    }
+
+    public void getTransaction() {
+
+        requestHandlerDao.transaction();
     }
 
     public void getAll() {
