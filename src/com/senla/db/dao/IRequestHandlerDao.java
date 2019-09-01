@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface IRequestHandlerDao {
 
-    List<Pc> getPcByPriceLowerThan(float price);
+    List<Pc> getPcByPriceLowerThan(double price);
 
     List<Product> getProductBySpeedAboveThan(int speed);
 

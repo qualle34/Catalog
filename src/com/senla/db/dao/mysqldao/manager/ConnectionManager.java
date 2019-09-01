@@ -1,4 +1,4 @@
-package com.senla.db.mysqldao.manager;
+package com.senla.db.dao.mysqldao.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

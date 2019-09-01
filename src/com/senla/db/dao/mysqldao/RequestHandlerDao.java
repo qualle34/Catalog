@@ -1,10 +1,9 @@
-package com.senla.db.mysqldao;
+package com.senla.db.dao.mysqldao;
 
 import com.senla.db.dao.IRequestHandlerDao;
 import com.senla.db.entity.Pc;
 import com.senla.db.entity.Product;
-import com.senla.db.mysqldao.manager.ConnectionManager;
-import javafx.concurrent.Worker;
+import com.senla.db.dao.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -24,7 +23,7 @@ public class RequestHandlerDao implements IRequestHandlerDao {
     }
 
     @Override
-    public List<Pc> getPcByPriceLowerThan(float price) {
+    public List<Pc> getPcByPriceLowerThan(double price) {
         List<Pc> pcList = new LinkedList<>();
         String query = "SELECT * FROM pc WHERE price < ?;";
 

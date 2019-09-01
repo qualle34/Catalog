@@ -5,8 +5,8 @@ import com.senla.db.entity.Laptop;
 import com.senla.db.entity.Pc;
 import com.senla.db.entity.Printer;
 import com.senla.db.entity.Product;
-import com.senla.db.mysqldao.*;
-import com.senla.db.mysqldao.manager.ConnectionManager;
+import com.senla.db.dao.mysqldao.*;
+import com.senla.db.dao.mysqldao.manager.ConnectionManager;
 
 import java.sql.Connection;
 import java.util.List;
@@ -33,17 +33,19 @@ public class Service {
         requestHandlerDao = new RequestHandlerDao(connection);
     }
 
-    public void printMakerBySpeedAboveThan() {
-        List<Product> productList = requestHandlerDao.getProductBySpeedAboveThan(750);
-        for (Product product : productList) {
-            System.out.println(product.getMaker());
+    public void printPcByPriceLowerThan(double price) {
+        List<Pc> pcList = requestHandlerDao.getPcByPriceLowerThan(price);
+
+        for (Pc pc : pcList) {
+            System.out.println(pc.toString());
         }
     }
 
-    public void printPcByPriceLowerThan() {
-        List<Pc> pcList = requestHandlerDao.getPcByPriceLowerThan(500);
-        for (Pc pc : pcList) {
-            System.out.println(pc.toString());
+    public void printMakerBySpeedAboveThan(int speed) {
+        List<Product> productList = requestHandlerDao.getProductBySpeedAboveThan(speed);
+
+        for (Product product : productList) {
+            System.out.println(product.getMaker());
         }
     }
 
@@ -52,95 +54,133 @@ public class Service {
 
         for (Map.Entry<Integer, List<Pc>> entry : groupBySpeed.entrySet()) {
             double avgPrice = 0;
+
             for (Pc pc : entry.getValue()) {
                 avgPrice += pc.getPrice();
             }
             avgPrice = avgPrice / (entry.getValue().size());
-
             System.out.println(entry.getKey() + " " + avgPrice);
         }
     }
 
     public void printPrinterMakers() {
         List<Product> prodPrinterList = requestHandlerDao.getPrinterMakers();
+
         for (Product product : prodPrinterList) {
             System.out.println(product.getMaker());
         }
     }
 
-    public void getTransaction() {
 
+    public void getTransaction() {
         requestHandlerDao.transaction();
     }
 
-    public void getAll() {
+
+    public void printAllFromProduct() {
         List<Product> productList = productDao.getAll();
-        System.out.println(productList.toString());
 
-        List<Laptop> laptopList = laptopDao.getAll();
-        System.out.println(laptopList.toString());
-
-        List<Pc> pcList = pcDao.getAll();
-        System.out.println(pcList.toString());
-
-        List<Printer> printerList = printerDao.getAll();
-        System.out.println(printerList.toString());
+        for (Product product : productList) {
+            System.out.println(product.toString());
+        }
     }
 
-    public void add() {
-        Product product1 = new Product("Test", "T-1", "Laptop");
-        Product product2 = new Product("Test", "T-2", "Pc");
-        Product product3 = new Product("Test", "T-3", "Printer");
-        productDao.add(product1);
-        productDao.add(product2);
-        productDao.add(product3);
+    public void printAllFromLaptop() {
+        List<Laptop> laptopList = laptopDao.getAll();
 
-        Laptop laptop = new Laptop(8, "T-1", 1, 1, 1, 1.0D, 14.3F);
+        for (Laptop laptop : laptopList) {
+            System.out.println(laptop.toString());
+        }
+    }
+
+    public void printAllFromPc() {
+        List<Pc> pcList = pcDao.getAll();
+
+        for (Pc pc : pcList) {
+            System.out.println(pc.toString());
+        }
+    }
+
+    public void printAllFromPrinter() {
+        List<Printer> printerList = printerDao.getAll();
+
+        for (Printer printer : printerList) {
+            System.out.println(printer.toString());
+        }
+    }
+
+
+    public void addProduct(Product product) {
+        productDao.add(product);
+    }
+
+    public void addLaptop(Laptop laptop) {
         laptopDao.add(laptop);
+    }
 
-        Pc pc = new Pc(12, "T-2", 1, 1, 1, "12x", 1.0D);
+    public void addPc(Pc pc) {
         pcDao.add(pc);
+    }
 
-        Printer printer = new Printer(8, "T-3", 'y', "Jet", 1.0D);
+    public void addPrinter(Printer printer) {
         printerDao.add(printer);
     }
 
-    public void getByPk() {
-        Product product = productDao.get("T-1");
+
+    public void printProduct(String pk) {
+        Product product = productDao.get(pk);
         System.out.println(product.toString());
+    }
 
-        Laptop laptop = laptopDao.get("T-1");
+    public void printLaptop(String pk) {
+        Laptop laptop = laptopDao.get(pk);
         System.out.println(laptop.toString());
+    }
 
-        Pc pc = pcDao.get("T-2");
+    public void printPc(String pk) {
+        Pc pc = pcDao.get(pk);
         System.out.println(pc.toString());
+    }
 
-        Printer printer = printerDao.get("T-3");
+    public void printPrinter(String pk) {
+        Printer printer = printerDao.get(pk);
         System.out.println(printer.toString());
     }
 
-    public void update() {
-        Product product = new Product("Teste", "T-1", "Laptop");
+
+    public void updateProduct(Product product) {
         productDao.update(product);
+    }
 
-        Laptop laptop = new Laptop(8, "T-1", 2, 1, 1, 1.0D, 14.3F);
+    public void updateLaptop(Laptop laptop) {
         laptopDao.update(laptop);
+    }
 
-        Pc pc = new Pc(12, "T-2", 2, 1, 1, "12x", 1.0D);
+    public void updatePc(Pc pc) {
         pcDao.update(pc);
+    }
 
-        Printer printer = new Printer(8, "T-3", 'n', "Jet", 1.0D);
+    public void updatePrinter(Printer printer) {
         printerDao.update(printer);
     }
 
-    public void delete() {
-        laptopDao.delete("T-1");
-        pcDao.delete("T-2");
-        printerDao.delete("T-3");
-        productDao.delete("T-1");
-        productDao.delete("T-2");
-        productDao.delete("T-3");
+
+    public void deleteProduct(String pk) {
+        productDao.delete(pk);
     }
+
+    public void deleteLaptop(String pk) {
+        laptopDao.delete(pk);
+    }
+
+    public void deletePc(String pk) {
+        pcDao.delete(pk);
+    }
+
+    public void deletePrinter(String pk) {
+        printerDao.delete(pk);
+    }
+
 
     public void close() {
         connectionManager.closeConnection();

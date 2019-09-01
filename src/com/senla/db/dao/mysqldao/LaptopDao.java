@@ -1,8 +1,8 @@
-package com.senla.db.mysqldao;
+package com.senla.db.dao.mysqldao;
 
-import com.senla.db.dao.IProductDao;
-import com.senla.db.entity.Product;
-import com.senla.db.mysqldao.manager.ConnectionManager;
+import com.senla.db.dao.ILaptopDao;
+import com.senla.db.entity.Laptop;
+import com.senla.db.dao.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -10,43 +10,47 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProductDao implements IProductDao {
+public class LaptopDao implements ILaptopDao {
 
     private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
     private Connection connection;
 
-    public ProductDao(Connection connection) {
+    public LaptopDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public List<Product> getAll() {
-        List<Product> productList = new LinkedList<>();
-        String query = "SELECT * FROM product;";
+    public List<Laptop> getAll() {
+        List<Laptop> laptopList = new LinkedList<>();
+        String query = "SELECT * FROM laptop;";
 
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                Product product = new Product(rs.getString(1), rs.getString(2), rs.getString(3));
-                productList.add(product);
+                Laptop laptop = new Laptop(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6), rs.getFloat(7));
+                laptopList.add(laptop);
             }
 
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "GetAll error: " + e.getMessage());
         }
-        return productList;
+        return laptopList;
     }
 
     @Override
-    public boolean add(Product product) {
-        String query = "INSERT INTO product VALUES(?, ?, ?);";
+    public boolean add(Laptop laptop) {
+        String query = "INSERT INTO laptop VALUES(?, ?, ?, ?, ? ,? ,?);";
         boolean result;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, product.getMaker());
-            statement.setString(2, product.getModel());
-            statement.setString(3, product.getType());
+            statement.setInt(1, laptop.getCode());
+            statement.setString(2, laptop.getModel());
+            statement.setInt(3, laptop.getSpeed());
+            statement.setInt(4, laptop.getRam());
+            statement.setInt(5, laptop.getHd());
+            statement.setDouble(6, laptop.getPrice());
+            statement.setFloat(7, laptop.getScreen());
             statement.executeUpdate();
             result = true;
 
@@ -58,32 +62,36 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public Product get(String pk) {
-        String query = "SELECT * FROM product WHERE model = ?;";
-        Product product = null;
+    public Laptop get(String pk) {
+        String query = "SELECT * FROM laptop WHERE model = ?;";
+        Laptop laptop = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, pk);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                product = new Product(rs.getString(1), rs.getString(2), rs.getString(3));
+                laptop = new Laptop(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6), rs.getFloat(7));
             }
 
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "Get error: " + e.getMessage());
         }
-        return product;
+        return laptop;
     }
 
     @Override
-    public boolean update(Product product) {
-        String query = "UPDATE product SET maker = ?, type = ? WHERE model = ?";
+    public boolean update(Laptop laptop) {
+        String query = "UPDATE laptop SET code = ?, speed = ?, ram = ?, hd = ?, price = ?, screen = ? WHERE model = ?;";
         boolean result;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, product.getMaker());
-            statement.setString(2, product.getType());
-            statement.setString(3, product.getModel());
+            statement.setInt(1, laptop.getCode());
+            statement.setInt(2, laptop.getSpeed());
+            statement.setInt(3, laptop.getRam());
+            statement.setInt(4, laptop.getHd());
+            statement.setDouble(5, laptop.getPrice());
+            statement.setFloat(6, laptop.getScreen());
+            statement.setString(7, laptop.getModel());
             statement.executeUpdate();
             result = true;
 
@@ -96,7 +104,7 @@ public class ProductDao implements IProductDao {
 
     @Override
     public boolean delete(String pk) {
-        String query = "DELETE FROM product WHERE model = ?;";
+        String query = "DELETE FROM laptop WHERE model = ?;";
         boolean result;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

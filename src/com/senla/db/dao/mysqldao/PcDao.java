@@ -1,8 +1,8 @@
-package com.senla.db.mysqldao;
+package com.senla.db.dao.mysqldao;
 
-import com.senla.db.dao.ILaptopDao;
-import com.senla.db.entity.Laptop;
-import com.senla.db.mysqldao.manager.ConnectionManager;
+import com.senla.db.dao.IPcDao;
+import com.senla.db.entity.Pc;
+import com.senla.db.dao.mysqldao.manager.ConnectionManager;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -10,47 +10,47 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LaptopDao implements ILaptopDao {
+public class PcDao implements IPcDao {
 
     private static final Logger LOG =  Logger.getLogger(ConnectionManager.class.getName());
     private Connection connection;
 
-    public LaptopDao(Connection connection) {
+    public PcDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public List<Laptop> getAll() {
-        List<Laptop> laptopList = new LinkedList<>();
-        String query = "SELECT * FROM laptop;";
+    public List<Pc> getAll() {
+        List<Pc> pcList = new LinkedList<>();
+        String query = "SELECT * FROM pc;";
 
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                Laptop laptop = new Laptop(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6), rs.getFloat(7));
-                laptopList.add(laptop);
+                Pc pc = new Pc(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getDouble(7));
+                pcList.add(pc);
             }
 
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "GetAll error: " + e.getMessage());
         }
-        return laptopList;
+        return pcList;
     }
 
     @Override
-    public boolean add(Laptop laptop) {
-        String query = "INSERT INTO laptop VALUES(?, ?, ?, ?, ? ,? ,?);";
+    public boolean add(Pc pc) {
+        String query = "INSERT INTO pc VALUES(?, ?, ?, ?, ? ,? ,?);";
         boolean result;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, laptop.getCode());
-            statement.setString(2, laptop.getModel());
-            statement.setInt(3, laptop.getSpeed());
-            statement.setInt(4, laptop.getRam());
-            statement.setInt(5, laptop.getHd());
-            statement.setDouble(6, laptop.getPrice());
-            statement.setFloat(7, laptop.getScreen());
+            statement.setInt(1, pc.getCode());
+            statement.setString(2, pc.getModel());
+            statement.setInt(3, pc.getSpeed());
+            statement.setInt(4, pc.getRam());
+            statement.setInt(5, pc.getHd());
+            statement.setString(6, pc.getCd());
+            statement.setDouble(7, pc.getPrice());
             statement.executeUpdate();
             result = true;
 
@@ -62,36 +62,36 @@ public class LaptopDao implements ILaptopDao {
     }
 
     @Override
-    public Laptop get(String pk) {
-        String query = "SELECT * FROM laptop WHERE model = ?;";
-        Laptop laptop = null;
+    public Pc get(String pk) {
+        String query = "SELECT * FROM pc WHERE model = ?;";
+        Pc pc = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, pk);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                laptop = new Laptop(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6), rs.getFloat(7));
+                pc = new Pc(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getDouble(7));
             }
 
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "Get error: " + e.getMessage());
         }
-        return laptop;
+        return pc;
     }
 
     @Override
-    public boolean update(Laptop laptop) {
-        String query = "UPDATE laptop SET code = ?, speed = ?, ram = ?, hd = ?, price = ?, screen = ? WHERE model = ?;";
+    public boolean update(Pc pc) {
+        String query = "UPDATE pc SET code = ?, speed = ?, ram = ?, hd = ?, cd = ?, price = ? WHERE model = ?;";
         boolean result;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, laptop.getCode());
-            statement.setInt(2, laptop.getSpeed());
-            statement.setInt(3, laptop.getRam());
-            statement.setInt(4, laptop.getHd());
-            statement.setDouble(5, laptop.getPrice());
-            statement.setFloat(6, laptop.getScreen());
-            statement.setString(7, laptop.getModel());
+            statement.setInt(1, pc.getCode());
+            statement.setInt(2, pc.getSpeed());
+            statement.setInt(3, pc.getRam());
+            statement.setInt(4, pc.getHd());
+            statement.setString(5, pc.getCd());
+            statement.setDouble(6, pc.getPrice());
+            statement.setString(7, pc.getModel());
             statement.executeUpdate();
             result = true;
 
@@ -104,7 +104,7 @@ public class LaptopDao implements ILaptopDao {
 
     @Override
     public boolean delete(String pk) {
-        String query = "DELETE FROM laptop WHERE model = ?;";
+        String query = "DELETE FROM pc WHERE model = ?;";
         boolean result;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
