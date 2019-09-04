@@ -6,16 +6,14 @@
 
     <groupId>com.senla.serviceapi</groupId>
     <artifactId>serviceapi</artifactId>
-    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>service</module>
-    </modules>
     <name>service-api</name>
+
+    <packaging>jar</packaging>
 
     <parent>
         <artifactId>catalog</artifactId>
-        <groupId>com.senla</groupId>
+        <groupId>com.senla.catalog</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -26,9 +24,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.senla.daoapi</groupId>
-            <artifactId>daoapi</artifactId>
+            <groupId>com.senla.dao</groupId>
+            <artifactId>dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
 </project>
