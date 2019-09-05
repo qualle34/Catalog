@@ -13,11 +13,10 @@
 
     <modules>
         <module>entity</module>
-        <module>daoapi</module>
-        <module>serviceapi</module>
         <module>controller</module>
         <module>dao</module>
         <module>service</module>
+        <module>api</module>
     </modules>
 
     <properties>
