@@ -1,4 +1,4 @@
 # Senla Task
 Developer: Samoilo Antoniy  
 
-_Fourth task_ - Maven
+_Fifth task_ - Hibernate

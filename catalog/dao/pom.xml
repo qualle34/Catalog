@@ -4,12 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.senla.catalog</groupId>
     <artifactId>dao</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <name>dao</name>
-
-    <packaging>jar</packaging>
 
     <parent>
         <artifactId>catalog</artifactId>
@@ -28,6 +24,25 @@
             <artifactId>api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.3.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.4.3.Final</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/catalog?serverTimezone=UTC</property>
+
+        <property name="hibernate.connection.username">qualle</property>
+        <property name="hibernate.connection.password">43q21</property>
+
+        <property name="hibernate.show_sql">true</property>
+
+        <mapping class="com.senla.catalog.entity.Advert"/>
+        <mapping class="com.senla.catalog.entity.Category"/>
+        <mapping class="com.senla.catalog.entity.Chat"/>
+        <mapping class="com.senla.catalog.entity.Comment"/>
+        <mapping class="com.senla.catalog.entity.Creds"/>
+        <mapping class="com.senla.catalog.entity.Message"/>
+        <mapping class="com.senla.catalog.entity.SalesHistory"/>
+        <mapping class="com.senla.catalog.entity.SellerRating"/>
+        <mapping class="com.senla.catalog.entity.User"/>
+    </session-factory>
+</hibernate-configuration>
