@@ -11,7 +11,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     }
 
     @Override
-    protected Class<Advert> getGenericClass() {
+    protected Class<Advert> getChildClass() {
         return Advert.class;
     }
 }

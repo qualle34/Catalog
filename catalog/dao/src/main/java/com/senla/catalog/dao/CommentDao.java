@@ -11,7 +11,7 @@ public class CommentDao extends AbstractDao<Comment, Integer> implements ICommen
     }
 
     @Override
-    protected Class<Comment> getGenericClass() {
+    protected Class<Comment> getChildClass() {
         return Comment.class;
     }
 }

@@ -11,7 +11,7 @@ public class SalesHistoryDao extends AbstractDao<SalesHistory, Integer> implemen
     }
 
     @Override
-    protected Class<SalesHistory> getGenericClass() {
+    protected Class<SalesHistory> getChildClass() {
         return SalesHistory.class;
     }
 }

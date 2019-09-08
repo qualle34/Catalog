@@ -12,7 +12,7 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
     }
 
     @Override
-    protected Class<Chat> getGenericClass() {
+    protected Class<Chat> getChildClass() {
         return Chat.class;
     }
 }

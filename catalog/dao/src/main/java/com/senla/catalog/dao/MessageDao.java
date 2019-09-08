@@ -11,7 +11,7 @@ public class MessageDao extends AbstractDao<Message, Integer> implements IMessag
     }
 
     @Override
-    protected Class<Message> getGenericClass() {
+    protected Class<Message> getChildClass() {
         return Message.class;
     }
 }

@@ -11,7 +11,7 @@ public class SellerRatingDao extends AbstractDao<SellerRating, Integer> implemen
     }
 
     @Override
-    protected Class<SellerRating> getGenericClass() {
+    protected Class<SellerRating> getChildClass() {
         return SellerRating.class;
     }
 }

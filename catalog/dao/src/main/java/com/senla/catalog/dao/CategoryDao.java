@@ -11,7 +11,7 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     }
 
     @Override
-    protected Class<Category> getGenericClass() {
+    protected Class<Category> getChildClass() {
         return Category.class;
     }
 }

@@ -11,7 +11,7 @@ public class CredsDao extends AbstractDao<Creds, Integer> implements ICredsDao {
     }
 
     @Override
-    protected Class<Creds> getGenericClass() {
+    protected Class<Creds> getChildClass() {
         return Creds.class;
     }
 }
