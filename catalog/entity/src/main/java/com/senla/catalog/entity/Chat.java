@@ -8,6 +8,7 @@ import java.util.List;
 public class Chat {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id")
     private int id;
 
@@ -17,7 +18,7 @@ public class Chat {
     @ManyToMany(mappedBy = "chatList")
     private List<User> userList;
 
-    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chat")
     private List<Message> messageList;
 
     public Chat() {

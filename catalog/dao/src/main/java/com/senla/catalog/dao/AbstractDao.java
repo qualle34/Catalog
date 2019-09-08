@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,22 +22,25 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    protected abstract String getSelectAllQuery();
-
     protected abstract Class<T> getChildClass();
 
     @Override
     public List<T> getAll() {
         List<T> list = null;
+        Class cls = getChildClass();
 
         try (Session session = sessionFactory.openSession()) {
-            list = session.createQuery(getSelectAllQuery(), getChildClass()).getResultList();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<T> criteria = builder.createQuery(cls);
+            criteria.from(cls);
+            list = session.createQuery(criteria).getResultList();
 
         } catch (Exception e) {
             logger.error("Get all entities error: " + e.getMessage());
         }
         return list;
     }
+
 
     @Override
     public T get(PK pk) {
@@ -56,7 +61,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(t);
+            session.persist(t);
             transaction.commit();
 
         } catch (Exception e) {

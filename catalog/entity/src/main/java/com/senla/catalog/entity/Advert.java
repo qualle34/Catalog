@@ -8,6 +8,7 @@ import java.util.List;
 public class Advert {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "advert_id")
     private int id;
 
@@ -17,8 +18,8 @@ public class Advert {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "price")
+    private double price;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -28,16 +29,24 @@ public class Advert {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "advert")
+    @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL)
     private List<Comment> commentList;
 
     public Advert() {
     }
 
-    public Advert(String title, String description, String type, User user, Category category, List<Comment> commentList) {
+    public Advert(String title, String description, double price, User user, Category category) {
         this.title = title;
         this.description = description;
-        this.type = type;
+        this.price = price;
+        this.user = user;
+        this.category = category;
+    }
+
+    public Advert(String title, String description, double price, User user, Category category, List<Comment> commentList) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
         this.user = user;
         this.category = category;
         this.commentList = commentList;
@@ -67,12 +76,12 @@ public class Advert {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public double getType() {
+        return price;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(double price) {
+        this.price = price;
     }
 
     public User getUser() {
@@ -101,6 +110,6 @@ public class Advert {
 
     @Override
     public String toString() {
-        return id + " " + title + " " + description + " " + type;
+        return id + " " + title + " " + description + " " + price;
     }
 }

@@ -8,25 +8,31 @@ import java.util.Date;
 public class SellerRating {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
     @Column(name = "rating")
-    private int rating;
+    private float rating;
+
+    @Column(name = "rating_count")
+    private int ratingCount;
 
     @Column(name = "end_vip_date")
     private Date date;
 
-    @OneToOne(mappedBy = "rating")
-    private User user;
-
     public SellerRating() {
     }
 
-    public SellerRating(int rating, Date date, User user) {
+    public SellerRating(float rating, int ratingCount) {
         this.rating = rating;
+        this.ratingCount = ratingCount;
+    }
+
+    public SellerRating(float rating, int ratingCount, Date date) {
+        this.rating = rating;
+        this.ratingCount = ratingCount;
         this.date = date;
-        this.user = user;
     }
 
     public int getId() {
@@ -37,12 +43,20 @@ public class SellerRating {
         this.id = id;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
     }
 
     public Date getDate() {
@@ -53,16 +67,12 @@ public class SellerRating {
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
-        return id + " " + rating + " " + date.toString();
+        String line = id + " " + rating + " " + ratingCount;
+        if (date != null) {
+            line += " " + date.toString();
+        }
+        return line;
     }
 }

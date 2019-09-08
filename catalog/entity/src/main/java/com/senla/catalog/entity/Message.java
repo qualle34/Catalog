@@ -9,6 +9,7 @@ import java.util.Date;
 public class Message {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id")
     private int id;
 
@@ -79,6 +80,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return id + " " + text + " " + sendDate + " " + chat + " " + user;
+        return id + " " + text + " " + sendDate;
     }
 }

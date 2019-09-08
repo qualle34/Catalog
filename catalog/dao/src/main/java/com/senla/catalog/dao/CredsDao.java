@@ -6,11 +6,6 @@ import com.senla.catalog.entity.Creds;
 public class CredsDao extends AbstractDao<Creds, Integer> implements ICredsDao {
 
     @Override
-    protected String getSelectAllQuery() {
-        return "SELECT c FROM Creds c";
-    }
-
-    @Override
     protected Class<Creds> getChildClass() {
         return Creds.class;
     }

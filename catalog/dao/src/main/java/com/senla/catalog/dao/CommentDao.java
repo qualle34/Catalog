@@ -6,11 +6,6 @@ import com.senla.catalog.entity.Comment;
 public class CommentDao extends AbstractDao<Comment, Integer> implements ICommentDao {
 
     @Override
-    protected String getSelectAllQuery() {
-        return "SELECT c FROM Comment c";
-    }
-
-    @Override
     protected Class<Comment> getChildClass() {
         return Comment.class;
     }

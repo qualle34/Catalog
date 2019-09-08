@@ -3,10 +3,11 @@ package com.senla.catalog.service;
 import com.senla.catalog.dao.SellerRatingDao;
 import com.senla.catalog.daoapi.ISellerRatingDao;
 import com.senla.catalog.entity.SellerRating;
+import com.senla.catalog.serviceapi.ISellerRatingService;
 
 import java.util.List;
 
-public class SellerRatingService implements ISellerRatingDao {
+public class SellerRatingService implements ISellerRatingService {
 
     private ISellerRatingDao sellerRatingDao;
 

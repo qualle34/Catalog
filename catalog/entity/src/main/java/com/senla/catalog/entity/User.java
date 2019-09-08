@@ -10,6 +10,7 @@ import java.util.Objects;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
@@ -30,11 +31,11 @@ public class User {
     private String location;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @PrimaryKeyJoinColumn
     private Creds creds;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private SellerRating rating;
 
     @OneToMany(mappedBy = "seller")
@@ -46,7 +47,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> commentList;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_chat",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
@@ -66,9 +67,7 @@ public class User {
         this.location = location;
     }
 
-    public User(String firstname, String lastname, Date birthdate, String phone, String location, Creds creds,
-                SellerRating rating, List<SalesHistory> salesHistoryList, List<Advert> advertList,
-                List<Comment> commentList, List<Chat> chatList, List<Message> messageList) {
+    public User(String firstname, String lastname, Date birthdate, String phone, String location, Creds creds, SellerRating rating) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
@@ -76,11 +75,6 @@ public class User {
         this.location = location;
         this.creds = creds;
         this.rating = rating;
-        this.salesHistoryList = salesHistoryList;
-        this.advertList = advertList;
-        this.commentList = commentList;
-        this.chatList = chatList;
-        this.messageList = messageList;
     }
 
     public int getId() {

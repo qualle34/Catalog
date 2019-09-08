@@ -3,10 +3,11 @@ package com.senla.catalog.service;
 import com.senla.catalog.dao.CredsDao;
 import com.senla.catalog.daoapi.ICredsDao;
 import com.senla.catalog.entity.Creds;
+import com.senla.catalog.serviceapi.ICredsService;
 
 import java.util.List;
 
-public class CredsService implements ICredsDao {
+public class CredsService implements ICredsService {
 
     private ICredsDao credsDao;
 

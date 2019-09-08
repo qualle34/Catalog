@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Creds {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
 
@@ -22,18 +23,14 @@ public class Creds {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(mappedBy = "creds")
-    private User user;
-
     public Creds() {
     }
 
-    public Creds(String login, String password, String role, String email, User user) {
+    public Creds(String login, String password, String role, String email) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
-        this.user = user;
     }
 
     public int getId() {
@@ -74,14 +71,6 @@ public class Creds {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
