@@ -11,7 +11,7 @@ public interface ICommentService {
 
     void add(Comment comment);
 
-    Comment get(Integer id);
+    Comment getById(Integer id);
 
     void update(Comment comment);
 

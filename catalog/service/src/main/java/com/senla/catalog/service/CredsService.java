@@ -26,8 +26,8 @@ public class CredsService implements ICredsService {
     }
 
     @Override
-    public Creds get(Integer id) {
-        return credsDao.get(id);
+    public Creds getById(Integer id) {
+        return credsDao.getById(id);
     }
 
     @Override

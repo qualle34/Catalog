@@ -11,7 +11,7 @@ public interface IMessageService {
 
     void add(Message message);
 
-    Message get(Integer id);
+    Message getById(Integer id);
 
     void update(Message message);
 

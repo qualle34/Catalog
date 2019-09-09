@@ -26,8 +26,8 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public Comment get(Integer id) {
-        return commentDao.get(id);
+    public Comment getById(Integer id) {
+        return commentDao.getById(id);
     }
 
     @Override

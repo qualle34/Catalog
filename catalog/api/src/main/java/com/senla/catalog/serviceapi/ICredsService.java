@@ -10,7 +10,7 @@ public interface ICredsService {
 
     void add(Creds creds);
 
-    Creds get(Integer id);
+    Creds getById(Integer id);
 
     void update(Creds creds);
 

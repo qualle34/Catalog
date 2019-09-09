@@ -26,8 +26,8 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category get(Integer id) {
-        return categoryDao.get(id);
+    public Category getById(Integer id) {
+        return categoryDao.getById(id);
     }
 
     @Override

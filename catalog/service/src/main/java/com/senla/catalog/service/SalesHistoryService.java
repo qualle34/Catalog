@@ -26,8 +26,8 @@ public class SalesHistoryService implements ISalesHistoryService {
     }
 
     @Override
-    public SalesHistory get(Integer id) {
-        return salesHistoryDao.get(id);
+    public SalesHistory getById(Integer id) {
+        return salesHistoryDao.getById(id);
     }
 
     @Override

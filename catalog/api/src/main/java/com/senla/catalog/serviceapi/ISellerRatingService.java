@@ -10,7 +10,7 @@ public interface ISellerRatingService {
 
     void add(SellerRating sellerRating);
 
-    SellerRating get(Integer id);
+    SellerRating getById(Integer id);
 
     void update(SellerRating sellerRating);
 

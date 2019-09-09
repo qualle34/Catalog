@@ -72,7 +72,9 @@ public class User {
         this.phone = phone;
         this.location = location;
         this.creds = creds;
+        creds.setUser(this);
         this.rating = rating;
+        rating.setUser(this);
     }
 
     public int getId() {
@@ -193,19 +195,12 @@ public class User {
                 Objects.equals(phone, user.phone) &&
                 Objects.equals(location, user.location) &&
                 Objects.equals(creds, user.creds) &&
-                Objects.equals(rating, user.rating) &&
-                Objects.equals(salesHistoryList, user.salesHistoryList) &&
-                Objects.equals(advertList, user.advertList) &&
-                Objects.equals(commentList, user.commentList) &&
-                Objects.equals(chatList, user.chatList) &&
-                Objects.equals(messageList, user.messageList);
+                Objects.equals(rating, user.rating);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, firstname, lastname, birthdate, phone, location, creds,
-                rating, salesHistoryList, advertList, commentList, chatList, messageList);
+        return Objects.hash(id, firstname, lastname, birthdate, phone, location, creds, rating);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.senla.catalog.daoapi;
+package com.senla.catalog.daoapi.basic;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ public interface IGenericDao<T, PK> {
 
     void add(T t);
 
-    T get(PK pk);
+    T getById(PK pk);
 
     void update(T t);
 

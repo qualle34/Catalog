@@ -11,7 +11,7 @@ public interface IAdvertService {
 
     void add(Advert advert);
 
-    Advert get(Integer id);
+    Advert getById(Integer id);
 
     void update(Advert advert);
 

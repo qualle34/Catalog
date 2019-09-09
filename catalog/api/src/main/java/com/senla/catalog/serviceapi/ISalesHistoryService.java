@@ -11,7 +11,7 @@ public interface ISalesHistoryService {
 
     void add(SalesHistory salesHistory);
 
-    SalesHistory get(Integer id);
+    SalesHistory getById(Integer id);
 
     void update(SalesHistory salesHistory);
 

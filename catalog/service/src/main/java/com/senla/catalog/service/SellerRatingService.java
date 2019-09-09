@@ -26,8 +26,8 @@ public class SellerRatingService implements ISellerRatingService {
     }
 
     @Override
-    public SellerRating get(Integer id) {
-        return sellerRatingDao.get(id);
+    public SellerRating getById(Integer id) {
+        return sellerRatingDao.getById(id);
     }
 
     @Override

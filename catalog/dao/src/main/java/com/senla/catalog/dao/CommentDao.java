@@ -1,5 +1,6 @@
 package com.senla.catalog.dao;
 
+import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.ICommentDao;
 import com.senla.catalog.entity.Comment;
 

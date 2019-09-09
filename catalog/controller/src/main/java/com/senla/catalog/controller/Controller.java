@@ -1,5 +1,6 @@
 package com.senla.catalog.controller;
 
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.entity.Creds;
 import com.senla.catalog.entity.SellerRating;
 import com.senla.catalog.entity.User;

@@ -26,8 +26,8 @@ public class AdvertService implements IAdvertService {
     }
 
     @Override
-    public Advert get(Integer id) {
-        return advertDao.get(id);
+    public Advert getById(Integer id) {
+        return advertDao.getById(id);
     }
 
     @Override

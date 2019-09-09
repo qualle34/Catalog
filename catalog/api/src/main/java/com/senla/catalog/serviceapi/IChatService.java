@@ -11,7 +11,7 @@ public interface IChatService {
 
     void add(Chat chat);
 
-    Chat get(Integer id);
+    Chat getById(Integer id);
 
     void update(Chat chat);
 

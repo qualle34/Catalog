@@ -10,7 +10,7 @@ public interface IUserService {
 
     void add(User user);
 
-    User get(Integer id);
+    User getById(Integer id);
 
     void update(User user);
 

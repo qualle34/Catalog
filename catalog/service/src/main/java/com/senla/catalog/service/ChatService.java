@@ -26,8 +26,8 @@ public class ChatService implements IChatService {
     }
 
     @Override
-    public Chat get(Integer id) {
-        return chatDao.get(id);
+    public Chat getById(Integer id) {
+        return chatDao.getById(id);
     }
 
     @Override

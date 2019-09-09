@@ -26,8 +26,8 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public Message get(Integer id) {
-        return messageDao.get(id);
+    public Message getById(Integer id) {
+        return messageDao.getById(id);
     }
 
     @Override
