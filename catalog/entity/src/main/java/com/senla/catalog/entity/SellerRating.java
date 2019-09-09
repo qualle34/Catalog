@@ -21,6 +21,10 @@ public class SellerRating {
     @Column(name = "end_vip_date")
     private Date date;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public SellerRating() {
     }
 
@@ -65,6 +69,14 @@ public class SellerRating {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

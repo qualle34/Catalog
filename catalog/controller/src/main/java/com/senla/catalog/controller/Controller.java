@@ -60,7 +60,10 @@ public class Controller {
         Creds creds = new Creds("Mah", "qwerty", "user", "mah@mail.ru");
         SellerRating sellerRating = new SellerRating(7.8F, 4);
 
-        User user = new User("Маша", "Машина", birthdate, "+375333213882", "Варшава", creds, sellerRating);
+        User user = new User("Маша", "Машина", birthdate, "+375333213882", "Варшава");
+
+        user.setCreds(creds);
+        user.setRating(sellerRating);
 
         userService.add(user);
     }

@@ -30,12 +30,10 @@ public class User {
     @Column(name = "location")
     private String location;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Creds creds;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private SellerRating rating;
 
     @OneToMany(mappedBy = "seller")
@@ -131,6 +129,7 @@ public class User {
 
     public void setCreds(Creds creds) {
         this.creds = creds;
+        creds.setUser(this);
     }
 
     public SellerRating getRating() {
@@ -139,6 +138,7 @@ public class User {
 
     public void setRating(SellerRating rating) {
         this.rating = rating;
+        rating.setUser(this);
     }
 
     public List<SalesHistory> getSalesHistoryList() {

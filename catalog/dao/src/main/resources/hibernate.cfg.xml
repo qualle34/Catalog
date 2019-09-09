@@ -11,7 +11,7 @@
         <property name="hibernate.connection.username">qualle</property>
         <property name="hibernate.connection.password">43q21</property>
 
-        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.show_sql">true</property>
 
         <mapping class="com.senla.catalog.entity.Advert"/>
         <mapping class="com.senla.catalog.entity.Category"/>
