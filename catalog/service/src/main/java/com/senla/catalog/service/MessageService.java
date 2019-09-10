@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.MessageDao;
 import com.senla.catalog.daoapi.IMessageDao;
 import com.senla.catalog.entity.Message;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IMessageService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class MessageService extends AbstractService<Message, Integer> implements IMessageService {
 
-public class MessageService implements IMessageService {
-
+    private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
     private IMessageDao messageDao;
+    private Session session;
 
-    public MessageService() {
-        messageDao = new MessageDao();
-    }
-
-    @Override
-    public List<Message> getAll() {
-        return messageDao.getAll();
-    }
-
-    @Override
-    public void add(Message message) {
-        messageDao.add(message);
-    }
-
-    @Override
-    public Message getById(Integer id) {
-        return messageDao.getById(id);
-    }
-
-    @Override
-    public void update(Message message) {
-        messageDao.update(message);
-    }
-
-    @Override
-    public void delete(Message message) {
-        messageDao.delete(message);
+    public MessageService(IMessageDao messageDao, Session session) {
+        super(messageDao, session);
+        this.messageDao = messageDao;
+        this.session = session;
     }
 }

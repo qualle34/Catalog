@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.ChatDao;
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.entity.Chat;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class ChatService extends AbstractService<Chat, Integer> implements IChatService {
 
-public class ChatService implements IChatService {
-
+    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
     private IChatDao chatDao;
+    private Session session;
 
-    public ChatService() {
-        chatDao = new ChatDao();
-    }
-
-    @Override
-    public List<Chat> getAll() {
-        return chatDao.getAll();
-    }
-
-    @Override
-    public void add(Chat chat) {
-        chatDao.add(chat);
-    }
-
-    @Override
-    public Chat getById(Integer id) {
-        return chatDao.getById(id);
-    }
-
-    @Override
-    public void update(Chat chat) {
-        chatDao.update(chat);
-    }
-
-    @Override
-    public void delete(Chat chat) {
-        chatDao.delete(chat);
+    public ChatService(IChatDao chatDao, Session session) {
+        super(chatDao, session);
+        this.chatDao = chatDao;
+        this.session = session;
     }
 }

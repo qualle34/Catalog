@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.CategoryDao;
 import com.senla.catalog.daoapi.ICategoryDao;
 import com.senla.catalog.entity.Category;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ICategoryService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class CategoryService extends AbstractService<Category, Integer> implements ICategoryService {
 
-public class CategoryService implements ICategoryService {
-
+    private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
     private ICategoryDao categoryDao;
+    private Session session;
 
-    public CategoryService() {
-        categoryDao = new CategoryDao();
-    }
-
-    @Override
-    public List<Category> getAll() {
-        return categoryDao.getAll();
-    }
-
-    @Override
-    public void add(Category category) {
-        categoryDao.add(category);
-    }
-
-    @Override
-    public Category getById(Integer id) {
-        return categoryDao.getById(id);
-    }
-
-    @Override
-    public void update(Category category) {
-        categoryDao.update(category);
-    }
-
-    @Override
-    public void delete(Category category) {
-        categoryDao.delete(category);
+    public CategoryService(ICategoryDao categoryDao, Session session) {
+        super(categoryDao, session);
+        this.categoryDao = categoryDao;
+        this.session = session;
     }
 }

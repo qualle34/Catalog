@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.SellerRatingDao;
 import com.senla.catalog.daoapi.ISellerRatingDao;
 import com.senla.catalog.entity.SellerRating;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ISellerRatingService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class SellerRatingService extends AbstractService<SellerRating, Integer> implements ISellerRatingService {
 
-public class SellerRatingService implements ISellerRatingService {
-
+    private static final Logger logger = LoggerFactory.getLogger(SellerRatingService.class);
     private ISellerRatingDao sellerRatingDao;
+    private Session session;
 
-    public SellerRatingService() {
-        sellerRatingDao = new SellerRatingDao();
-    }
-
-    @Override
-    public List<SellerRating> getAll() {
-        return sellerRatingDao.getAll();
-    }
-
-    @Override
-    public void add(SellerRating sr) {
-        sellerRatingDao.add(sr);
-    }
-
-    @Override
-    public SellerRating getById(Integer id) {
-        return sellerRatingDao.getById(id);
-    }
-
-    @Override
-    public void update(SellerRating sr) {
-        sellerRatingDao.update(sr);
-    }
-
-    @Override
-    public void delete(SellerRating sr) {
-        sellerRatingDao.delete(sr);
+    public SellerRatingService(ISellerRatingDao sellerRatingDao, Session session) {
+        super(sellerRatingDao, session);
+        this.sellerRatingDao = sellerRatingDao;
+        this.session = session;
     }
 }

@@ -1,9 +1,7 @@
 package com.senla.catalog.dao.basic;
 
-import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.basic.IGenericDao;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +13,10 @@ import java.util.List;
 public abstract class AbstractDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
     private final Logger logger = LoggerFactory.getLogger(getChildClass());
-    private SessionFactory sessionFactory;
+    private Session session;
 
-    public AbstractDao() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+    public AbstractDao(Session session) {
+        this.session = session;
     }
 
     protected abstract Class<T> getChildClass();
@@ -28,13 +26,13 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
         List<T> list = null;
         Class cls = getChildClass();
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<T> criteria = builder.createQuery(cls);
             criteria.from(cls);
             list = session.createQuery(criteria).getResultList();
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Get all entities error: " + e.getMessage());
         }
         return list;
@@ -45,10 +43,10 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public T getById(PK pk) {
         T t = null;
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
             t = session.get(getChildClass(), pk);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Get entity error: " + e.getMessage());
         }
         return t;
@@ -57,10 +55,10 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     @Override
     public void add(T t) {
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
             session.save(t);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Add entity error: " + e.getMessage());
         }
     }
@@ -68,10 +66,10 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     @Override
     public void update(T t) {
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
             session.update(t);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Update entity error: " + e.getMessage());
         }
     }
@@ -79,10 +77,10 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     @Override
     public void delete(T t) {
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
             session.delete(t);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Delete entity error: " + e.getMessage());
         }
     }

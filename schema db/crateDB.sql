@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `catalog`.`credentials` (
   CONSTRAINT `user_creds_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `catalog`.`user` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`seller_rating` (
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `catalog`.`seller_rating` (
   CONSTRAINT `user_rating_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `catalog`.`user` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`sales_history` (

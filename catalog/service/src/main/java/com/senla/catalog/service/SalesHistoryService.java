@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.SalesHistoryDao;
 import com.senla.catalog.daoapi.ISalesHistoryDao;
 import com.senla.catalog.entity.SalesHistory;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ISalesHistoryService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class SalesHistoryService extends AbstractService<SalesHistory, Integer> implements ISalesHistoryService {
 
-public class SalesHistoryService implements ISalesHistoryService {
-
+    private static final Logger logger = LoggerFactory.getLogger(SalesHistoryService.class);
     private ISalesHistoryDao salesHistoryDao;
+    private Session session;
 
-    public SalesHistoryService() {
-        salesHistoryDao = new SalesHistoryDao();
-    }
-
-    @Override
-    public List<SalesHistory> getAll() {
-        return salesHistoryDao.getAll();
-    }
-
-    @Override
-    public void add(SalesHistory sh) {
-        salesHistoryDao.add(sh);
-    }
-
-    @Override
-    public SalesHistory getById(Integer id) {
-        return salesHistoryDao.getById(id);
-    }
-
-    @Override
-    public void update(SalesHistory sh) {
-        salesHistoryDao.update(sh);
-    }
-
-    @Override
-    public void delete(SalesHistory sh) {
-        salesHistoryDao.delete(sh);
+    public SalesHistoryService(ISalesHistoryDao salesHistoryDao, Session session) {
+        super(salesHistoryDao, session);
+        this.salesHistoryDao = salesHistoryDao;
+        this.session = session;
     }
 }

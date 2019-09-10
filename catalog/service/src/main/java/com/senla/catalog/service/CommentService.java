@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.CommentDao;
 import com.senla.catalog.daoapi.ICommentDao;
 import com.senla.catalog.entity.Comment;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ICommentService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class CommentService extends AbstractService<Comment, Integer> implements ICommentService {
 
-public class CommentService implements ICommentService {
-
+    private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
     private ICommentDao commentDao;
+    private Session session;
 
-    public CommentService() {
-        commentDao = new CommentDao();
-    }
-
-    @Override
-    public List<Comment> getAll() {
-        return commentDao.getAll();
-    }
-
-    @Override
-    public void add(Comment comment) {
-        commentDao.add(comment);
-    }
-
-    @Override
-    public Comment getById(Integer id) {
-        return commentDao.getById(id);
-    }
-
-    @Override
-    public void update(Comment comment) {
-        commentDao.update(comment);
-    }
-
-    @Override
-    public void delete(Comment comment) {
-        commentDao.update(comment);
+    public CommentService(ICommentDao commentDao, Session session) {
+        super(commentDao, session);
+        this.commentDao = commentDao;
+        this.session = session;
     }
 }

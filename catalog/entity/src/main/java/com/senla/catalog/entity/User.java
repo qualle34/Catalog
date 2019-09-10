@@ -30,13 +30,13 @@ public class User {
     @Column(name = "location")
     private String location;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Creds creds;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private SellerRating rating;
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SalesHistory> salesHistoryList;
 
     @OneToMany(mappedBy = "user")
@@ -45,10 +45,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> commentList;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_chat",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    @ManyToMany
+    @JoinTable(name = "user_chat", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "chat_id"))
     private List<Chat> chatList;
 
     @OneToMany(mappedBy = "user")

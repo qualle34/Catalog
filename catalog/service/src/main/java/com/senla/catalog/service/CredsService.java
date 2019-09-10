@@ -1,42 +1,22 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.CredsDao;
 import com.senla.catalog.daoapi.ICredsDao;
 import com.senla.catalog.entity.Creds;
+import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ICredsService;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.List;
+public class CredsService extends AbstractService<Creds, Integer> implements ICredsService {
 
-public class CredsService implements ICredsService {
-
+    private static final Logger logger = LoggerFactory.getLogger(CredsService.class);
     private ICredsDao credsDao;
+    private Session session;
 
-    public CredsService() {
-        credsDao = new CredsDao();
-    }
-
-    @Override
-    public List<Creds> getAll() {
-        return credsDao.getAll();
-    }
-
-    @Override
-    public void add(Creds creds) {
-        credsDao.add(creds);
-    }
-
-    @Override
-    public Creds getById(Integer id) {
-        return credsDao.getById(id);
-    }
-
-    @Override
-    public void update(Creds creds) {
-        credsDao.update(creds);
-    }
-
-    @Override
-    public void delete(Creds creds) {
-        credsDao.delete(creds);
+    public CredsService(ICredsDao credsDao, Session session) {
+        super(credsDao, session);
+        this.credsDao = credsDao;
+        this.session = session;
     }
 }
