@@ -19,4 +19,9 @@ public class CredsService extends AbstractService<Creds, Integer> implements ICr
         this.credsDao = credsDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return CredsService.class;
+    }
 }

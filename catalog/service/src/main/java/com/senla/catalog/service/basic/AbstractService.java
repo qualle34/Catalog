@@ -1,7 +1,6 @@
 package com.senla.catalog.service.basic;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
-import com.senla.catalog.service.UserService;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,20 +10,28 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.List;
 
-public class AbstractService<T, PK extends Serializable> implements IGenericService<T, PK> {
+public abstract class AbstractService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final Logger logger = LoggerFactory.getLogger(getChildClass());
     private IGenericDao genericDao;
     private Session session;
 
-    public AbstractService(IGenericDao genericDao, Session session){
+    public AbstractService(IGenericDao genericDao, Session session) {
         this.genericDao = genericDao;
         this.session = session;
     }
 
+    protected abstract Class getChildClass();
+
     @Override
     public List<T> getAll() {
-        return genericDao.getAll();
+        List<T> list = null;
+        try {
+            list = genericDao.getAll();
+        } catch (RuntimeException e) {
+            logger.error("Get all error" + e.getMessage());
+        }
+        return list;
     }
 
     @Override
@@ -47,7 +54,12 @@ public class AbstractService<T, PK extends Serializable> implements IGenericServ
 
     @Override
     public T getById(PK pk) {
-        T t = (T) genericDao.getById(pk);
+        T t = null;
+        try {
+            t = (T) genericDao.getById(pk);
+        } catch (RuntimeException e) {
+            logger.error("Get by id error" + e.getMessage());
+        }
         return t;
     }
 
@@ -65,7 +77,7 @@ public class AbstractService<T, PK extends Serializable> implements IGenericServ
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Add error: " + re.getMessage());
+            logger.error("Update error: " + re.getMessage());
         }
     }
 
@@ -83,7 +95,7 @@ public class AbstractService<T, PK extends Serializable> implements IGenericServ
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Add error: " + re.getMessage());
+            logger.error("Delete error: " + re.getMessage());
         }
     }
 }

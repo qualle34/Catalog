@@ -19,4 +19,9 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
         this.advertDao = advertDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return AdvertService.class;
+    }
 }

@@ -19,4 +19,9 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
         this.categoryDao = categoryDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return CategoryService.class;
+    }
 }

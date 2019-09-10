@@ -19,4 +19,14 @@ public class UserService extends AbstractService<User, Integer> implements IUser
         this.userDao = userDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return UserService.class;
+    }
+
+    @Override
+    public User getByName(String name) {
+        return userDao.getByName(name);
+    }
 }

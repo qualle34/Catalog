@@ -5,5 +5,5 @@ import com.senla.catalog.entity.User;
 
 public interface IUserDao extends IGenericDao<User, Integer> {
 
-
+    User getByName(String name);
 }

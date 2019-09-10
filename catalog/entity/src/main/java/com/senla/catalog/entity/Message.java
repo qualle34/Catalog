@@ -17,7 +17,7 @@ public class Message {
     private String text;
 
     @Column(name = "send_date", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date sendDate;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)

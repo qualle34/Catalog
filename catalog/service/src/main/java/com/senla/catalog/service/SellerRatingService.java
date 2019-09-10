@@ -19,4 +19,10 @@ public class SellerRatingService extends AbstractService<SellerRating, Integer> 
         this.sellerRatingDao = sellerRatingDao;
         this.session = session;
     }
+
+
+    @Override
+    protected Class<SellerRating> getChildClass() {
+        return null;
+    }
 }

@@ -19,4 +19,9 @@ public class MessageService extends AbstractService<Message, Integer> implements
         this.messageDao = messageDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return MessageService.class;
+    }
 }

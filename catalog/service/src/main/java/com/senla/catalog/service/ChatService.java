@@ -19,4 +19,9 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
         this.chatDao = chatDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return ChatService.class;
+    }
 }

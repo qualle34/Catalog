@@ -19,4 +19,9 @@ public class CommentService extends AbstractService<Comment, Integer> implements
         this.commentDao = commentDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return CommentService.class;
+    }
 }

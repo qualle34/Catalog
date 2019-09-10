@@ -19,4 +19,9 @@ public class SalesHistoryService extends AbstractService<SalesHistory, Integer> 
         this.salesHistoryDao = salesHistoryDao;
         this.session = session;
     }
+
+    @Override
+    protected Class getChildClass() {
+        return SalesHistoryService.class;
+    }
 }
