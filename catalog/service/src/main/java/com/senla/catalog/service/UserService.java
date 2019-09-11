@@ -28,8 +28,15 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
-    public User getByName(String name) {
-        return userDao.getByName(name);
+    public User getByName(String name) throws RuntimeException {
+
+        try {
+            return userDao.getByName(name);
+
+        } catch (RuntimeException e) {
+            logger.error("Get by name error: " + e.getMessage());
+            throw e;
+        }
     }
 
     public static UserService getInstance(Session session) {

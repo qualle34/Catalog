@@ -27,6 +27,18 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
         return CategoryService.class;
     }
 
+    @Override
+    public Category getWithAdvertsByName(String name) throws RuntimeException {
+
+        try {
+            return categoryDao.getWithAdvertsByName(name);
+
+        } catch (RuntimeException e) {
+            logger.error("" + e.getMessage());
+            throw e;
+        }
+    }
+
     public static CategoryService getInstance(Session session) {
         ICategoryDao categoryDao = CategoryDao.getInstance(session);
 

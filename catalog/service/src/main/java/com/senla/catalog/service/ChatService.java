@@ -27,6 +27,17 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
         return ChatService.class;
     }
 
+    @Override
+    public Chat getWithMessagesById(int id) throws RuntimeException {
+
+        try {
+            return chatDao.getWithMessagesById(id);
+        } catch (RuntimeException e) {
+            logger.error("Get chat with messages error: " + e.getMessage());
+            throw e;
+        }
+    }
+
     public static ChatService getInstance(Session session) {
         IChatDao chatDao = ChatDao.getInstance(session);
 

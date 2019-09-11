@@ -13,7 +13,7 @@
 
         <property name="current_session_context_class">thread</property>
 
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
 
         <mapping class="com.senla.catalog.entity.Advert"/>
         <mapping class="com.senla.catalog.entity.Category"/>

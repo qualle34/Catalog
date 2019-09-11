@@ -39,6 +39,8 @@ public class Controller {
 //        communication();
 //        printMessages();
 
+//        printAdverts();
+
 //        csvWriteUsers();
 //        csvSendUsersToDb();
 
@@ -76,7 +78,7 @@ public class Controller {
 
     private void printMessages() {
 
-        for (Message message : chatService.getById(1).getMessageList()) {
+        for (Message message : chatService.getWithMessagesById(1).getMessageList()) {
             System.out.println(message.toString());
         }
     }
@@ -91,6 +93,13 @@ public class Controller {
         messageService.add(message1);
         Message message2 = new Message("Привет, как лексус?", new Date(), chat, seller);
         messageService.add(message2);
+    }
+
+    private void printAdverts() {
+
+        for (Advert advert : categoryService.getWithAdvertsByName("Электроника").getAdvertList()) {
+            System.out.println(advert.toString());
+        }
     }
 
     private void printAll() {
