@@ -16,7 +16,7 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     private IAdvertDao advertDao;
     private Session session;
 
-    public AdvertService(IAdvertDao advertDao, Session session) {
+    private AdvertService(IAdvertDao advertDao, Session session) {
         super(advertDao, session);
         this.advertDao = advertDao;
         this.session = session;

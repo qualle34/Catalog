@@ -1,23 +1,44 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.*;
+import com.senla.csvhelper.annotation.CsvEntity;
+import com.senla.csvhelper.annotation.CsvProperty;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user")
+@CsvEntity(directoryName = "D://data")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
     private int id;
 
     @Column(name = "firstname")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String firstname;
 
     @Column(name = "lastname")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
     private String lastname;
 
     @Column(name = "birthdate", columnDefinition = "DATETIME")
@@ -31,9 +52,11 @@ public class User {
     private String location;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 3, keyField = "id")
     private Creds creds;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @CsvProperty(propertyType = CsvProperty.Type.CompositeProperty, columnNumber = 4, keyField = "id")
     private SellerRating rating;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -204,6 +227,6 @@ public class User {
 
     @Override
     public String toString() {
-        return firstname + " " + lastname + " " + birthdate.toString() + " " + phone + " " + location;
+        return firstname + " " + lastname + " " + birthdate + " " + phone + " " + location;
     }
 }

@@ -1,18 +1,7 @@
 package com.senla.catalog.serviceapi;
 
 import com.senla.catalog.entity.SellerRating;
+import com.senla.catalog.serviceapi.basic.IGenericService;
 
-import java.util.List;
-
-public interface ISellerRatingService {
-
-    List<SellerRating> getAll();
-
-    void add(SellerRating sellerRating);
-
-    SellerRating getById(Integer id);
-
-    void update(SellerRating sellerRating);
-
-    void delete(SellerRating sellerRating);
+public interface ISellerRatingService extends IGenericService<SellerRating, Integer> {
 }

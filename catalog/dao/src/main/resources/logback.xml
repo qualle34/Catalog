@@ -12,7 +12,7 @@
         <file>${LOG_FILE}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>log/archived/category.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <fileNamePattern>log/archived/category.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <totalSizeCap>50MB</totalSizeCap>
             <maxHistory>7</maxHistory>

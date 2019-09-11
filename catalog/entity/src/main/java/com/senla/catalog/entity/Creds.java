@@ -1,26 +1,42 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.*;
+import com.senla.csvhelper.annotation.CsvEntity;
+import com.senla.csvhelper.annotation.CsvProperty;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "credentials")
+@CsvEntity(directoryName = "D://data")
 public class Creds {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
     private int id;
 
     @Column(name = "login")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String login;
 
     @Column(name = "password")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
     private String password;
 
     @Column(name = "role")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 3)
     private String role;
 
     @Column(name = "email")
+    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 4)
     private String email;
 
     @OneToOne

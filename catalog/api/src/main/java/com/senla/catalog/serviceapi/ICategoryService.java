@@ -1,19 +1,7 @@
 package com.senla.catalog.serviceapi;
 
-
 import com.senla.catalog.entity.Category;
+import com.senla.catalog.serviceapi.basic.IGenericService;
 
-import java.util.List;
-
-public interface ICategoryService {
-
-    List<Category> getAll();
-
-    void add(Category category);
-
-    Category getById(Integer id);
-
-    void update(Category category);
-
-    void delete(Category category);
+public interface ICategoryService extends IGenericService<Category, Integer> {
 }

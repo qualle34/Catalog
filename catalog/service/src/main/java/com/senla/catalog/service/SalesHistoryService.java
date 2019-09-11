@@ -16,7 +16,7 @@ public class SalesHistoryService extends AbstractService<SalesHistory, Integer> 
     private ISalesHistoryDao salesHistoryDao;
     private Session session;
 
-    public SalesHistoryService(ISalesHistoryDao salesHistoryDao, Session session) {
+    private SalesHistoryService(ISalesHistoryDao salesHistoryDao, Session session) {
         super(salesHistoryDao, session);
         this.salesHistoryDao = salesHistoryDao;
         this.session = session;

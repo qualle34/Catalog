@@ -16,7 +16,7 @@ public class MessageService extends AbstractService<Message, Integer> implements
     private IMessageDao messageDao;
     private Session session;
 
-    public MessageService(IMessageDao messageDao, Session session) {
+    private MessageService(IMessageDao messageDao, Session session) {
         super(messageDao, session);
         this.messageDao = messageDao;
         this.session = session;

@@ -24,65 +24,69 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     protected abstract Class getChildClass();
 
     @Override
-    public List<T> getAll() {
-        List<T> list = null;
+    public List<T> getAll() throws RuntimeException {
+        List<T> list;
+
         try {
             list = genericDao.getAll();
         } catch (RuntimeException e) {
             logger.error("Get all error" + e.getMessage());
+            throw e;
         }
         return list;
     }
 
     @Override
-    public void add(T t) {
+    public void add(T t) throws RuntimeException {
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-
             genericDao.add(t);
             transaction.commit();
 
-        } catch (RuntimeException re) {
+        } catch (RuntimeException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Add error: " + re.getMessage());
+            logger.error("Add error: " + e.getMessage());
+            throw e;
         }
     }
 
     @Override
-    public T getById(PK pk) {
-        T t = null;
+    public T getById(PK pk) throws RuntimeException {
+        T t;
+
         try {
             t = (T) genericDao.getById(pk);
         } catch (RuntimeException e) {
             logger.error("Get by id error" + e.getMessage());
+            throw e;
         }
         return t;
     }
 
     @Override
-    public void update(T t) {
+    public void update(T t) throws RuntimeException {
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-
             genericDao.update(t);
             transaction.commit();
 
-        } catch (RuntimeException re) {
+        } catch (RuntimeException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Update error: " + re.getMessage());
+            logger.error("Update error: " + e.getMessage());
+            throw e;
         }
     }
 
     @Override
-    public void delete(T t) {
+    public void delete(T t) throws RuntimeException {
         Transaction transaction = null;
 
         try {
@@ -91,11 +95,12 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             genericDao.delete(t);
             transaction.commit();
 
-        } catch (RuntimeException re) {
+        } catch (RuntimeException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Delete error: " + re.getMessage());
+            logger.error("Delete error: " + e.getMessage());
+            throw e;
         }
     }
 }

@@ -16,7 +16,7 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     private ICategoryDao categoryDao;
     private Session session;
 
-    public CategoryService(ICategoryDao categoryDao, Session session) {
+    private CategoryService(ICategoryDao categoryDao, Session session) {
         super(categoryDao, session);
         this.categoryDao = categoryDao;
         this.session = session;

@@ -4,11 +4,13 @@ import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.entity.*;
 import com.senla.catalog.service.*;
 import com.senla.catalog.serviceapi.*;
+import com.senla.csvhelper.CsvService;
 import org.hibernate.Session;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Controller {
 
@@ -27,29 +29,59 @@ public class Controller {
     public void start() {
         //test
 
-        System.out.println(userService.getByName("Андрей").toString());
+//        addUser();
+//        updateUser();
+//        printAll();
+//        deleteUser();
 
-//        addUser(session);
-//        updateUser(session);
-//        printAll(session);
-//        deleteUser(session);
+//        customUserQuery();
 
-//        customUserQuery(session);
+//        communication();
+//        printMessages();
 
-//        communication(session);
-//        printMessages(session);
+//        csvWriteUsers();
+//        csvSendUsersToDb();
 
         session.close();
     }
 
-    private void printMessages(Session session) {
+    private void csvWriteUsers() {
+
+        List<User> userList = userService.getAll();
+        List<Object> objectList = (List<Object>) (List) userList;
+
+        CsvService csvService = new CsvService();
+        csvService.write(objectList);
+    }
+
+    private void csvSendUsersToDb() {
+
+        List objectList = new CsvService().read(User.class);
+
+        for (Object obj : objectList) {
+
+            User user = (User) obj;
+
+            user.getCreds().setUser(user);
+            user.getRating().setUser(user);
+
+            // reset old id (very important)
+            user.setId(0);
+            user.getCreds().setId(0);
+            user.getRating().setId(0);
+
+            userService.add(user);
+        }
+    }
+
+    private void printMessages() {
 
         for (Message message : chatService.getById(1).getMessageList()) {
             System.out.println(message.toString());
         }
     }
 
-    private void communication(Session session) {
+    private void communication() {
 
         User seller = userService.getById(4);
         User buyer = userService.getById(1);
@@ -61,7 +93,7 @@ public class Controller {
         messageService.add(message2);
     }
 
-    private void printAll(Session session) {
+    private void printAll() {
 
         System.out.println(userService.getAll().toString());
         System.out.println(credsService.getAll().toString());
@@ -74,7 +106,7 @@ public class Controller {
         System.out.println(messageService.getAll().toString());
     }
 
-    private void updateUser(Session session) {
+    private void updateUser() {
 
         User user = userService.getById(3);
         System.out.println(user.toString());
@@ -83,13 +115,13 @@ public class Controller {
         userService.update(user);
     }
 
-    private void deleteUser(Session session) {
+    private void deleteUser() {
 
-        User user = userService.getById(7);
+        User user = userService.getById(2);
         userService.delete(user);
     }
 
-    private void addUser(Session session) {
+    private void addUser() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = "1982-08-31";

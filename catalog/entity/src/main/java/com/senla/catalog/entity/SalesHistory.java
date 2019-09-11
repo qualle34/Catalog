@@ -1,6 +1,12 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;

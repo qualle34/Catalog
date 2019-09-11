@@ -1,19 +1,7 @@
 package com.senla.catalog.serviceapi;
 
-
 import com.senla.catalog.entity.Message;
+import com.senla.catalog.serviceapi.basic.IGenericService;
 
-import java.util.List;
-
-public interface IMessageService {
-
-    List<Message> getAll();
-
-    void add(Message message);
-
-    Message getById(Integer id);
-
-    void update(Message message);
-
-    void delete(Message message);
+public interface IMessageService extends IGenericService<Message, Integer> {
 }

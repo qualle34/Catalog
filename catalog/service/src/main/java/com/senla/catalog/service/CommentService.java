@@ -16,7 +16,7 @@ public class CommentService extends AbstractService<Comment, Integer> implements
     private ICommentDao commentDao;
     private Session session;
 
-    public CommentService(ICommentDao commentDao, Session session) {
+    private CommentService(ICommentDao commentDao, Session session) {
         super(commentDao, session);
         this.commentDao = commentDao;
         this.session = session;

@@ -1,18 +1,7 @@
 package com.senla.catalog.serviceapi;
 
 import com.senla.catalog.entity.Creds;
+import com.senla.catalog.serviceapi.basic.IGenericService;
 
-import java.util.List;
-
-public interface ICredsService {
-
-    List<Creds> getAll();
-
-    void add(Creds creds);
-
-    Creds getById(Integer id);
-
-    void update(Creds creds);
-
-    void delete(Creds creds);
+public interface ICredsService extends IGenericService<Creds, Integer> {
 }

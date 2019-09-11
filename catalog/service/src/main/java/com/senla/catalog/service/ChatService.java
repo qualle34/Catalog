@@ -16,7 +16,7 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     private IChatDao chatDao;
     private Session session;
 
-    public ChatService(IChatDao chatDao, Session session) {
+    private ChatService(IChatDao chatDao, Session session) {
         super(chatDao, session);
         this.chatDao = chatDao;
         this.session = session;

@@ -16,7 +16,7 @@ public class CredsService extends AbstractService<Creds, Integer> implements ICr
     private ICredsDao credsDao;
     private Session session;
 
-    public CredsService(ICredsDao credsDao, Session session) {
+    private CredsService(ICredsDao credsDao, Session session) {
         super(credsDao, session);
         this.credsDao = credsDao;
         this.session = session;
