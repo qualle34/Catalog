@@ -20,11 +20,11 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     private Date sendDate;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 

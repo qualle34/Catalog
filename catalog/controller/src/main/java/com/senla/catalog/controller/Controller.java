@@ -1,8 +1,6 @@
 package com.senla.catalog.controller;
 
-import com.senla.catalog.dao.*;
 import com.senla.catalog.dao.util.HibernateUtil;
-import com.senla.catalog.daoapi.*;
 import com.senla.catalog.entity.*;
 import com.senla.catalog.service.*;
 import com.senla.catalog.serviceapi.*;
@@ -10,16 +8,26 @@ import org.hibernate.Session;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Controller {
 
+    private Session session = HibernateUtil.getSession();
 
-    public static void main(String... args) {
-        Session session = HibernateUtil.getSession();
+    private IUserService userService = UserService.getInstance(session);
+    private ICredsService credsService = CredsService.getInstance(session);
+    private ISalesHistoryService salesHistoryService = SalesHistoryService.getInstance(session);
+    private ISellerRatingService sellerRatingService = SellerRatingService.getInstance(session);
+    private ICategoryService categoryService = CategoryService.getInstance(session);
+    private IAdvertService advertService = AdvertService.getInstance(session);
+    private ICommentService commentService = CommentService.getInstance(session);
+    private IChatService chatService = ChatService.getInstance(session);
+    private IMessageService messageService = MessageService.getInstance(session);
 
+    public void start() {
         //test
+
+        System.out.println(userService.getByName("Андрей").toString());
 
 //        addUser(session);
 //        updateUser(session);
@@ -34,25 +42,14 @@ public class Controller {
         session.close();
     }
 
-    private static void printMessages(Session session){
+    private void printMessages(Session session) {
 
-        IChatDao chatDao = new ChatDao(session);
-        IChatService chatService = new ChatService(chatDao, session);
-
-        for (Message message : chatService.getById(1).getMessageList()){
+        for (Message message : chatService.getById(1).getMessageList()) {
             System.out.println(message.toString());
         }
     }
 
-    private static void communication(Session session) {
-
-        IUserDao userDao = new UserDao(session);
-        IChatDao chatDao = new ChatDao(session);
-        IMessageDao messageDao = new MessageDao(session);
-
-        IUserService userService = new UserService(userDao, session);
-        IChatService chatService = new ChatService(chatDao, session);
-        IMessageService messageService = new MessageService(messageDao, session);
+    private void communication(Session session) {
 
         User seller = userService.getById(4);
         User buyer = userService.getById(1);
@@ -64,32 +61,7 @@ public class Controller {
         messageService.add(message2);
     }
 
-    private static void customUserQuery(Session session) {
-        IUserDao userDao = new UserDao(session);
-        System.out.println(userDao.getByName("Аня").toString());
-    }
-
-    private static void printAll(Session session) {
-
-        IUserDao userDao = new UserDao(session);
-        ICredsDao credsDao = new CredsDao(session);
-        ISalesHistoryDao salesHistoryDao = new SalesHistoryDao(session);
-        ISellerRatingDao sellerRatingDao = new SellerRatingDao(session);
-        ICategoryDao categoryDao = new CategoryDao(session);
-        IAdvertDao advertDao = new AdvertDao(session);
-        ICommentDao commentDao = new CommentDao(session);
-        IChatDao chatDao = new ChatDao(session);
-        IMessageDao messageDao = new MessageDao(session);
-
-        IUserService userService = new UserService(userDao, session);
-        ICredsService credsService = new CredsService(credsDao, session);
-        ISalesHistoryService salesHistoryService = new SalesHistoryService(salesHistoryDao, session);
-        ISellerRatingService sellerRatingService = new SellerRatingService(sellerRatingDao, session);
-        ICategoryService categoryService = new CategoryService(categoryDao, session);
-        IAdvertService advertService = new AdvertService(advertDao, session);
-        ICommentService commentService = new CommentService(commentDao, session);
-        IChatService chatService = new ChatService(chatDao, session);
-        IMessageService messageService = new MessageService(messageDao, session);
+    private void printAll(Session session) {
 
         System.out.println(userService.getAll().toString());
         System.out.println(credsService.getAll().toString());
@@ -102,10 +74,8 @@ public class Controller {
         System.out.println(messageService.getAll().toString());
     }
 
-    private static void updateUser(Session session) {
+    private void updateUser(Session session) {
 
-        IUserDao userDao = new UserDao(session);
-        IUserService userService = new UserService(userDao, session);
         User user = userService.getById(3);
         System.out.println(user.toString());
         user.setFirstname("Олег");
@@ -113,18 +83,13 @@ public class Controller {
         userService.update(user);
     }
 
-    private static void deleteUser(Session session) {
+    private void deleteUser(Session session) {
 
-        IUserDao userDao = new UserDao(session);
-        IUserService userService = new UserService(userDao, session);
         User user = userService.getById(7);
         userService.delete(user);
     }
 
-    private static void addUser(Session session) {
-
-        IUserDao userDao = new UserDao(session);
-        IUserService userService = new UserService(userDao, session);
+    private void addUser(Session session) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = "1982-08-31";

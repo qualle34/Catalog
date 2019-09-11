@@ -1,5 +1,6 @@
 package com.senla.catalog.service;
 
+import com.senla.catalog.dao.SellerRatingDao;
 import com.senla.catalog.daoapi.ISellerRatingDao;
 import com.senla.catalog.entity.SellerRating;
 import com.senla.catalog.service.basic.AbstractService;
@@ -10,19 +11,28 @@ import org.slf4j.LoggerFactory;
 
 public class SellerRatingService extends AbstractService<SellerRating, Integer> implements ISellerRatingService {
 
+    private static SellerRatingService instance;
     private static final Logger logger = LoggerFactory.getLogger(SellerRatingService.class);
     private ISellerRatingDao sellerRatingDao;
     private Session session;
 
-    public SellerRatingService(ISellerRatingDao sellerRatingDao, Session session) {
+    private SellerRatingService(ISellerRatingDao sellerRatingDao, Session session) {
         super(sellerRatingDao, session);
         this.sellerRatingDao = sellerRatingDao;
         this.session = session;
     }
 
-
     @Override
-    protected Class<SellerRating> getChildClass() {
-        return null;
+    protected Class getChildClass() {
+        return SellerRatingService.class;
+    }
+
+    public static SellerRatingService getInstance(Session session) {
+        ISellerRatingDao sellerRatingDao = SellerRatingDao.getInstance(session);
+
+        if (instance == null) {
+            instance = new SellerRatingService(sellerRatingDao, session);
+        }
+        return instance;
     }
 }

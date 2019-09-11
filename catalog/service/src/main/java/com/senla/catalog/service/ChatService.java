@@ -1,5 +1,6 @@
 package com.senla.catalog.service;
 
+import com.senla.catalog.dao.ChatDao;
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.entity.Chat;
 import com.senla.catalog.service.basic.AbstractService;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class ChatService extends AbstractService<Chat, Integer> implements IChatService {
 
+    private static ChatService instance;
     private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
     private IChatDao chatDao;
     private Session session;
@@ -23,5 +25,14 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     @Override
     protected Class getChildClass() {
         return ChatService.class;
+    }
+
+    public static ChatService getInstance(Session session) {
+        IChatDao chatDao = ChatDao.getInstance(session);
+
+        if (instance == null) {
+            instance = new ChatService(chatDao, session);
+        }
+        return instance;
     }
 }

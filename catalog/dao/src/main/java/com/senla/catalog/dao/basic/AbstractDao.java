@@ -22,7 +22,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     protected abstract Class<T> getChildClass();
 
     @Override
-    public List<T> getAll() {
+    public List<T> getAll() throws RuntimeException {
         List<T> list = null;
         Class cls = getChildClass();
 
@@ -40,7 +40,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
 
 
     @Override
-    public T getById(PK pk) {
+    public T getById(PK pk) throws RuntimeException {
         T t = null;
 
         try {
@@ -53,18 +53,19 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     }
 
     @Override
-    public void add(T t) {
+    public void add(T t) throws RuntimeException {
 
         try {
             session.save(t);
 
         } catch (RuntimeException e) {
             logger.error("Add entity error: " + e.getMessage());
+            throw e;
         }
     }
 
     @Override
-    public void update(T t) {
+    public void update(T t) throws RuntimeException {
 
         try {
             session.update(t);
@@ -75,7 +76,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     }
 
     @Override
-    public void delete(T t) {
+    public void delete(T t) throws RuntimeException {
 
         try {
             session.delete(t);

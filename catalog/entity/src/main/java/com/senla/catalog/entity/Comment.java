@@ -11,11 +11,11 @@ public class Comment {
     @Column(name = "comment_id")
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "advert_id")
     private Advert advert;
 

@@ -1,5 +1,6 @@
 package com.senla.catalog.service;
 
+import com.senla.catalog.dao.UserDao;
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
@@ -10,11 +11,12 @@ import org.slf4j.LoggerFactory;
 
 public class UserService extends AbstractService<User, Integer> implements IUserService {
 
+    private static UserService instance;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private IUserDao userDao;
     private Session session;
 
-    public UserService(IUserDao userDao, Session session) {
+    private UserService(IUserDao userDao, Session session) {
         super(userDao, session);
         this.userDao = userDao;
         this.session = session;
@@ -28,5 +30,14 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     @Override
     public User getByName(String name) {
         return userDao.getByName(name);
+    }
+
+    public static UserService getInstance(Session session) {
+        IUserDao userDao = UserDao.getInstance(session);
+
+        if (instance == null) {
+            instance = new UserService(userDao, session);
+        }
+        return instance;
     }
 }

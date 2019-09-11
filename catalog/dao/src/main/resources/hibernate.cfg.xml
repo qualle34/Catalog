@@ -8,7 +8,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/catalog?serverTimezone=UTC</property>
 
-        <property name="hibernate.connection.username">qualle</property>
+        <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">43q21</property>
 
         <property name="current_session_context_class">thread</property>

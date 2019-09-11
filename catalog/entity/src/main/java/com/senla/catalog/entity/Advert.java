@@ -21,7 +21,7 @@ public class Advert {
     @Column(name = "price")
     private double price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

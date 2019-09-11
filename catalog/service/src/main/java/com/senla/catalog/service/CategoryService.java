@@ -1,5 +1,6 @@
 package com.senla.catalog.service;
 
+import com.senla.catalog.dao.CategoryDao;
 import com.senla.catalog.daoapi.ICategoryDao;
 import com.senla.catalog.entity.Category;
 import com.senla.catalog.service.basic.AbstractService;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class CategoryService extends AbstractService<Category, Integer> implements ICategoryService {
 
+    private static CategoryService instance;
     private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
     private ICategoryDao categoryDao;
     private Session session;
@@ -23,5 +25,14 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     @Override
     protected Class getChildClass() {
         return CategoryService.class;
+    }
+
+    public static CategoryService getInstance(Session session) {
+        ICategoryDao categoryDao = CategoryDao.getInstance(session);
+
+        if (instance == null) {
+            instance = new CategoryService(categoryDao, session);
+        }
+        return instance;
     }
 }

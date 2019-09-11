@@ -4,11 +4,18 @@ import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDao {
 
-    public AdvertDao(Session session) {
+    private static AdvertDao instance;
+    private static final Logger logger = LoggerFactory.getLogger(AdvertDao.class);
+    private Session session;
+
+    private AdvertDao(Session session) {
         super(session);
+        this.session = session;
     }
 
     @Override
@@ -16,6 +23,11 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
         return Advert.class;
     }
 
+    public static AdvertDao getInstance(Session session) {
 
-
+        if (instance == null) {
+            instance = new AdvertDao(session);
+        }
+        return instance;
+    }
 }

@@ -1,5 +1,6 @@
 package com.senla.catalog.service;
 
+import com.senla.catalog.dao.AdvertDao;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.service.basic.AbstractService;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class AdvertService extends AbstractService<Advert, Integer> implements IAdvertService {
 
+    private static AdvertService instance;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private IAdvertDao advertDao;
     private Session session;
@@ -23,5 +25,14 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     @Override
     protected Class getChildClass() {
         return AdvertService.class;
+    }
+
+    public static AdvertService getInstance(Session session) {
+        IAdvertDao advertDao = AdvertDao.getInstance(session);
+
+        if (instance == null) {
+            instance = new AdvertService(advertDao, session);
+        }
+        return instance;
     }
 }
