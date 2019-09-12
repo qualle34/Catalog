@@ -28,6 +28,11 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     }
 
     @Override
+    protected Class getEntityClass() {
+        return Category.class;
+    }
+
+    @Override
     public Category getWithAdvertsByName(String name) throws RuntimeException {
 
         try {

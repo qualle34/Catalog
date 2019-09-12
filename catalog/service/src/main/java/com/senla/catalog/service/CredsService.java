@@ -27,6 +27,11 @@ public class CredsService extends AbstractService<Creds, Integer> implements ICr
         return CredsService.class;
     }
 
+    @Override
+    protected Class getEntityClass() {
+        return Creds.class;
+    }
+
     public static CredsService getInstance(Session session) {
         ICredsDao credsDao = CredsDao.getInstance(session);
 

@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class UserService extends AbstractService<User, Integer> implements IUserService {
 
     private static UserService instance;
@@ -28,7 +30,12 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
-    public User getByName(String name) throws RuntimeException {
+    protected Class getEntityClass() {
+        return User.class;
+    }
+
+    @Override
+    public List<User> getByName(String name) throws RuntimeException {
 
         try {
             return userDao.getByName(name);
@@ -37,6 +44,18 @@ public class UserService extends AbstractService<User, Integer> implements IUser
             logger.error("Get by name error: " + e.getMessage());
             throw e;
         }
+    }
+
+    public void importFromCsv() {
+
+        List<User> list = super.getEntitiesFromCsv();
+
+        for (User user : list) {
+            user.setId(0);
+            user.getCreds().setId(0);
+            user.getRating().setId(0);
+        }
+        super.addList(list);
     }
 
     public static UserService getInstance(Session session) {

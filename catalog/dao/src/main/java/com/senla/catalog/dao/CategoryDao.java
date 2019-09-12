@@ -20,10 +20,10 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     }
 
     @Override
-    public Category getWithAdvertsByName(String name) throws RuntimeException {
+    public Category getWithAdvertsByName(String name) {
 
         try {
-            Query query = session.createQuery("from Category as category join fetch category.advertList as advertList where category = advertList.category and category.title = :name ");
+            Query query = session.createQuery("from Category as category join fetch category.advertList as advertList where category.title = :name ");
             query.setParameter("name", name);
 
             return (Category) query.getSingleResult();

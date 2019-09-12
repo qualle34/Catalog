@@ -27,6 +27,11 @@ public class SellerRatingService extends AbstractService<SellerRating, Integer> 
         return SellerRatingService.class;
     }
 
+    @Override
+    protected Class getEntityClass() {
+        return SellerRating.class;
+    }
+
     public static SellerRatingService getInstance(Session session) {
         ISellerRatingDao sellerRatingDao = SellerRatingDao.getInstance(session);
 

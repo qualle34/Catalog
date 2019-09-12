@@ -3,7 +3,11 @@ package com.senla.catalog.serviceapi;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 
+import java.util.List;
+
 public interface IUserService extends IGenericService<User, Integer> {
 
-    User getByName(String name);
+    List<User> getByName(String name);
+
+    void importFromCsv();
 }

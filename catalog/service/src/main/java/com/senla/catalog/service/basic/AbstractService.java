@@ -2,6 +2,7 @@ package com.senla.catalog.service.basic;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.serviceapi.basic.IGenericService;
+import com.senla.csvhelper.CsvService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
@@ -22,9 +23,10 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     }
 
     protected abstract Class getChildClass();
+    protected abstract Class getEntityClass();
 
     @Override
-    public List<T> getAll() throws RuntimeException {
+    public List<T> getAll() {
         List<T> list;
 
         try {
@@ -37,7 +39,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     }
 
     @Override
-    public void add(T t) throws RuntimeException {
+    public void add(T t) {
         Transaction transaction = null;
 
         try {
@@ -55,7 +57,21 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     }
 
     @Override
-    public T getById(PK pk) throws RuntimeException {
+    public void addList(List<T> list) {
+
+        try {
+            for (T t : list) {
+                add(t);
+            }
+
+        } catch (RuntimeException e) {
+            logger.error("Add list error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public T getById(PK pk) {
         T t;
 
         try {
@@ -68,7 +84,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     }
 
     @Override
-    public void update(T t) throws RuntimeException {
+    public void update(T t) {
         Transaction transaction = null;
 
         try {
@@ -86,12 +102,11 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     }
 
     @Override
-    public void delete(T t) throws RuntimeException {
+    public void delete(T t) {
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-
             genericDao.delete(t);
             transaction.commit();
 
@@ -100,6 +115,31 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
                 transaction.rollback();
             }
             logger.error("Delete error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<T> getEntitiesFromCsv() {
+
+        try {
+            return (List<T>) new CsvService().read(getEntityClass());
+
+        } catch (RuntimeException e) {
+            logger.error("Import from csv error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void exportToCsv(List<T> list) {
+
+        try {
+            CsvService csvService = new CsvService();
+            csvService.write((List<Object>) list);
+
+        } catch (RuntimeException e) {
+            logger.error("Export to csv error: " + e.getMessage());
             throw e;
         }
     }

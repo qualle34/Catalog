@@ -27,6 +27,11 @@ public class CommentService extends AbstractService<Comment, Integer> implements
         return CommentService.class;
     }
 
+    @Override
+    protected Class getEntityClass() {
+        return Comment.class;
+    }
+
     public static CommentService getInstance(Session session) {
         ICommentDao commentDao = CommentDao.getInstance(session);
 

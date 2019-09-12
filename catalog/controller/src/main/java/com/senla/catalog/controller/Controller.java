@@ -4,7 +4,6 @@ import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.entity.*;
 import com.senla.catalog.service.*;
 import com.senla.catalog.serviceapi.*;
-import com.senla.csvhelper.CsvService;
 import org.hibernate.Session;
 
 import java.text.ParseException;
@@ -41,39 +40,19 @@ public class Controller {
 
 //        printAdverts();
 
-//        csvWriteUsers();
-//        csvSendUsersToDb();
+//        exportCsv();
+        importCsv();
 
         session.close();
     }
 
-    private void csvWriteUsers() {
+    private void exportCsv() {
 
-        List<User> userList = userService.getAll();
-        List<Object> objectList = (List<Object>) (List) userList;
-
-        CsvService csvService = new CsvService();
-        csvService.write(objectList);
+        userService.exportToCsv(userService.getAll());
     }
 
-    private void csvSendUsersToDb() {
-
-        List objectList = new CsvService().read(User.class);
-
-        for (Object obj : objectList) {
-
-            User user = (User) obj;
-
-            user.getCreds().setUser(user);
-            user.getRating().setUser(user);
-
-            // reset old id (very important)
-            user.setId(0);
-            user.getCreds().setId(0);
-            user.getRating().setId(0);
-
-            userService.add(user);
-        }
+    private void importCsv() {
+        userService.importFromCsv();
     }
 
     private void printMessages() {
@@ -97,7 +76,7 @@ public class Controller {
 
     private void printAdverts() {
 
-        for (Advert advert : categoryService.getWithAdvertsByName("Электроника").getAdvertList()) {
+        for (Advert advert : categoryService.getWithAdvertsByName("Одежда").getAdvertList()) {
             System.out.println(advert.toString());
         }
     }

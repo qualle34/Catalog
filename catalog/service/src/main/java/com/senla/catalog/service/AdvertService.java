@@ -27,6 +27,11 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
         return AdvertService.class;
     }
 
+    @Override
+    protected Class getEntityClass() {
+        return Advert.class;
+    }
+
     public static AdvertService getInstance(Session session) {
         IAdvertDao advertDao = AdvertDao.getInstance(session);
 

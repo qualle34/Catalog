@@ -8,6 +8,8 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
     private static UserDao instance;
@@ -25,13 +27,13 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
     }
 
     @Override
-    public User getByName(String name) throws RuntimeException {
+    public List<User> getByName(String name) {
 
         try {
             Query query = session.createQuery("from User where firstname = :name ");
             query.setParameter("name", name);
 
-            return (User) query.list().get(0);
+            return query.list();
 
         } catch (RuntimeException e) {
             logger.error("Get user by name error: " + e.getMessage());

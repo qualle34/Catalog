@@ -28,6 +28,11 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     }
 
     @Override
+    protected Class getEntityClass() {
+        return Chat.class;
+    }
+
+    @Override
     public Chat getWithMessagesById(int id) throws RuntimeException {
 
         try {

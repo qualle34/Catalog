@@ -27,6 +27,11 @@ public class SalesHistoryService extends AbstractService<SalesHistory, Integer> 
         return SalesHistoryService.class;
     }
 
+    @Override
+    protected Class getEntityClass() {
+        return SalesHistory.class;
+    }
+
     public static SalesHistoryService getInstance(Session session) {
         ISalesHistoryDao salesHistoryDao = SalesHistoryDao.getInstance(session);
 

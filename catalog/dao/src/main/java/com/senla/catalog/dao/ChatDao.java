@@ -29,7 +29,7 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
     }
 
     @Override
-    public Chat getWithMessagesById(int id) throws RuntimeException {
+    public Chat getWithMessagesById(int id) {
 
         Chat chat;
         CriteriaBuilder cb;

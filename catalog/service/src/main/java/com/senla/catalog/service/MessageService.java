@@ -27,6 +27,11 @@ public class MessageService extends AbstractService<Message, Integer> implements
         return MessageService.class;
     }
 
+    @Override
+    protected Class getEntityClass() {
+        return Message.class;
+    }
+
     public static MessageService getInstance(Session session) {
         IMessageDao messageDao = MessageDao.getInstance(session);
 
