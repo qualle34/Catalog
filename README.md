@@ -6,4 +6,5 @@ Developer: Samoilo Antoniy
 - [x] [secondTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/secondTask) - Reflection, Annotations, .csv  
 - [x] [thirdTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/thirdTask) - JDBC 
 - [x] [fourthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fourthTask) - Maven
-- [ ] [fifthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fifthTask) - Hibernate
+- [x] [fifthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fifthTask) - Hibernate
+- [ ] [sixthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/sixthTask) - Spring IoC
