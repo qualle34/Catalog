@@ -1,26 +1,28 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.CategoryDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.ICategoryDao;
+import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Category;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ICategoryService;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CategoryService extends AbstractService<Category, Integer> implements ICategoryService {
 
-    private static CategoryService instance;
     private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
-    private ICategoryDao categoryDao;
+
+    @Autowired
     private Session session;
 
-    private CategoryService(ICategoryDao categoryDao, Session session) {
-        super(categoryDao, session);
-        this.categoryDao = categoryDao;
-        this.session = session;
-    }
+    @Autowired
+    private ICategoryDao categoryDao;
 
     @Override
     protected Class getChildClass() {
@@ -28,8 +30,18 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<Category> getEntityClass() {
         return Category.class;
+    }
+
+    @Override
+    protected Session getSession() {
+        return session;
+    }
+
+    @Override
+    protected IGenericDao getDao() {
+        return categoryDao;
     }
 
     @Override
@@ -44,12 +56,8 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
         }
     }
 
-    public static CategoryService getInstance(Session session) {
-        ICategoryDao categoryDao = CategoryDao.getInstance(session);
-
-        if (instance == null) {
-            instance = new CategoryService(categoryDao, session);
-        }
-        return instance;
+    @Bean
+    public CategoryService getInstance() {
+        return new CategoryService();
     }
 }

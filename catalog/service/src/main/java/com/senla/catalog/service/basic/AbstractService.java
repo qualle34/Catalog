@@ -14,25 +14,23 @@ import java.util.List;
 public abstract class AbstractService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
     private final Logger logger = LoggerFactory.getLogger(getChildClass());
-    private IGenericDao genericDao;
-    private Session session;
-
-    public AbstractService(IGenericDao genericDao, Session session) {
-        this.genericDao = genericDao;
-        this.session = session;
-    }
 
     protected abstract Class getChildClass();
-    protected abstract Class getEntityClass();
+
+    protected abstract Class<T> getEntityClass();
+
+    protected abstract Session getSession();
+
+    protected abstract IGenericDao getDao();
 
     @Override
     public List<T> getAll() {
         List<T> list;
 
         try {
-            list = genericDao.getAll();
+            list = getDao().getAll();
         } catch (RuntimeException e) {
-            logger.error("Get all error" + e.getMessage());
+            logger.error("Get all error: " + e.getMessage());
             throw e;
         }
         return list;
@@ -43,8 +41,8 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         Transaction transaction = null;
 
         try {
-            transaction = session.beginTransaction();
-            genericDao.add(t);
+            transaction = getSession().beginTransaction();
+            getDao().add(t);
             transaction.commit();
 
         } catch (RuntimeException e) {
@@ -75,9 +73,9 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         T t;
 
         try {
-            t = (T) genericDao.getById(pk);
+            t = (T) getDao().getById(pk);
         } catch (RuntimeException e) {
-            logger.error("Get by id error" + e.getMessage());
+            logger.error("Get by id error: " + e.getMessage());
             throw e;
         }
         return t;
@@ -88,8 +86,8 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         Transaction transaction = null;
 
         try {
-            transaction = session.beginTransaction();
-            genericDao.update(t);
+            transaction = getSession().beginTransaction();
+            getDao().update(t);
             transaction.commit();
 
         } catch (RuntimeException e) {
@@ -106,8 +104,8 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         Transaction transaction = null;
 
         try {
-            transaction = session.beginTransaction();
-            genericDao.delete(t);
+            transaction = getSession().beginTransaction();
+            getDao().delete(t);
             transaction.commit();
 
         } catch (RuntimeException e) {

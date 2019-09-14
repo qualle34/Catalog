@@ -1,29 +1,40 @@
 package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.entity.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
-    private static UserDao instance;
     private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
+
+    @Autowired
     private Session session;
 
-    private UserDao(Session session) {
-        super(session);
-        this.session = session;
+    @Override
+    protected Class getChildClass() {
+        return UserDao.class;
     }
 
     @Override
-    protected Class<User> getChildClass() {
+    protected Class<User> getEntityClass() {
         return User.class;
+    }
+
+    @Override
+    protected Session getSession() {
+        return session;
     }
 
     @Override
@@ -41,11 +52,8 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
         }
     }
 
-    public static UserDao getInstance(Session session) {
-
-        if (instance == null) {
-            instance = new UserDao(session);
-        }
-        return instance;
+    @Bean
+    public UserDao getInstance() {
+        return new UserDao();
     }
 }

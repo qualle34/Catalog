@@ -1,26 +1,28 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.SellerRatingDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.ISellerRatingDao;
+import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.SellerRating;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ISellerRatingService;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SellerRatingService extends AbstractService<SellerRating, Integer> implements ISellerRatingService {
 
-    private static SellerRatingService instance;
     private static final Logger logger = LoggerFactory.getLogger(SellerRatingService.class);
-    private ISellerRatingDao sellerRatingDao;
+
+    @Autowired
     private Session session;
 
-    private SellerRatingService(ISellerRatingDao sellerRatingDao, Session session) {
-        super(sellerRatingDao, session);
-        this.sellerRatingDao = sellerRatingDao;
-        this.session = session;
-    }
+    @Autowired
+    private ISellerRatingDao sellerRatingDao;
 
     @Override
     protected Class getChildClass() {
@@ -28,16 +30,22 @@ public class SellerRatingService extends AbstractService<SellerRating, Integer> 
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<SellerRating> getEntityClass() {
         return SellerRating.class;
     }
 
-    public static SellerRatingService getInstance(Session session) {
-        ISellerRatingDao sellerRatingDao = SellerRatingDao.getInstance(session);
+    @Override
+    protected Session getSession() {
+        return session;
+    }
 
-        if (instance == null) {
-            instance = new SellerRatingService(sellerRatingDao, session);
-        }
-        return instance;
+    @Override
+    protected IGenericDao getDao() {
+        return sellerRatingDao;
+    }
+
+    @Bean
+    public SellerRatingService getInstance() {
+        return new SellerRatingService();
     }
 }

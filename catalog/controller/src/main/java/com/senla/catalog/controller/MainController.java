@@ -2,48 +2,62 @@ package com.senla.catalog.controller;
 
 import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.entity.*;
-import com.senla.catalog.service.*;
 import com.senla.catalog.serviceapi.*;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-public class Controller {
+@Controller
+public class MainController {
 
-    private Session session = HibernateUtil.getSession();
+    @Autowired
+    private IUserService userService;
 
-    private IUserService userService = UserService.getInstance(session);
-    private ICredsService credsService = CredsService.getInstance(session);
-    private ISalesHistoryService salesHistoryService = SalesHistoryService.getInstance(session);
-    private ISellerRatingService sellerRatingService = SellerRatingService.getInstance(session);
-    private ICategoryService categoryService = CategoryService.getInstance(session);
-    private IAdvertService advertService = AdvertService.getInstance(session);
-    private ICommentService commentService = CommentService.getInstance(session);
-    private IChatService chatService = ChatService.getInstance(session);
-    private IMessageService messageService = MessageService.getInstance(session);
+    @Autowired
+    private ICredsService credsService;
+
+    @Autowired
+    private ISalesHistoryService salesHistoryService;
+
+    @Autowired
+    private ISellerRatingService sellerRatingService;
+
+    @Autowired
+    private ICategoryService categoryService;
+
+    @Autowired
+    private IAdvertService advertService;
+
+    @Autowired
+    private ICommentService commentService;
+
+    @Autowired
+    private IChatService chatService;
+
+    @Autowired
+    private IMessageService messageService;
 
     public void start() {
         //test
+   //     System.out.println(userService.getById(1));
 
 //        addUser();
 //        updateUser();
-//        printAll();
+        printAll();
 //        deleteUser();
-
-//        customUserQuery();
-
+//
 //        communication();
 //        printMessages();
-
+//
 //        printAdverts();
-
+//
 //        exportCsv();
-        importCsv();
-
-        session.close();
+//        importCsv();
     }
 
     private void exportCsv() {
@@ -131,5 +145,10 @@ public class Controller {
         user.setRating(sellerRating);
 
         userService.add(user);
+    }
+
+    @Bean
+    MainController getInstance(){
+        return new MainController();
     }
 }

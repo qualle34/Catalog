@@ -7,16 +7,31 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CategoryDao extends AbstractDao<Category, Integer> implements ICategoryDao {
 
-    private static CategoryDao instance;
     private static final Logger logger = LoggerFactory.getLogger(CategoryDao.class);
+
+    @Autowired
     private Session session;
 
-    private CategoryDao(Session session) {
-        super(session);
-        this.session = session;
+    @Override
+    protected Class getChildClass() {
+        return CategoryDao.class;
+    }
+
+    @Override
+    protected Class<Category> getEntityClass() {
+        return Category.class;
+    }
+
+    @Override
+    protected Session getSession() {
+        return session;
     }
 
     @Override
@@ -34,17 +49,8 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
         }
     }
 
-
-    @Override
-    protected Class<Category> getChildClass() {
-        return Category.class;
-    }
-
-    public static CategoryDao getInstance(Session session) {
-
-        if (instance == null) {
-            instance = new CategoryDao(session);
-        }
-        return instance;
+    @Bean
+    public CategoryDao getInstance() {
+        return new CategoryDao();
     }
 }

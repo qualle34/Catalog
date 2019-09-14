@@ -1,26 +1,28 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.SalesHistoryDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.ISalesHistoryDao;
+import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.SalesHistory;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ISalesHistoryService;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SalesHistoryService extends AbstractService<SalesHistory, Integer> implements ISalesHistoryService {
 
-    private static SalesHistoryService instance;
     private static final Logger logger = LoggerFactory.getLogger(SalesHistoryService.class);
-    private ISalesHistoryDao salesHistoryDao;
+
+    @Autowired
     private Session session;
 
-    private SalesHistoryService(ISalesHistoryDao salesHistoryDao, Session session) {
-        super(salesHistoryDao, session);
-        this.salesHistoryDao = salesHistoryDao;
-        this.session = session;
-    }
+    @Autowired
+    private ISalesHistoryDao salesHistoryDao;
 
     @Override
     protected Class getChildClass() {
@@ -28,16 +30,22 @@ public class SalesHistoryService extends AbstractService<SalesHistory, Integer> 
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<SalesHistory> getEntityClass() {
         return SalesHistory.class;
     }
 
-    public static SalesHistoryService getInstance(Session session) {
-        ISalesHistoryDao salesHistoryDao = SalesHistoryDao.getInstance(session);
+    @Override
+    protected Session getSession() {
+        return session;
+    }
 
-        if (instance == null) {
-            instance = new SalesHistoryService(salesHistoryDao, session);
-        }
-        return instance;
+    @Override
+    protected IGenericDao getDao() {
+        return salesHistoryDao;
+    }
+
+    @Bean
+    public SalesHistoryService getInstance() {
+        return new SalesHistoryService();
     }
 }

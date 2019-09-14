@@ -13,18 +13,18 @@ import java.util.List;
 public abstract class AbstractDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
     private final Logger logger = LoggerFactory.getLogger(getChildClass());
-    private Session session;
 
-    public AbstractDao(Session session) {
-        this.session = session;
-    }
+    protected abstract Class getChildClass();
 
-    protected abstract Class<T> getChildClass();
+    protected abstract Class<T> getEntityClass();
+
+    protected abstract Session getSession();
 
     @Override
     public List<T> getAll() {
         List<T> list;
-        Class cls = getChildClass();
+        Class cls = getEntityClass();
+        Session session = getSession();
 
         try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -44,7 +44,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
         T t;
 
         try {
-            t = session.get(getChildClass(), pk);
+            t = getSession().get(getEntityClass(), pk);
 
         } catch (RuntimeException e) {
             logger.error("Get entity error: " + e.getMessage());
@@ -57,7 +57,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void add(T t) {
 
         try {
-            session.save(t);
+            getSession().save(t);
 
         } catch (RuntimeException e) {
             logger.error("Add entity error: " + e.getMessage());
@@ -69,7 +69,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void update(T t) {
 
         try {
-            session.update(t);
+            getSession().update(t);
 
         } catch (RuntimeException e) {
             logger.error("Update entity error: " + e.getMessage());
@@ -81,7 +81,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void delete(T t) {
 
         try {
-            session.delete(t);
+            getSession().delete(t);
 
         } catch (RuntimeException e) {
             logger.error("Delete entity error: " + e.getMessage());

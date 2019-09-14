@@ -1,31 +1,42 @@
 package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.entity.Chat;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+@Repository
 public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
 
-    private static ChatDao instance;
     private static final Logger logger = LoggerFactory.getLogger(ChatDao.class);
+
+    @Autowired
     private Session session;
 
-    private ChatDao(Session session) {
-        super(session);
-        this.session = session;
+    @Override
+    protected Class getChildClass() {
+        return ChatDao.class;
     }
 
     @Override
-    protected Class<Chat> getChildClass() {
+    protected Class<Chat> getEntityClass() {
         return Chat.class;
+    }
+
+    @Override
+    protected Session getSession() {
+        return session;
     }
 
     @Override
@@ -54,11 +65,8 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
         return chat;
     }
 
-    public static ChatDao getInstance(Session session) {
-
-        if (instance == null) {
-            instance = new ChatDao(session);
-        }
-        return instance;
+    @Bean
+    public ChatDao getInstance() {
+        return new ChatDao();
     }
 }

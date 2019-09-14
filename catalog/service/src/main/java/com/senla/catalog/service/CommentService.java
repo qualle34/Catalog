@@ -1,26 +1,28 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.CommentDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.ICommentDao;
+import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Comment;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.ICommentService;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommentService extends AbstractService<Comment, Integer> implements ICommentService {
 
-    private static CommentService instance;
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
-    private ICommentDao commentDao;
+
+    @Autowired
     private Session session;
 
-    private CommentService(ICommentDao commentDao, Session session) {
-        super(commentDao, session);
-        this.commentDao = commentDao;
-        this.session = session;
-    }
+    @Autowired
+    private ICommentDao commentDao;
 
     @Override
     protected Class getChildClass() {
@@ -28,16 +30,26 @@ public class CommentService extends AbstractService<Comment, Integer> implements
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<Comment> getEntityClass() {
         return Comment.class;
     }
 
-    public static CommentService getInstance(Session session) {
-        ICommentDao commentDao = CommentDao.getInstance(session);
+    @Override
+    protected Session getSession() {
+        return session;
+    }
 
-        if (instance == null) {
-            instance = new CommentService(commentDao, session);
-        }
-        return instance;
+    @Override
+    protected IGenericDao getDao() {
+        return commentDao;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    @Bean
+    public CommentService getInstance() {
+        return new CommentService();
     }
 }

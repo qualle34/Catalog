@@ -1,26 +1,29 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.ChatDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.IChatDao;
+import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Chat;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChatService extends AbstractService<Chat, Integer> implements IChatService {
 
-    private static ChatService instance;
     private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
-    private IChatDao chatDao;
+
+    @Autowired
     private Session session;
 
-    private ChatService(IChatDao chatDao, Session session) {
-        super(chatDao, session);
-        this.chatDao = chatDao;
-        this.session = session;
-    }
+    @Autowired
+    private IChatDao chatDao;
+
 
     @Override
     protected Class getChildClass() {
@@ -28,8 +31,18 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<Chat> getEntityClass() {
         return Chat.class;
+    }
+
+    @Override
+    protected Session getSession() {
+        return session;
+    }
+
+    @Override
+    protected IGenericDao getDao() {
+        return chatDao;
     }
 
     @Override
@@ -43,12 +56,8 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
         }
     }
 
-    public static ChatService getInstance(Session session) {
-        IChatDao chatDao = ChatDao.getInstance(session);
-
-        if (instance == null) {
-            instance = new ChatService(chatDao, session);
-        }
-        return instance;
+    @Bean
+    public ChatService getInstance() {
+        return new ChatService();
     }
 }

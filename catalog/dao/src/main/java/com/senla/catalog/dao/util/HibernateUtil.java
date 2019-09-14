@@ -6,7 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HibernateUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
@@ -21,11 +24,8 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public static Session getSession(){
+    @Bean
+    public static Session getSession() {
         return sessionFactory.openSession();
     }
 }

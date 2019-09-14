@@ -1,26 +1,28 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.MessageDao;
+import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.IMessageDao;
+import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Message;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IMessageService;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MessageService extends AbstractService<Message, Integer> implements IMessageService {
 
-    private static MessageService instance;
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
-    private IMessageDao messageDao;
+
+    @Autowired
     private Session session;
 
-    private MessageService(IMessageDao messageDao, Session session) {
-        super(messageDao, session);
-        this.messageDao = messageDao;
-        this.session = session;
-    }
+    @Autowired
+    private IMessageDao messageDao;
 
     @Override
     protected Class getChildClass() {
@@ -28,16 +30,22 @@ public class MessageService extends AbstractService<Message, Integer> implements
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<Message> getEntityClass() {
         return Message.class;
     }
 
-    public static MessageService getInstance(Session session) {
-        IMessageDao messageDao = MessageDao.getInstance(session);
+    @Override
+    protected Session getSession() {
+        return session;
+    }
 
-        if (instance == null) {
-            instance = new MessageService(messageDao, session);
-        }
-        return instance;
+    @Override
+    protected IGenericDao getDao() {
+        return messageDao;
+    }
+
+    @Bean
+    public MessageService getInstance() {
+        return new MessageService();
     }
 }
