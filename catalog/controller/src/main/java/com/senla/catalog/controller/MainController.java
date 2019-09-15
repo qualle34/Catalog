@@ -1,9 +1,7 @@
 package com.senla.catalog.controller;
 
-import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.entity.*;
 import com.senla.catalog.serviceapi.*;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;

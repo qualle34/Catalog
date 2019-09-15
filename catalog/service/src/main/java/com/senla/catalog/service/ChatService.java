@@ -1,6 +1,5 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Chat;

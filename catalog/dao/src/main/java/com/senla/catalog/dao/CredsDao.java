@@ -1,7 +1,6 @@
 package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
-import com.senla.catalog.dao.util.HibernateUtil;
 import com.senla.catalog.daoapi.ICredsDao;
 import com.senla.catalog.entity.Creds;
 import org.hibernate.Session;
