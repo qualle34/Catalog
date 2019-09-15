@@ -32,19 +32,4 @@ public class SellerRatingService extends AbstractService<SellerRating, Integer> 
     protected Class<SellerRating> getEntityClass() {
         return SellerRating.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return sellerRatingDao;
-    }
-
-    @Bean
-    public SellerRatingService getInstance() {
-        return new SellerRatingService();
-    }
 }

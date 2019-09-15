@@ -34,16 +34,6 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     }
 
     @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return categoryDao;
-    }
-
-    @Override
     public Category getWithAdvertsByName(String name) throws RuntimeException {
 
         try {
@@ -53,10 +43,5 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
             logger.error("" + e.getMessage());
             throw e;
         }
-    }
-
-    @Bean
-    public CategoryService getInstance() {
-        return new CategoryService();
     }
 }

@@ -30,11 +30,6 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     }
 
     @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
     public Category getWithAdvertsByName(String name) {
 
         try {
@@ -47,10 +42,5 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
             logger.error("Get category with adverts by name error: " + e.getMessage());
             throw e;
         }
-    }
-
-    @Bean
-    public CategoryDao getInstance() {
-        return new CategoryDao();
     }
 }

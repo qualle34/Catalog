@@ -4,6 +4,7 @@ import com.senla.catalog.daoapi.basic.IGenericDao;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,17 +15,17 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
 
     private final Logger logger = LoggerFactory.getLogger(getChildClass());
 
+    @Autowired
+    private Session session;
+
     protected abstract Class getChildClass();
 
     protected abstract Class<T> getEntityClass();
-
-    protected abstract Session getSession();
 
     @Override
     public List<T> getAll() {
         List<T> list;
         Class cls = getEntityClass();
-        Session session = getSession();
 
         try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -44,7 +45,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
         T t;
 
         try {
-            t = getSession().get(getEntityClass(), pk);
+            t = session.get(getEntityClass(), pk);
 
         } catch (RuntimeException e) {
             logger.error("Get entity error: " + e.getMessage());
@@ -57,7 +58,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void add(T t) {
 
         try {
-            getSession().save(t);
+            session.save(t);
 
         } catch (RuntimeException e) {
             logger.error("Add entity error: " + e.getMessage());
@@ -69,7 +70,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void update(T t) {
 
         try {
-            getSession().update(t);
+            session.update(t);
 
         } catch (RuntimeException e) {
             logger.error("Update entity error: " + e.getMessage());
@@ -81,7 +82,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void delete(T t) {
 
         try {
-            getSession().delete(t);
+            session.delete(t);
 
         } catch (RuntimeException e) {
             logger.error("Delete entity error: " + e.getMessage());

@@ -27,14 +27,4 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     protected Class<Advert> getEntityClass() {
         return Advert.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Bean
-    public AdvertDao getInstance() {
-        return new AdvertDao();
-    }
 }

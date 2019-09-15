@@ -27,14 +27,4 @@ public class SalesHistoryDao extends AbstractDao<SalesHistory, Integer> implemen
     protected Class<SalesHistory> getEntityClass() {
         return SalesHistory.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Bean
-    public SalesHistoryDao getInstance() {
-        return new SalesHistoryDao();
-    }
 }

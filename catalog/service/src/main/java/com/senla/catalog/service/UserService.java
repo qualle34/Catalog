@@ -36,16 +36,6 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return userDao;
-    }
-
-    @Override
     public List<User> getByName(String name) throws RuntimeException {
 
         try {
@@ -67,10 +57,5 @@ public class UserService extends AbstractService<User, Integer> implements IUser
             user.getRating().setId(0);
         }
         super.addList(list);
-    }
-
-    @Bean
-    public UserService getInstance() {
-        return new UserService();
     }
 }

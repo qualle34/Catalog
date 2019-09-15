@@ -32,19 +32,4 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     protected Class<Advert> getEntityClass() {
         return Advert.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return advertDao;
-    }
-
-    @Bean
-    public AdvertService getInstance() {
-        return new AdvertService();
-    }
 }

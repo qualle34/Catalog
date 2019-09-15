@@ -27,14 +27,4 @@ public class CredsDao extends AbstractDao<Creds, Integer> implements ICredsDao {
     protected Class<Creds> getEntityClass() {
         return Creds.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Bean
-    public CredsDao getInstance() {
-        return new CredsDao();
-    }
 }

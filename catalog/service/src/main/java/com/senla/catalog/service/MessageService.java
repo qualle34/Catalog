@@ -32,19 +32,4 @@ public class MessageService extends AbstractService<Message, Integer> implements
     protected Class<Message> getEntityClass() {
         return Message.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return messageDao;
-    }
-
-    @Bean
-    public MessageService getInstance() {
-        return new MessageService();
-    }
 }

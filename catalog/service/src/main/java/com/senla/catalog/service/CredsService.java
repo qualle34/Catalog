@@ -32,19 +32,4 @@ public class CredsService extends AbstractService<Creds, Integer> implements ICr
     protected Class<Creds> getEntityClass() {
         return Creds.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return credsDao;
-    }
-
-    @Bean
-    public CredsService getInstance() {
-        return new CredsService();
-    }
 }

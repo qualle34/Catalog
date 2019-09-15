@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,22 +17,31 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
 
     private final Logger logger = LoggerFactory.getLogger(getChildClass());
 
+    @Autowired
+    private Session session;
+
+    private IGenericDao dao;
+
+    @Autowired
+    private void setDao(List<IGenericDao> daoList){
+        for(IGenericDao dao : daoList){
+            if (dao.getClass().getSimpleName().equals(getEntityClass().getSimpleName() + "Dao")){
+                this.dao = dao;
+            }
+        }
+    }
+
     protected abstract Class getChildClass();
 
     protected abstract Class<T> getEntityClass();
-
-    protected abstract Session getSession();
-
-    protected abstract IGenericDao getDao();
 
     @Override
     public List<T> getAll() {
         List<T> list;
 
         try {
-            list = getDao().getAll();
+            list = dao.getAll();
         } catch (RuntimeException e) {
-            logger.error("Get all error: " + e.getMessage());
             throw e;
         }
         return list;
@@ -41,15 +52,14 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         Transaction transaction = null;
 
         try {
-            transaction = getSession().beginTransaction();
-            getDao().add(t);
+            transaction = session.beginTransaction();
+            dao.add(t);
             transaction.commit();
 
         } catch (RuntimeException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Add error: " + e.getMessage());
             throw e;
         }
     }
@@ -63,7 +73,6 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             }
 
         } catch (RuntimeException e) {
-            logger.error("Add list error: " + e.getMessage());
             throw e;
         }
     }
@@ -73,9 +82,8 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         T t;
 
         try {
-            t = (T) getDao().getById(pk);
+            t = (T) dao.getById(pk);
         } catch (RuntimeException e) {
-            logger.error("Get by id error: " + e.getMessage());
             throw e;
         }
         return t;
@@ -86,15 +94,14 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         Transaction transaction = null;
 
         try {
-            transaction = getSession().beginTransaction();
-            getDao().update(t);
+            transaction = session.beginTransaction();
+            dao.update(t);
             transaction.commit();
 
         } catch (RuntimeException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Update error: " + e.getMessage());
             throw e;
         }
     }
@@ -104,15 +111,14 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
         Transaction transaction = null;
 
         try {
-            transaction = getSession().beginTransaction();
-            getDao().delete(t);
+            transaction = session.beginTransaction();
+            dao.delete(t);
             transaction.commit();
 
         } catch (RuntimeException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Delete error: " + e.getMessage());
             throw e;
         }
     }

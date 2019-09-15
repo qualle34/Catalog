@@ -34,11 +34,6 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
     }
 
     @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
     public Chat getWithMessagesById(int id) {
 
         Chat chat;
@@ -62,10 +57,5 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
             throw e;
         }
         return chat;
-    }
-
-    @Bean
-    public ChatDao getInstance() {
-        return new ChatDao();
     }
 }

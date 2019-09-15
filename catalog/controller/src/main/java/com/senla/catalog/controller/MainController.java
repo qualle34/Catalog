@@ -42,11 +42,12 @@ public class MainController {
 
     public void start() {
         //test
-   //     System.out.println(userService.getById(1));
+
+//       System.out.println(userService.getById(1));
 
 //        addUser();
 //        updateUser();
-        printAll();
+//        printAll();
 //        deleteUser();
 //
 //        communication();
@@ -143,10 +144,5 @@ public class MainController {
         user.setRating(sellerRating);
 
         userService.add(user);
-    }
-
-    @Bean
-    MainController getInstance(){
-        return new MainController();
     }
 }

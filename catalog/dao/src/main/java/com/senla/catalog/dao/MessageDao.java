@@ -27,14 +27,4 @@ public class MessageDao extends AbstractDao<Message, Integer> implements IMessag
     protected Class<Message> getEntityClass() {
         return Message.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Bean
-    public MessageDao getInstance() {
-        return new MessageDao();
-    }
 }

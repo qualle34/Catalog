@@ -27,14 +27,4 @@ public class SellerRatingDao extends AbstractDao<SellerRating, Integer> implemen
     protected Class<SellerRating> getEntityClass() {
         return SellerRating.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Bean
-    public SellerRatingDao getInstance() {
-        return new SellerRatingDao();
-    }
 }

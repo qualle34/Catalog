@@ -35,16 +35,6 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     }
 
     @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return chatDao;
-    }
-
-    @Override
     public Chat getWithMessagesById(int id) throws RuntimeException {
 
         try {
@@ -53,10 +43,5 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
             logger.error("Get chat with messages error: " + e.getMessage());
             throw e;
         }
-    }
-
-    @Bean
-    public ChatService getInstance() {
-        return new ChatService();
     }
 }

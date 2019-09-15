@@ -27,15 +27,4 @@ public class CommentDao extends AbstractDao<Comment, Integer> implements ICommen
     protected Class<Comment> getEntityClass() {
         return Comment.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Bean
-    public CommentDao getInstance() {
-        return new CommentDao();
-    }
-
 }

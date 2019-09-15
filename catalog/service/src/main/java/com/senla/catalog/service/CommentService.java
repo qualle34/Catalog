@@ -33,22 +33,7 @@ public class CommentService extends AbstractService<Comment, Integer> implements
         return Comment.class;
     }
 
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return commentDao;
-    }
-
     public void setSession(Session session) {
         this.session = session;
-    }
-
-    @Bean
-    public CommentService getInstance() {
-        return new CommentService();
     }
 }

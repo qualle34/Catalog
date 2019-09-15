@@ -32,11 +32,6 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
     }
 
     @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
     public List<User> getByName(String name) {
 
         try {
@@ -49,10 +44,5 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
             logger.error("Get user by name error: " + e.getMessage());
             throw e;
         }
-    }
-
-    @Bean
-    public UserDao getInstance() {
-        return new UserDao();
     }
 }

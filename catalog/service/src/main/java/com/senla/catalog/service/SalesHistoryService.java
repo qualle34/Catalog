@@ -32,19 +32,4 @@ public class SalesHistoryService extends AbstractService<SalesHistory, Integer> 
     protected Class<SalesHistory> getEntityClass() {
         return SalesHistory.class;
     }
-
-    @Override
-    protected Session getSession() {
-        return session;
-    }
-
-    @Override
-    protected IGenericDao getDao() {
-        return salesHistoryDao;
-    }
-
-    @Bean
-    public SalesHistoryService getInstance() {
-        return new SalesHistoryService();
-    }
 }
