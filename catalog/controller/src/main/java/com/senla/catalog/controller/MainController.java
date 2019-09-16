@@ -47,7 +47,7 @@ public class MainController {
 
 //        addUser();
 //        updateUser();
-//        printAll();
+        printAll();
 //        deleteUser();
 //
 //        communication();

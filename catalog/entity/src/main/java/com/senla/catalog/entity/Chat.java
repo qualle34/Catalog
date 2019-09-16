@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "chat")
@@ -68,6 +69,20 @@ public class Chat {
 
     public void setMessageList(List<Message> messageList) {
         this.messageList = messageList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chat chat = (Chat) o;
+        return id == chat.id &&
+                Objects.equals(title, chat.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title);
     }
 
     @Override

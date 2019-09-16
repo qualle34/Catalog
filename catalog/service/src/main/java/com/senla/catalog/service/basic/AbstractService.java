@@ -23,9 +23,9 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     private IGenericDao dao;
 
     @Autowired
-    private void setDao(List<IGenericDao> daoList){
-        for(IGenericDao dao : daoList){
-            if (dao.getClass().getSimpleName().equals(getEntityClass().getSimpleName() + "Dao")){
+    private void setDao(List<IGenericDao> daoList) {
+        for (IGenericDao dao : daoList) {
+            if (dao.getClass().getSimpleName().equals(getEntityClass().getSimpleName() + "Dao")) {
                 this.dao = dao;
             }
         }
@@ -37,14 +37,12 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
 
     @Override
     public List<T> getAll() {
-        List<T> list;
+        return dao.getAll();
+    }
 
-        try {
-            list = dao.getAll();
-        } catch (RuntimeException e) {
-            throw e;
-        }
-        return list;
+    @Override
+    public T getById(PK pk) {
+        return (T) dao.getById(pk);
     }
 
     @Override
@@ -67,26 +65,9 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     @Override
     public void addList(List<T> list) {
 
-        try {
-            for (T t : list) {
-                add(t);
-            }
-
-        } catch (RuntimeException e) {
-            throw e;
+        for (T t : list) {
+            add(t);
         }
-    }
-
-    @Override
-    public T getById(PK pk) {
-        T t;
-
-        try {
-            t = (T) dao.getById(pk);
-        } catch (RuntimeException e) {
-            throw e;
-        }
-        return t;
     }
 
     @Override

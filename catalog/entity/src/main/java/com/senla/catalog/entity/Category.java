@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "category")
@@ -55,6 +56,20 @@ public class Category {
 
     public void setAdvertList(List<Advert> advertList) {
         this.advertList = advertList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id &&
+                Objects.equals(title, category.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title);
     }
 
     @Override

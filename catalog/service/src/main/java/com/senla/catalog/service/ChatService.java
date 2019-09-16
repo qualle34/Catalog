@@ -23,7 +23,6 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     @Autowired
     private IChatDao chatDao;
 
-
     @Override
     protected Class getChildClass() {
         return ChatService.class;

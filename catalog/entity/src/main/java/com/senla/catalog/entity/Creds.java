@@ -1,8 +1,5 @@
 package com.senla.catalog.entity;
 
-import com.senla.csvhelper.annotation.CsvEntity;
-import com.senla.csvhelper.annotation.CsvProperty;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -11,32 +8,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
+import java.util.Objects;
 
 @Entity
 @Table(name = "credentials")
-@CsvEntity(directoryName = "D://data")
 public class Creds {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
     private int id;
 
     @Column(name = "login")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private String login;
 
     @Column(name = "password")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
     private String password;
 
     @Column(name = "role")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 3)
     private String role;
 
     @Column(name = "email")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 4)
     private String email;
 
     @OneToOne
@@ -99,6 +91,23 @@ public class Creds {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Creds creds = (Creds) o;
+        return id == creds.id &&
+                Objects.equals(login, creds.login) &&
+                Objects.equals(password, creds.password) &&
+                Objects.equals(role, creds.role) &&
+                Objects.equals(email, creds.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, role, email);
     }
 
     @Override

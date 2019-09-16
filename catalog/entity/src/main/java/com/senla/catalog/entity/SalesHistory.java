@@ -90,7 +90,7 @@ public class SalesHistory implements Serializable {
 
     @Override
     public String toString() {
-        return title + " " + date.toString();
+        return seller.getId() + " " + title + " " + date;
     }
 }
 

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import java.util.Objects;
 
 @Entity
 @Table(name = "comment")
@@ -68,6 +69,20 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return id == comment.id &&
+                Objects.equals(text, comment.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text);
     }
 
     @Override

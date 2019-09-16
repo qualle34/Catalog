@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 
 import java.util.Date;
-
+import java.util.Objects;
 
 @Entity
 @Table(name = "message")
@@ -86,6 +86,21 @@ public class Message {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return id == message.id &&
+                Objects.equals(text, message.text) &&
+                Objects.equals(sendDate, message.sendDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text, sendDate);
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.senla.catalog.entity;
 
-import com.senla.csvhelper.annotation.CsvEntity;
-import com.senla.csvhelper.annotation.CsvProperty;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -13,24 +10,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "seller_rating")
-@CsvEntity(directoryName = "D://data")
 public class SellerRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 0)
     private int id;
 
     @Column(name = "rating")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 1)
     private float rating;
 
     @Column(name = "rating_count")
-    @CsvProperty(propertyType = CsvProperty.Type.SimpleProperty, columnNumber = 2)
     private int ratingCount;
 
     @Column(name = "end_vip_date")
@@ -95,8 +89,25 @@ public class SellerRating {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SellerRating that = (SellerRating) o;
+        return id == that.id &&
+                Float.compare(that.rating, rating) == 0 &&
+                ratingCount == that.ratingCount &&
+                Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, rating, ratingCount, date);
+    }
+
+    @Override
     public String toString() {
         String line = id + " " + rating + " " + ratingCount;
+
         if (date != null) {
             line += " " + date.toString();
         }

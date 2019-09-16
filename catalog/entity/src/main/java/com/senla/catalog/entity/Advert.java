@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "advert")
@@ -116,6 +117,22 @@ public class Advert {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Advert advert = (Advert) o;
+        return id == advert.id &&
+                Double.compare(advert.price, price) == 0 &&
+                Objects.equals(title, advert.title) &&
+                Objects.equals(description, advert.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, price);
     }
 
     @Override
