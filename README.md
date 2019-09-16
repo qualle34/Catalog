@@ -1,10 +1,13 @@
-# Senla Tasks
-Developer: Samoilo Antoniy  
+# Catalog - Система размещения частных объявлений
+Разработчик: Samoilo Antoniy  
 
-**Branches:**   
-- [x] [firstTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/firstTask) - SQL  
-- [x] [secondTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/secondTask) - Reflection, Annotations, .csv  
-- [x] [thirdTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/thirdTask) - JDBC 
-- [x] [fourthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fourthTask) - Maven
-- [x] [fifthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fifthTask) - Hibernate
-- [ ] [sixthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/sixthTask) - Spring IoC
+Каталог объектов купли/продажи (категории, классификация).  
+Просмотр списка объявлений. Поиск и фильтрация.  
+Возможность добавления / редактирования / удаления объявлений.  
+Регистрация пользователей (администраторы, пользователи).  
+Редактирование профиля.  
+Возможность оставлять комментарии под объявлениями.  
+Организация личной переписки покупателя и продавца.  
+Возможность проплатить нахождение объявления в топе выдачи.  
+Система рейтингов продавцов, влияющая на положение объявлений продавца в поисковой выдаче. Чем ниже рейтинг, тем ниже объявление в выдаче.  
+История продаж пользователя.  
