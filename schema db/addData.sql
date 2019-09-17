@@ -9,16 +9,16 @@ INSERT INTO catalog.user(firstname, lastname, birthdate, phone, location) values
 INSERT INTO catalog.user(firstname, lastname, birthdate, phone, location) values('Егор', 'Егоров', '1978-12-09', '+375112223344', 'Берлин');
 INSERT INTO catalog.user(firstname, lastname, birthdate, phone, location) values('Катя', 'Катева', '1956-12-09', '+375112223344', 'Киев');
 
-INSERT INTO catalog.credentials(login, password, role, email) values('A1n', 'qwerty1', 'user', 'andrey@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Dimmer', 'qwerty2', 'user', 'dima@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Maximer', 'qwerty3', 'user', 'max.makasin@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Vova', 'qwerty4', 'user', 'vova@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Anna', 'qwerty5', 'user', 'anna@mail.ru');
-INSERT INTO catalog.credentials(login, password, role, email) values('Kola', 'qwerty6', 'user', 'kola@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Svet', 'qwerty7', 'user', 'svet34@tut.by');
-INSERT INTO catalog.credentials(login, password, role, email) values('Tanya', 'qwerty8', 'user', 'tanya8@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Egor', 'qwerty9', 'user', 'error@gmail.com');
-INSERT INTO catalog.credentials(login, password, role, email) values('Katya', 'qwerty10', 'user', 'kater@mail.ru');
+INSERT INTO catalog.credentials(login, password, role, email) values('A1n', 'qwerty1', 'USER', 'andrey@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Dimmer', 'qwerty2', 'USER', 'dima@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Maximer', 'qwerty3', 'USER', 'max.makasin@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Vova', 'qwerty4', 'USER', 'vova@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Anna', 'qwerty5', 'USER', 'anna@mail.ru');
+INSERT INTO catalog.credentials(login, password, role, email) values('Kola', 'qwerty6', 'USER', 'kola@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Svet', 'qwerty7', 'USER', 'svet34@tut.by');
+INSERT INTO catalog.credentials(login, password, role, email) values('Tanya', 'qwerty8', 'USER', 'tanya8@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Egor', 'qwerty9', 'USER', 'error@gmail.com');
+INSERT INTO catalog.credentials(login, password, role, email) values('Katya', 'qwerty10', 'USER', 'kater@mail.ru');
 
 INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(7.0, 3);

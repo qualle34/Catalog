@@ -8,4 +8,8 @@ import java.util.List;
 public interface IUserDao extends IGenericDao<User, Integer> {
 
     List<User> getByName(String name);
+
+    User getFullUserById(int id);
+
+    User getUserWithCredsById(int id);
 }

@@ -47,6 +47,16 @@ public class UserService extends AbstractService<User, Integer> implements IUser
         }
     }
 
+    @Override
+    public User getFullUserById(int id) {
+        return userDao.getFullUserById(id);
+    }
+
+    @Override
+    public User getUserWithCredsById(int id) {
+        return userDao.getUserWithCredsById(id);
+    }
+
     public void importFromCsv() {
 
         List<User> list = super.getEntitiesFromCsv();

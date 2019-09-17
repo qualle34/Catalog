@@ -1,13 +1,8 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
+import com.senla.catalog.entity.constants.UserRole;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -25,8 +20,9 @@ public class Creds {
     @Column(name = "password")
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private String role;
+    private UserRole role;
 
     @Column(name = "email")
     private String email;
@@ -38,7 +34,7 @@ public class Creds {
     public Creds() {
     }
 
-    public Creds(String login, String password, String role, String email) {
+    public Creds(String login, String password, UserRole role, String email) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -69,11 +65,11 @@ public class Creds {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 

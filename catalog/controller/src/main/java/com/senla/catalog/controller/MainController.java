@@ -1,6 +1,7 @@
 package com.senla.catalog.controller;
 
 import com.senla.catalog.entity.*;
+import com.senla.catalog.entity.constants.UserRole;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,24 +44,10 @@ public class MainController {
     public void start() {
         //test
 
-//       System.out.println(userService.getById(1));
-
-//        addUser();
-//        updateUser();
-        printAll();
-//        deleteUser();
-//
-//        communication();
-//        printMessages();
-//
-//        printAdverts();
-//
-//        exportCsv();
-//        importCsv();
+        System.out.println(userService.getUserWithCredsById(2).getCreds().toString());
     }
 
     private void exportCsv() {
-
         userService.exportToCsv(userService.getAll());
     }
 
@@ -76,7 +63,6 @@ public class MainController {
     }
 
     private void communication() {
-
         User seller = userService.getById(4);
         User buyer = userService.getById(1);
         Chat chat = chatService.getById(1);
@@ -95,7 +81,6 @@ public class MainController {
     }
 
     private void printAll() {
-
         System.out.println(userService.getAll().toString());
         System.out.println(credsService.getAll().toString());
         System.out.println(salesHistoryService.getAll().toString());
@@ -108,7 +93,6 @@ public class MainController {
     }
 
     private void updateUser() {
-
         User user = userService.getById(3);
         System.out.println(user.toString());
         user.setFirstname("Олег");
@@ -117,13 +101,11 @@ public class MainController {
     }
 
     private void deleteUser() {
-
         User user = userService.getById(2);
         userService.delete(user);
     }
 
     private void addUser() {
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = "1982-08-31";
 
@@ -135,7 +117,7 @@ public class MainController {
             System.out.println("Error");
         }
 
-        Creds creds = new Creds("Mah", "qwerty", "user", "mah@mail.ru");
+        Creds creds = new Creds("Mah", "qwerty", UserRole.USER, "mah@mail.ru");
         SellerRating sellerRating = new SellerRating(7.8F, 4);
 
         User user = new User("Маша", "Машина", birthdate, "+375333213882", "Варшава");

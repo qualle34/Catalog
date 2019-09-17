@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -53,7 +52,7 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
             chat = (Chat) this.session.createQuery(query).getSingleResult();
 
         } catch (RuntimeException e) {
-            logger.error("" + e.getMessage());
+            logger.error("Get with messages by id error: " + e.getMessage());
             throw e;
         }
         return chat;
