@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface IAdvertDao extends IGenericDao<Advert, Integer> {
 
-    List<Advert> getAdvertListByCategory(Category category);
+    List<Advert> getByCategory(Category category);
+
+    List<Advert> getByTitle(String title);
 }

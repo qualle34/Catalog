@@ -10,8 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "chat")
@@ -25,19 +25,19 @@ public class Chat {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(mappedBy = "chatList", fetch = FetchType.LAZY)
-    private List<User> userList;
+    @ManyToMany(mappedBy = "chatSet", fetch = FetchType.LAZY)
+    private Set<User> userSet;
 
     @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
-    private List<Message> messageList;
+    private Set<Message> messageSet;
 
     public Chat() {
     }
 
-    public Chat(String title, List<User> userList, List<Message> messageList) {
+    public Chat(String title, Set<User> userSet, Set<Message> messageSet) {
         this.title = title;
-        this.userList = userList;
-        this.messageList = messageList;
+        this.userSet = userSet;
+        this.messageSet = messageSet;
     }
 
     public int getId() {
@@ -56,20 +56,20 @@ public class Chat {
         this.title = title;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public Set<User> getUserSet() {
+        return userSet;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 
-    public List<Message> getMessageList() {
-        return messageList;
+    public Set<Message> getMessageSet() {
+        return messageSet;
     }
 
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
+    public void setMessageSet(Set<Message> messageSet) {
+        this.messageSet = messageSet;
     }
 
     @Override

@@ -17,8 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -52,21 +52,21 @@ public class User {
     private SellerRating rating;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Deal> dealList;
+    private Set<Deal> dealSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Advert> advertList;
+    private Set<Advert> advertSet;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Comment> commentList;
+    private Set<Comment> commentSet;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_chat", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "chat_id"))
-    private List<Chat> chatList;
+    private Set<Chat> chatSet;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Message> messageList;
+    private Set<Message> messageSet;
 
     public User() {
     }
@@ -157,44 +157,44 @@ public class User {
         rating.setUser(this);
     }
 
-    public List<Deal> getDealList() {
-        return dealList;
+    public Set<Deal> getDealSet() {
+        return dealSet;
     }
 
-    public void setDealList(List<Deal> dealList) {
-        this.dealList = dealList;
+    public void setDealSet(Set<Deal> dealSet) {
+        this.dealSet = dealSet;
     }
 
-    public List<Advert> getAdvertList() {
-        return advertList;
+    public Set<Advert> getAdvertSet() {
+        return advertSet;
     }
 
-    public void setAdvertList(List<Advert> advertList) {
-        this.advertList = advertList;
+    public void setAdvertSet(Set<Advert> advertSet) {
+        this.advertSet = advertSet;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
+    public Set<Comment> getCommentSet() {
+        return commentSet;
     }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 
-    public List<Chat> getChatList() {
-        return chatList;
+    public Set<Chat> getChatSet() {
+        return chatSet;
     }
 
-    public void setChatList(List<Chat> chatList) {
-        this.chatList = chatList;
+    public void setChatSet(Set<Chat> chatSet) {
+        this.chatSet = chatSet;
     }
 
-    public List<Message> getMessageList() {
-        return messageList;
+    public Set<Message> getMessageSet() {
+        return messageSet;
     }
 
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
+    public void setMessageSet(Set<Message> messageSet) {
+        this.messageSet = messageSet;
     }
 
     @Override

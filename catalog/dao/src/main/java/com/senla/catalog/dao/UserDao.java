@@ -63,12 +63,19 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
             root = query.from(User.class);
 
             root.fetch("creds", JoinType.LEFT);
+            root.fetch("rating", JoinType.LEFT);
+            root.fetch("dealSet", JoinType.LEFT);
+            root.fetch("advertSet", JoinType.LEFT);
+            root.fetch("commentSet", JoinType.LEFT);
+            root.fetch("chatSet", JoinType.LEFT);
+            root.fetch("messageSet", JoinType.LEFT);
+
             query.select(root).where(cb.equal(root.get("id"), id));
 
             user = (User) this.session.createQuery(query).getSingleResult();
 
         } catch (RuntimeException e) {
-            logger.error("Get user with creds by id error: " + e.getMessage());
+            logger.error("Get full user by id error: " + e.getMessage());
             throw e;
         }
         return user;

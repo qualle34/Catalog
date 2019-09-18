@@ -42,6 +42,10 @@ public class MainController {
 
     //test
     public void start() {
+/*
+Возможность проплатить нахождение объявления в топе выдачи.
+Система рейтингов продавцов, влияющая на положение объявлений продавца в поисковой выдаче. Чем ниже рейтинг, тем ниже объявление в выдаче.
+ */
     }
 
     private void printAll() {
@@ -69,7 +73,7 @@ public class MainController {
 
     private void printMessages() {
 
-        for (Message message : chatService.getWithMessagesById(1).getMessageList()) {
+        for (Message message : chatService.getWithMessagesById(1).getMessageSet()) {
             System.out.println(message.toString());
         }
     }

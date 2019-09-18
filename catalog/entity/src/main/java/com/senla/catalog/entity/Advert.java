@@ -12,8 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "advert")
@@ -42,7 +42,7 @@ public class Advert {
     private Category category;
 
     @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comment> commentList;
+    private Set<Comment> commentSet;
 
     public Advert() {
     }
@@ -55,13 +55,13 @@ public class Advert {
         this.category = category;
     }
 
-    public Advert(String title, String description, double price, User user, Category category, List<Comment> commentList) {
+    public Advert(String title, String description, double price, User user, Category category, Set<Comment> commentSet) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.user = user;
         this.category = category;
-        this.commentList = commentList;
+        this.commentSet = commentSet;
     }
 
     public int getId() {
@@ -88,11 +88,11 @@ public class Advert {
         this.description = description;
     }
 
-    public double getType() {
+    public double getPrice() {
         return price;
     }
 
-    public void setType(double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -112,12 +112,12 @@ public class Advert {
         this.category = category;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
+    public Set<Comment> getCommentSet() {
+        return commentSet;
     }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 
     @Override

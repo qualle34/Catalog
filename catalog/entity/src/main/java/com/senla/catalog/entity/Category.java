@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
@@ -25,14 +25,14 @@ public class Category {
     private String title;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Advert> advertList;
+    private Set<Advert> advertSet;
 
     public Category() {
     }
 
-    public Category(String title, List<Advert> advertList) {
+    public Category(String title, Set<Advert> advertSet) {
         this.title = title;
-        this.advertList = advertList;
+        this.advertSet = advertSet;
     }
 
     public int getId() {
@@ -51,12 +51,12 @@ public class Category {
         this.title = title;
     }
 
-    public List<Advert> getAdvertList() {
-        return advertList;
+    public Set<Advert> getAdvertSet() {
+        return advertSet;
     }
 
-    public void setAdvertList(List<Advert> advertList) {
-        this.advertList = advertList;
+    public void setAdvertSet(Set<Advert> advertSet) {
+        this.advertSet = advertSet;
     }
 
     @Override

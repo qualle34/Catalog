@@ -35,7 +35,12 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<Advert> getAdvertListByCategory(Category category) {
-        return advertDao.getAdvertListByCategory(category);
+    public List<Advert> getByCategory(Category category) {
+        return advertDao.getByCategory(category);
+    }
+
+    @Override
+    public List<Advert> getByTitle(String title) {
+        return advertDao.getByTitle(title);
     }
 }

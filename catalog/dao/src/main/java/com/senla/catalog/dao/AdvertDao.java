@@ -33,7 +33,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     }
 
     @Override
-    public List<Advert> getAdvertListByCategory(Category category) {
+    public List<Advert> getByCategory(Category category) {
 
         try {
             Query query = session.createQuery("from Advert where category_id = :id ");
@@ -43,6 +43,20 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
 
         } catch (RuntimeException e) {
             logger.error("Get advert list by category error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Advert> getByTitle(String title) {
+        try {
+            Query query = session.createQuery("from Advert where title like :title ");
+            query.setParameter("title", "%" + title + "%");
+
+            return query.list();
+
+        } catch (RuntimeException e) {
+            logger.error("Get advert list by title error: " + e.getMessage());
             throw e;
         }
     }
