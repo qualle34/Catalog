@@ -6,14 +6,15 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
+import javax.persistence.TemporalType;
+import javax.persistence.Temporal;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
-import javax.persistence.CascadeType;
 import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 
 import java.util.Date;
 import java.util.List;
@@ -50,21 +51,21 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private SellerRating rating;
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Deal> dealList;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Advert> advertList;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> commentList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_chat", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "chat_id"))
     private List<Chat> chatList;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Message> messageList;
 
     public User() {
@@ -206,14 +207,12 @@ public class User {
                 Objects.equals(lastname, user.lastname) &&
                 Objects.equals(birthdate, user.birthdate) &&
                 Objects.equals(phone, user.phone) &&
-                Objects.equals(location, user.location) &&
-                Objects.equals(creds, user.creds) &&
-                Objects.equals(rating, user.rating);
+                Objects.equals(location, user.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, birthdate, phone, location, creds, rating);
+        return Objects.hash(id, firstname, lastname, birthdate, phone, location);
     }
 
     @Override

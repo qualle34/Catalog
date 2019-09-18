@@ -7,9 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,15 +33,15 @@ public class Advert {
     @Column(name = "price")
     private double price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> commentList;
 
     public Advert() {

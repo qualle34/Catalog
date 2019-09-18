@@ -2,7 +2,18 @@ package com.senla.catalog.entity;
 
 import com.senla.catalog.entity.constants.UserRole;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+
 import java.util.Objects;
 
 @Entity
@@ -27,7 +38,7 @@ public class Creds {
     @Column(name = "email")
     private String email;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

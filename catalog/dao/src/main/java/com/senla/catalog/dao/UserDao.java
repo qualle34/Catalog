@@ -52,12 +52,6 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
     @Override
     public User getFullUserById(int id) {
-        return null;
-    }
-
-    @Override
-    public User getUserWithCredsById(int id) {
-
         User user;
         CriteriaBuilder cb;
         CriteriaQuery query;

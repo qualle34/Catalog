@@ -42,7 +42,6 @@ public class MainController {
 
     //test
     public void start() {
-       
     }
 
     private void printAll() {

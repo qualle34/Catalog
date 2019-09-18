@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +25,10 @@ public class Chat {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(mappedBy = "chatList")
+    @ManyToMany(mappedBy = "chatList", fetch = FetchType.LAZY)
     private List<User> userList;
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
     private List<Message> messageList;
 
     public Chat() {

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +24,7 @@ public class Category {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Advert> advertList;
 
     public Category() {

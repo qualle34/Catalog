@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 
 import java.util.Date;
 import java.util.Objects;
@@ -30,7 +31,7 @@ public class SellerRating {
     @Column(name = "end_vip_date")
     private Date date;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

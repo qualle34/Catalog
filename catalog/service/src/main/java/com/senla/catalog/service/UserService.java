@@ -1,7 +1,6 @@
 package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IUserDao;
-import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IUserService;
@@ -9,7 +8,6 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,14 +35,7 @@ public class UserService extends AbstractService<User, Integer> implements IUser
 
     @Override
     public List<User> getByName(String name) throws RuntimeException {
-
-        try {
-            return userDao.getByName(name);
-
-        } catch (RuntimeException e) {
-            logger.error("Get by name error: " + e.getMessage());
-            throw e;
-        }
+        return userDao.getByName(name);
     }
 
     @Override
@@ -53,12 +44,7 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
-    public User getUserWithCredsById(int id) {
-        return userDao.getUserWithCredsById(id);
-    }
-
     public void importFromCsv() {
-
         List<User> list = super.getEntitiesFromCsv();
 
         for (User user : list) {
