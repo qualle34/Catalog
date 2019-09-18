@@ -59,7 +59,7 @@ public class HibernateUtil {
         configuration.addAnnotatedClass(Comment.class);
         configuration.addAnnotatedClass(Creds.class);
         configuration.addAnnotatedClass(Message.class);
-        configuration.addAnnotatedClass(SalesHistory.class);
+        configuration.addAnnotatedClass(Deal.class);
         configuration.addAnnotatedClass(SellerRating.class);
         configuration.addAnnotatedClass(User.class);
 

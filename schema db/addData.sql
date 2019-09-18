@@ -31,11 +31,11 @@ INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
 
-INSERT INTO catalog.sales_history values(4, 1, 'Lexus ls', '2019-04-23');
-INSERT INTO catalog.sales_history values(2, 3, 'MacBook Air', '2019-05-08');
-INSERT INTO catalog.sales_history values(7, 2, 'Bloody R8', '2019-08-10');
-INSERT INTO catalog.sales_history values(9, 8, 'Mi Band 3', '2019-09-08');
-INSERT INTO catalog.sales_history values(4, 3, 'Huawei P Smart', '2019-05-08');
+INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(4, 1, 'Lexus ls', '2019-04-23');
+INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(2, 3, 'MacBook Air', '2019-05-08');
+INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(7, 2, 'Bloody R8', '2019-08-10');
+INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(9, 8, 'Mi Band 3', '2019-09-08');
+INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(4, 3, 'Huawei P Smart', '2019-05-08');
 
 INSERT INTO catalog.category(title) values('Авто');
 INSERT INTO catalog.category(title) values('Одежда');

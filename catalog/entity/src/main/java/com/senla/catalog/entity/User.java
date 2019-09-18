@@ -50,10 +50,10 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private SellerRating rating;
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SalesHistory> salesHistoryList;
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    private List<Deal> dealList;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Advert> advertList;
 
     @OneToMany(mappedBy = "user")
@@ -156,12 +156,12 @@ public class User {
         rating.setUser(this);
     }
 
-    public List<SalesHistory> getSalesHistoryList() {
-        return salesHistoryList;
+    public List<Deal> getDealList() {
+        return dealList;
     }
 
-    public void setSalesHistoryList(List<SalesHistory> salesHistoryList) {
-        this.salesHistoryList = salesHistoryList;
+    public void setDealList(List<Deal> dealList) {
+        this.dealList = dealList;
     }
 
     public List<Advert> getAdvertList() {

@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS `catalog`;
-CREATE DATABASE IF NOT EXISTS `catalog`;
+CREATE DATABASE `catalog`;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`user` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
@@ -38,13 +38,14 @@ CREATE TABLE IF NOT EXISTS `catalog`.`seller_rating` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `catalog`.`sales_history` (
+CREATE TABLE IF NOT EXISTS `catalog`.`deal` (
+  `deal_id` INT NOT NULL AUTO_INCREMENT,
   `seller_id` INT NOT NULL,
-  `buyer_id` INT NOT NULL,
+  `buyer_id` INT NULL,
   `title` VARCHAR(45) NOT NULL,
   `sale_date` DATE NOT NULL,
-  PRIMARY KEY (`seller_id`, `buyer_id`),
   INDEX `user_buyer_fk_idx` (`buyer_id` ASC) VISIBLE,
+  PRIMARY KEY (`deal_id`, `seller_id`),
   CONSTRAINT `user_seller_fk`
     FOREIGN KEY (`seller_id`)
     REFERENCES `catalog`.`user` (`user_id`)
@@ -53,24 +54,24 @@ CREATE TABLE IF NOT EXISTS `catalog`.`sales_history` (
   CONSTRAINT `user_buyer_fk`
     FOREIGN KEY (`buyer_id`)
     REFERENCES `catalog`.`user` (`user_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`category` (
   `category_id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NULL,
+  `title` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`category_id`))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`advert` (
   `advert_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `category_id` INT NOT NULL,
+  `category_id` INT NULL,
   `title` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NOT NULL,
   `price` DECIMAL(12,2) NOT NULL,
-  PRIMARY KEY (`advert_id`, `user_id`, `category_id`),
+  PRIMARY KEY (`advert_id`, `user_id`),
   INDEX `user_advert_fk_idx` (`user_id` ASC) VISIBLE,
   INDEX `category_advert_fk_idx` (`category_id` ASC) VISIBLE,
   CONSTRAINT `user_advert_fk`
@@ -81,22 +82,22 @@ CREATE TABLE IF NOT EXISTS `catalog`.`advert` (
   CONSTRAINT `category_advert_fk`
     FOREIGN KEY (`category_id`)
     REFERENCES `catalog`.`category` (`category_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `advert_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `user_id` INT NULL,
   `text` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`comment_id`, `advert_id`, `user_id`),
+  PRIMARY KEY (`comment_id`, `advert_id`),
   INDEX `user_comment_fk_idx` (`user_id` ASC) VISIBLE,
   INDEX `advert_comment_fk_idx` (`advert_id` ASC) VISIBLE,
   CONSTRAINT `user_comment_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `catalog`.`user` (`user_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `advert_comment_fk`
     FOREIGN KEY (`advert_id`)
@@ -107,7 +108,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`chat` (
   `chat_id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NULL,
+  `title` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`chat_id`))
 ENGINE = InnoDB;
 
@@ -131,10 +132,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `catalog`.`message` (
   `message_id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
+  `user_id` INT NULL,
   `text` VARCHAR(45) NOT NULL,
   `send_date` DATETIME NOT NULL,
-  PRIMARY KEY (`message_id`, `chat_id`, `user_id`),
+  PRIMARY KEY (`message_id`, `chat_id`),
   INDEX `chat_message_fk_idx` (`chat_id` ASC) VISIBLE,
   INDEX `user_message_fk_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `chat_message_fk`
@@ -145,6 +146,6 @@ CREATE TABLE IF NOT EXISTS `catalog`.`message` (
   CONSTRAINT `user_message_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `catalog`.`user` (`user_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

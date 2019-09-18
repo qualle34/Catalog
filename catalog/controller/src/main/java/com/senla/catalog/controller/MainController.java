@@ -4,7 +4,6 @@ import com.senla.catalog.entity.*;
 import com.senla.catalog.entity.constants.UserRole;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 
 import java.text.ParseException;
@@ -21,7 +20,7 @@ public class MainController {
     private ICredsService credsService;
 
     @Autowired
-    private ISalesHistoryService salesHistoryService;
+    private IDealService dealService;
 
     @Autowired
     private ISellerRatingService sellerRatingService;
@@ -41,25 +40,21 @@ public class MainController {
     @Autowired
     private IMessageService messageService;
 
+    //test
     public void start() {
-        //test
-
-        System.out.println(userService.getUserWithCredsById(2).getCreds().toString());
+       
     }
 
-    private void exportCsv() {
-        userService.exportToCsv(userService.getAll());
-    }
-
-    private void importCsv() {
-        userService.importFromCsv();
-    }
-
-    private void printMessages() {
-
-        for (Message message : chatService.getWithMessagesById(1).getMessageList()) {
-            System.out.println(message.toString());
-        }
+    private void printAll() {
+        System.out.println(userService.getAll().toString());
+        System.out.println(credsService.getAll().toString());
+        System.out.println(dealService.getAll().toString());
+        System.out.println(sellerRatingService.getAll().toString());
+        System.out.println(categoryService.getAll().toString());
+        System.out.println(advertService.getAll().toString());
+        System.out.println(commentService.getAll().toString());
+        System.out.println(chatService.getAll().toString());
+        System.out.println(messageService.getAll().toString());
     }
 
     private void communication() {
@@ -73,36 +68,11 @@ public class MainController {
         messageService.add(message2);
     }
 
-    private void printAdverts() {
+    private void printMessages() {
 
-        for (Advert advert : categoryService.getWithAdvertsByName("Одежда").getAdvertList()) {
-            System.out.println(advert.toString());
+        for (Message message : chatService.getWithMessagesById(1).getMessageList()) {
+            System.out.println(message.toString());
         }
-    }
-
-    private void printAll() {
-        System.out.println(userService.getAll().toString());
-        System.out.println(credsService.getAll().toString());
-        System.out.println(salesHistoryService.getAll().toString());
-        System.out.println(sellerRatingService.getAll().toString());
-        System.out.println(categoryService.getAll().toString());
-        System.out.println(advertService.getAll().toString());
-        System.out.println(commentService.getAll().toString());
-        System.out.println(chatService.getAll().toString());
-        System.out.println(messageService.getAll().toString());
-    }
-
-    private void updateUser() {
-        User user = userService.getById(3);
-        System.out.println(user.toString());
-        user.setFirstname("Олег");
-        user.setLastname("Олегов");
-        userService.update(user);
-    }
-
-    private void deleteUser() {
-        User user = userService.getById(2);
-        userService.delete(user);
     }
 
     private void addUser() {

@@ -2,14 +2,13 @@ package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IUserDao;
-import com.senla.catalog.entity.Chat;
 import com.senla.catalog.entity.User;
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
