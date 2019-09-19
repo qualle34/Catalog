@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -42,5 +43,19 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     @Override
     public List<Advert> getByTitle(String title) {
         return advertDao.getByTitle(title);
+    }
+
+    @Override
+    public List<Advert> getSortedByRating() {
+        List<Advert> advertList = advertDao.getWithUser();
+        advertList.sort(Collections.reverseOrder());
+        return advertList;
+    }
+
+    @Override
+    public List<Advert> getByCategorySortedByRating(Category category) {
+        List<Advert> advertList = advertDao.getByCategoryWithUser(category);
+        advertList.sort(Collections.reverseOrder());
+        return advertList;
     }
 }

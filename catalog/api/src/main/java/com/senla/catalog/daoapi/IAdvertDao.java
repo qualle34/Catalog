@@ -10,5 +10,9 @@ public interface IAdvertDao extends IGenericDao<Advert, Integer> {
 
     List<Advert> getByCategory(Category category);
 
+    List<Advert> getWithUser();
+
+    List<Advert> getByCategoryWithUser(Category category);
+
     List<Advert> getByTitle(String title);
 }

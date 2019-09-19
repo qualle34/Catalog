@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -48,7 +52,49 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     }
 
     @Override
+    public List<Advert> getWithUser() {
+        List<Advert> list;
+
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+
+            Root root = query.from(Advert.class);
+
+            root.fetch("user", JoinType.INNER);
+            list = session.createQuery(query).getResultList();
+
+        } catch (RuntimeException e) {
+            logger.error("Get adverts with users error: " + e.getMessage());
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public List<Advert> getByCategoryWithUser(Category category) {
+        List<Advert> list;
+
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+            Root root = query.from(Advert.class);
+
+            root.fetch("user", JoinType.INNER);
+            query.select(root).where(builder.equal(root.get("category"), category));
+
+            list = session.createQuery(query).getResultList();
+
+        } catch (RuntimeException e) {
+            logger.error("Get adverts by category with users error: " + e.getMessage());
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
     public List<Advert> getByTitle(String title) {
+
         try {
             Query query = session.createQuery("from Advert where title like :title ");
             query.setParameter("title", "%" + title + "%");

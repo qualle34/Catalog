@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 @Repository
 public class SellerRatingDao extends AbstractDao<SellerRating, Integer> implements ISellerRatingDao {
 

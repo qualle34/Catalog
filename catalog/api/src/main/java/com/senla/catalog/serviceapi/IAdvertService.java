@@ -11,4 +11,8 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
     List<Advert> getByCategory(Category category);
 
     List<Advert> getByTitle(String title);
+
+    List<Advert> getSortedByRating();
+
+    List<Advert> getByCategorySortedByRating(Category category);
 }

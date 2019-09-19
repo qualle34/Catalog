@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "advert")
-public class Advert {
+public class Advert implements Comparable<Advert>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,5 +139,10 @@ public class Advert {
     @Override
     public String toString() {
         return id + " " + title + " " + description + " " + price;
+    }
+
+    @Override
+    public int compareTo(Advert o) {
+        return Float.compare(this.getUser().getRating().getRating(), o.getUser().getRating().getRating());
     }
 }
