@@ -2,7 +2,6 @@ package com.senla.catalog.service.basic;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.serviceapi.basic.IGenericService;
-import com.senla.csvhelper.CsvService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
@@ -62,14 +61,6 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     }
 
     @Override
-    public void addList(List<T> list) {
-
-        for (T t : list) {
-            add(t);
-        }
-    }
-
-    @Override
     public void update(T t) {
         Transaction transaction = null;
 
@@ -99,31 +90,6 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw e;
-        }
-    }
-
-    @Override
-    public List<T> getEntitiesFromCsv() {
-
-        try {
-            return (List<T>) new CsvService().read(getEntityClass());
-
-        } catch (RuntimeException e) {
-            logger.error("Import from csv error: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    @Override
-    public void exportToCsv(List<T> list) {
-
-        try {
-            CsvService csvService = new CsvService();
-            csvService.write((List<Object>) list);
-
-        } catch (RuntimeException e) {
-            logger.error("Export to csv error: " + e.getMessage());
             throw e;
         }
     }

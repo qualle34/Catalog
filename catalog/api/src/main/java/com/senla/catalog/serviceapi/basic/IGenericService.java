@@ -8,15 +8,9 @@ public interface IGenericService<T, PK> {
 
     void add(T t);
 
-    void addList(List<T> list);
-
     T getById(PK pk);
 
     void update(T t);
 
     void delete(T t);
-
-    List<T> getEntitiesFromCsv();
-
-    void exportToCsv(List<T> list);
 }
