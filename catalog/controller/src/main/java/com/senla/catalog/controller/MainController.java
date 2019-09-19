@@ -40,6 +40,9 @@ public class MainController {
     @Autowired
     private IMessageService messageService;
 
+    @Autowired
+    private IVipInfoService vipInfoService;
+
     //test
     public void start() {
 /*
@@ -57,6 +60,7 @@ public class MainController {
         System.out.println(commentService.getAll().toString());
         System.out.println(chatService.getAll().toString());
         System.out.println(messageService.getAll().toString());
+        System.out.println(vipInfoService.getAll().toString());
     }
 
     private void communication() {

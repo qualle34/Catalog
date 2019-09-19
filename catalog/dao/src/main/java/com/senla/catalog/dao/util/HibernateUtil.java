@@ -54,6 +54,7 @@ public class HibernateUtil {
         configuration.setProperties(properties);
 
         configuration.addAnnotatedClass(Advert.class);
+        configuration.addAnnotatedClass(VipInfo.class);
         configuration.addAnnotatedClass(Category.class);
         configuration.addAnnotatedClass(Chat.class);
         configuration.addAnnotatedClass(Comment.class);

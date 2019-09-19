@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
 
@@ -32,6 +33,9 @@ public class Advert implements Comparable<Advert>{
 
     @Column(name = "price")
     private double price;
+
+    @OneToOne(mappedBy = "advert", cascade = CascadeType.ALL)
+    private VipInfo vipInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -94,6 +98,14 @@ public class Advert implements Comparable<Advert>{
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public VipInfo getVipInfo() {
+        return vipInfo;
+    }
+
+    public void setVipInfo(VipInfo vipInfo) {
+        this.vipInfo = vipInfo;
     }
 
     public User getUser() {

@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `catalog`.`seller_rating` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `rating` DECIMAL(2,1) NOT NULL,
   `rating_count` INT NOT NULL,
-  `end_vip_date` DATE NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `user_rating_fk`
     FOREIGN KEY (`user_id`)
@@ -83,6 +82,18 @@ CREATE TABLE IF NOT EXISTS `catalog`.`advert` (
     FOREIGN KEY (`category_id`)
     REFERENCES `catalog`.`category` (`category_id`)
     ON DELETE SET NULL
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `catalog`.`vip_info` (
+  `advert_id` INT NOT NULL,
+  `buy_vip_date` VARCHAR(45) NOT NULL,
+  `end_vip_date` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`advert_id`),
+  CONSTRAINT `advert_vip_fk`
+    FOREIGN KEY (`advert_id`)
+    REFERENCES `catalog`.`advert` (`advert_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

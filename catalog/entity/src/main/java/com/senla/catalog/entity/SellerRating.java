@@ -10,7 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -28,9 +27,6 @@ public class SellerRating {
     @Column(name = "rating_count")
     private int ratingCount;
 
-    @Column(name = "end_vip_date")
-    private Date date;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,12 +37,6 @@ public class SellerRating {
     public SellerRating(float rating, int ratingCount) {
         this.rating = rating;
         this.ratingCount = ratingCount;
-    }
-
-    public SellerRating(float rating, int ratingCount, Date date) {
-        this.rating = rating;
-        this.ratingCount = ratingCount;
-        this.date = date;
     }
 
     public int getId() {
@@ -73,14 +63,6 @@ public class SellerRating {
         this.ratingCount = ratingCount;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public User getUser() {
         return user;
     }
@@ -96,22 +78,16 @@ public class SellerRating {
         SellerRating that = (SellerRating) o;
         return id == that.id &&
                 Float.compare(that.rating, rating) == 0 &&
-                ratingCount == that.ratingCount &&
-                Objects.equals(date, that.date);
+                ratingCount == that.ratingCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rating, ratingCount, date);
+        return Objects.hash(id, rating, ratingCount);
     }
 
     @Override
     public String toString() {
-        String line = id + " " + rating + " " + ratingCount;
-
-        if (date != null) {
-            line += " " + date.toString();
-        }
-        return line;
+        return id + " " + rating + " " + ratingCount;
     }
 }

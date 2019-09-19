@@ -55,6 +55,8 @@ INSERT INTO catalog.advert(user_id, category_id, title, description, price) valu
 INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(7, 1, 'Автомобиль Audi A7', 'Audi A7 2012', 35230.0);
 INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(3, 2, 'Куртка Xiaomi', 'Xiaomi mi jacket', 95.4);
 
+INSERT INTO catalog.vip_info values(6, '2019-09-08', '2019-09-18');
+
 INSERT INTO catalog.chat(title) values('Lexus ls');
 INSERT INTO catalog.chat(title) values('MacBook Air');
 
