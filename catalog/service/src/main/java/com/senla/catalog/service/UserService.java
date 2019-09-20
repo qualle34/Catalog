@@ -29,6 +29,11 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "userDao";
+    }
+
+    @Override
     protected Class<User> getEntityClass() {
         return User.class;
     }

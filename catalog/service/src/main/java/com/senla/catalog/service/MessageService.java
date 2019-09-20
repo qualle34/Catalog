@@ -27,6 +27,11 @@ public class MessageService extends AbstractService<Message, Integer> implements
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "messageDao";
+    }
+
+    @Override
     protected Class<Message> getEntityClass() {
         return Message.class;
     }

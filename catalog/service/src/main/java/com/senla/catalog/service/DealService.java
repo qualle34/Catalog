@@ -27,6 +27,11 @@ public class DealService extends AbstractService<Deal, Integer> implements IDeal
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "dealDao";
+    }
+
+    @Override
     protected Class<Deal> getEntityClass() {
         return Deal.class;
     }

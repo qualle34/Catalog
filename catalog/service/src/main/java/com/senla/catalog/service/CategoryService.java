@@ -27,6 +27,11 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "categoryDao";
+    }
+
+    @Override
     protected Class<Category> getEntityClass() {
         return Category.class;
     }

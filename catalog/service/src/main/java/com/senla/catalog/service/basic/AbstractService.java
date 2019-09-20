@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
@@ -21,15 +22,13 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     private IGenericDao dao;
 
     @Autowired
-    private void setDao(List<IGenericDao> daoList) {
-        for (IGenericDao dao : daoList) {
-            if (dao.getClass().getSimpleName().equals(getEntityClass().getSimpleName() + "Dao")) {
-                this.dao = dao;
-            }
-        }
+    private void setDao(Map<String, IGenericDao> daoMap) {
+        this.dao = daoMap.get(getDaoClassName());
     }
 
     protected abstract Class getChildClass();
+
+    protected abstract String getDaoClassName();
 
     protected abstract Class<T> getEntityClass();
 

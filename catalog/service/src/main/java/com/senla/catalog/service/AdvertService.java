@@ -32,6 +32,11 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "advertDao";
+    }
+
+    @Override
     protected Class<Advert> getEntityClass() {
         return Advert.class;
     }

@@ -27,6 +27,11 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "chatDao";
+    }
+
+    @Override
     protected Class<Chat> getEntityClass() {
         return Chat.class;
     }

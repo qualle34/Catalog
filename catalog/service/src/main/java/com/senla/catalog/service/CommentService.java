@@ -27,6 +27,11 @@ public class CommentService extends AbstractService<Comment, Integer> implements
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "commentDao";
+    }
+
+    @Override
     protected Class<Comment> getEntityClass() {
         return Comment.class;
     }

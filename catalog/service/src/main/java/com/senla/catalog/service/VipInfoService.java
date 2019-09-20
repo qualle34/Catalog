@@ -27,6 +27,11 @@ public class VipInfoService extends AbstractService<VipInfo, Integer> implements
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "vipInfoDao";
+    }
+
+    @Override
     protected Class<VipInfo> getEntityClass() {
         return VipInfo.class;
     }

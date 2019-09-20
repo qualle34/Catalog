@@ -27,6 +27,11 @@ public class SellerRatingService extends AbstractService<SellerRating, Integer> 
     }
 
     @Override
+    protected String getDaoClassName() {
+        return "sellerRatingDao";
+    }
+
+    @Override
     protected Class<SellerRating> getEntityClass() {
         return SellerRating.class;
     }
