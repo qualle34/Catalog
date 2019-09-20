@@ -1,14 +1,9 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,9 +17,11 @@ public class VipInfo implements Serializable {
     private Advert advert;
 
     @Column(name = "buy_vip_date")
+    @Temporal(TemporalType.DATE)
     private Date buyDate;
 
     @Column(name = "end_vip_date")
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     public VipInfo(){
@@ -34,6 +31,16 @@ public class VipInfo implements Serializable {
         this.advert = advert;
         this.buyDate = buyDate;
         this.endDate = endDate;
+    }
+
+    public VipInfo(Advert advert, Date buyDate, int daysCount) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(buyDate);
+        c.add(Calendar.DATE, daysCount);
+
+        this.advert = advert;
+        this.buyDate = buyDate;
+        this.endDate = c.getTime();
     }
 
     public Advert getAdvert() {

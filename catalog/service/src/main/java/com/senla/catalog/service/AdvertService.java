@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,9 +54,51 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
+    public List<Advert> getSortedByVipAndRating() {
+        List<Advert> advertList = advertDao.getWithUser();
+        advertList.sort(Collections.reverseOrder());
+        int i = 0;
+        int n = 0;
+
+        for (Advert advert : advertList) {
+            if (advert.getVipInfo() != null) {
+                if (new Date().before(advert.getVipInfo().getEndDate())) {
+                    Advert vipAdvert = advertList.get(i);
+                    advertList.set(i, advertList.get(n));
+                    advertList.set(n, vipAdvert);
+                    n++;
+                }
+            }
+            i++;
+        }
+        return advertList;
+    }
+
+    @Override
     public List<Advert> getByCategorySortedByRating(Category category) {
         List<Advert> advertList = advertDao.getByCategoryWithUser(category);
         advertList.sort(Collections.reverseOrder());
+        return advertList;
+    }
+
+    @Override
+    public List<Advert> getByCategorySortedByVipAndRating(Category category) {
+        List<Advert> advertList = advertDao.getByCategoryWithUser(category);
+        advertList.sort(Collections.reverseOrder());
+        int i = 0;
+        int n = 0;
+
+        for (Advert advert : advertList) {
+            if (advert.getVipInfo() != null) {
+                if (new Date().before(advert.getVipInfo().getEndDate())) {
+                    Advert vipAdvert = advertList.get(i);
+                    advertList.set(i, advertList.get(n));
+                    advertList.set(n, vipAdvert);
+                    n++;
+                }
+            }
+            i++;
+        }
         return advertList;
     }
 }

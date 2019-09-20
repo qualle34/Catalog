@@ -27,9 +27,9 @@ INSERT INTO catalog.seller_rating(rating, rating_count) values(5.5, 4);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(8.9, 2);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
+INSERT INTO catalog.seller_rating(rating, rating_count) values(5, 1);
 INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
-INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
-INSERT INTO catalog.seller_rating(rating, rating_count) values(0, 0);
+INSERT INTO catalog.seller_rating(rating, rating_count) values(7.8, 8);
 
 INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(4, 1, 'Lexus ls', '2019-04-23');
 INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(2, 3, 'MacBook Air', '2019-05-08');
@@ -56,6 +56,7 @@ INSERT INTO catalog.advert(user_id, category_id, title, description, price) valu
 INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(3, 2, 'Куртка Xiaomi', 'Xiaomi mi jacket', 95.4);
 
 INSERT INTO catalog.vip_info values(6, '2019-09-08', '2019-09-18');
+INSERT INTO catalog.vip_info values(7, '2019-09-01', '2019-09-25');
 
 INSERT INTO catalog.chat(title) values('Lexus ls');
 INSERT INTO catalog.chat(title) values('MacBook Air');

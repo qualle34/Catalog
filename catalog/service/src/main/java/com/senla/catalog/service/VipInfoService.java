@@ -1,6 +1,6 @@
 package com.senla.catalog.service;
 
-import com.senla.catalog.IVipInfoDao;
+import com.senla.catalog.daoapi.IVipInfoDao;
 import com.senla.catalog.entity.VipInfo;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IVipInfoService;

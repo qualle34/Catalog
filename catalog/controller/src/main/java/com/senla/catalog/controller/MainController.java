@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Controller
@@ -45,9 +46,6 @@ public class MainController {
 
     //test
     public void start() {
-/*
-Возможность проплатить нахождение объявления в топе выдачи.
- */
     }
 
     private void printAll() {
