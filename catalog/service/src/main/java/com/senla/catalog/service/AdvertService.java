@@ -3,6 +3,7 @@ package com.senla.catalog.service;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
+import com.senla.catalog.entity.constants.AdvertType;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IAdvertService;
 import org.hibernate.Session;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,63 +47,47 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
+    public List<Advert> getByType(AdvertType type) {
+        return advertDao.getByType(type);
+    }
+
+    @Override
+    public List<Advert> getByCategoryAndType(Category category, AdvertType type) {
+        return advertDao.getByCategoryAndType(category, type);
+    }
+
+    @Override
     public List<Advert> getByTitle(String title) {
         return advertDao.getByTitle(title);
     }
 
     @Override
-    public List<Advert> getSortedByRating() {
-        List<Advert> advertList = advertDao.getWithUser();
-        advertList.sort(Collections.reverseOrder());
-        return advertList;
+    public List<Advert> getByTitleAndType(String title, AdvertType type) {
+        return advertDao.getByTitleAndType(title, type);
     }
 
     @Override
-    public List<Advert> getSortedByVipAndRating() {
-        List<Advert> advertList = advertDao.getWithUser();
-        advertList.sort(Collections.reverseOrder());
-        int i = 0;
-        int n = 0;
-
-        for (Advert advert : advertList) {
-            if (advert.getVipInfo() != null) {
-                if (new Date().before(advert.getVipInfo().getEndDate())) {
-                    Advert vipAdvert = advertList.get(i);
-                    advertList.set(i, advertList.get(n));
-                    advertList.set(n, vipAdvert);
-                    n++;
-                }
-            }
-            i++;
-        }
-        return advertList;
-    }
-
-    @Override
-    public List<Advert> getByCategorySortedByRating(Category category) {
-        List<Advert> advertList = advertDao.getByCategoryWithUser(category);
-        advertList.sort(Collections.reverseOrder());
-        return advertList;
+    public List<Advert> getAllSortedByVipAndRating() {
+        return sort(advertDao.getAllWithUser());
     }
 
     @Override
     public List<Advert> getByCategorySortedByVipAndRating(Category category) {
-        List<Advert> advertList = advertDao.getByCategoryWithUser(category);
-        advertList.sort(Collections.reverseOrder());
-        int i = 0;
-        int n = 0;
+        return sort(advertDao.getByCategoryWithUser(category));
+    }
 
-        for (Advert advert : advertList) {
-            if (advert.getVipInfo() != null) {
-                if (new Date().before(advert.getVipInfo().getEndDate())) {
-                    Advert vipAdvert = advertList.get(i);
-                    advertList.set(i, advertList.get(n));
-                    advertList.set(n, vipAdvert);
-                    n++;
-                }
-            }
-            i++;
-        }
+    @Override
+    public List<Advert> getByTypeSortedByVipAndRating(AdvertType type) {
+        return sort(advertDao.getByTypeWithUser(type));
+    }
+
+    @Override
+    public List<Advert> getByCategoryAndTypeSortedByVipAndRating(Category category, AdvertType type) {
+        return sort(advertDao.getByCategoryAndTypeWithUser(category, type));
+    }
+
+    private List<Advert> sort(List<Advert> advertList){
+        advertList.sort(Collections.reverseOrder());
         return advertList;
     }
 }

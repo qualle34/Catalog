@@ -45,6 +45,7 @@ public class MainController {
 
     //test
     public void start() {
+        printAll();
     }
 
     private void printAll() {
@@ -58,24 +59,6 @@ public class MainController {
         System.out.println(chatService.getAll().toString());
         System.out.println(messageService.getAll().toString());
         System.out.println(vipInfoService.getAll().toString());
-    }
-
-    private void communication() {
-        User seller = userService.getById(4);
-        User buyer = userService.getById(1);
-        Chat chat = chatService.getById(1);
-
-        Message message1 = new Message("Привет", new Date(), chat, buyer);
-        messageService.add(message1);
-        Message message2 = new Message("Привет, как лексус?", new Date(), chat, seller);
-        messageService.add(message2);
-    }
-
-    private void printMessages() {
-
-        for (Message message : chatService.getWithMessagesById(1).getMessageSet()) {
-            System.out.println(message.toString());
-        }
     }
 
     private void addUser() {

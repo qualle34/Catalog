@@ -46,17 +46,18 @@ INSERT INTO catalog.category(title) values('Сад и огород');
 INSERT INTO catalog.category(title) values('Хобби и игры');
 INSERT INTO catalog.category(title) values('Животные');
 
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(5, 4, 'Телефон Nokia', 'Nokia 3310', 46.2);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(4, 2, 'Кроссовки Nike', 'Nike Air', 78.4);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(9, 6, 'Лопата Raptor', 'Raptor TR', 12.4);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(7, 8, 'Клетка для кролика', 'Размер: 1м х 0.5м', 16.0);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(2, 5, 'Дрель Bosch', 'GSR-13', 56.4);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(8, 7, 'Геймпад Sony', 'DualShock 4 white', 48.4);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(7, 1, 'Автомобиль Audi A7', 'Audi A7 2012', 35230.0);
-INSERT INTO catalog.advert(user_id, category_id, title, description, price) values(3, 2, 'Куртка Xiaomi', 'Xiaomi mi jacket', 95.4);
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(5, 4, 'Телефон Nokia', 'Nokia 3310', 46.2, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(4, 2, 'Кроссовки Nike', 'Nike Air', 78.4, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, type) values(9, 6, 'Лопата Raptor', 'Raptor TR', 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(7, 8, 'Клетка для кролика', 'Размер: 1м х 0.5м', 16.0, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(2, 5, 'Дрель Bosch', 'GSR-13', 56.4, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(8, 7, 'Геймпад Sony', 'DualShock 4 white', 48.4, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(7, 1, 'Автомобиль Audi A7', 'Audi A7 2012', 35230.0, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(3, 2, 'Куртка Xiaomi', 'Xiaomi mi jacket', 95.4, 'SELL');
+INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(3, 4, 'Куплю ноутбук', 'Xiaomi, Asus, Apple, Aser', 95.4, 'BUY');
 
-INSERT INTO catalog.vip_info values(6, '2019-09-08', '2019-09-18');
-INSERT INTO catalog.vip_info values(7, '2019-09-01', '2019-09-25');
+INSERT INTO catalog.vip_info values(6, '2019-09-08');
+INSERT INTO catalog.vip_info values(7, '2019-09-01');
 
 INSERT INTO catalog.chat(title) values('Lexus ls');
 INSERT INTO catalog.chat(title) values('MacBook Air');

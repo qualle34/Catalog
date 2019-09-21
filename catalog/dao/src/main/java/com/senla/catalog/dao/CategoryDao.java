@@ -30,11 +30,11 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     }
 
     @Override
-    public Category getWithAdvertsByName(String name) {
+    public Category getByTitle(String title) {
 
         try {
-            Query query = session.createQuery("from Category as category join fetch category.advertList as advertList where category.title = :name ");
-            query.setParameter("name", name);
+            Query query = session.createQuery("from Category where title = :title ");
+            query.setParameter("title", title);
 
             return (Category) query.getSingleResult();
 

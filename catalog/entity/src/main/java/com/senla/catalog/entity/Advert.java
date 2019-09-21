@@ -1,5 +1,7 @@
 package com.senla.catalog.entity;
 
+import com.senla.catalog.entity.constants.AdvertType;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -7,18 +9,20 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "advert")
-public class Advert implements Comparable<Advert>{
+public class Advert implements Comparable<Advert> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +37,10 @@ public class Advert implements Comparable<Advert>{
 
     @Column(name = "price")
     private double price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private AdvertType type;
 
     @OneToOne(mappedBy = "advert", cascade = CascadeType.ALL)
     private VipInfo vipInfo;
@@ -51,21 +59,13 @@ public class Advert implements Comparable<Advert>{
     public Advert() {
     }
 
-    public Advert(String title, String description, double price, User user, Category category) {
+    public Advert(String title, String description, double price, AdvertType type, User user, Category category) {
         this.title = title;
         this.description = description;
         this.price = price;
+        this.type = type;
         this.user = user;
         this.category = category;
-    }
-
-    public Advert(String title, String description, double price, User user, Category category, Set<Comment> commentSet) {
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.user = user;
-        this.category = category;
-        this.commentSet = commentSet;
     }
 
     public int getId() {
@@ -100,8 +100,20 @@ public class Advert implements Comparable<Advert>{
         this.price = price;
     }
 
+    public AdvertType getType() {
+        return type;
+    }
+
+    public void setType(AdvertType type) {
+        this.type = type;
+    }
+
     public VipInfo getVipInfo() {
         return vipInfo;
+    }
+
+    public boolean isVip() {
+        return this.getVipInfo() != null;
     }
 
     public void setVipInfo(VipInfo vipInfo) {
@@ -140,21 +152,31 @@ public class Advert implements Comparable<Advert>{
         return id == advert.id &&
                 Double.compare(advert.price, price) == 0 &&
                 Objects.equals(title, advert.title) &&
-                Objects.equals(description, advert.description);
+                Objects.equals(description, advert.description) &&
+                type == advert.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, price);
+        return Objects.hash(id, title, description, price, type);
     }
 
     @Override
     public String toString() {
-        return id + " " + title + " " + description + " " + price;
+        return id + " " + title + " " + description + " " + price + " " + type;
     }
 
     @Override
     public int compareTo(Advert o) {
-        return Float.compare(this.getUser().getRating().getRating(), o.getUser().getRating().getRating());
+        int rating = Float.compare(this.getUser().getRating().getRating(), o.getUser().getRating().getRating());
+        int vip = Boolean.compare(this.isVip(), o.isVip());
+
+        if(vip == 1 || vip == 0 && rating == 1){
+            return 1;
+        } else if (vip == 0 && rating == 0){
+            return 0;
+        } else {
+            return -1;
+        }
     }
 }

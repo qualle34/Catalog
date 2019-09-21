@@ -5,5 +5,5 @@ import com.senla.catalog.entity.Category;
 
 public interface ICategoryDao extends IGenericDao<Category, Integer> {
 
-    Category getWithAdvertsByName(String name);
+    Category getByTitle(String title);
 }

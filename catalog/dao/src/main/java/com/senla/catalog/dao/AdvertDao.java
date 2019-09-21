@@ -4,18 +4,15 @@ import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
+import com.senla.catalog.entity.constants.AdvertType;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -40,13 +37,44 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     public List<Advert> getByCategory(Category category) {
 
         try {
-            Query query = session.createQuery("from Advert where category_id = :id ");
-            query.setParameter("id", category.getId());
+            Query query = session.createQuery("from Advert where category = :category ");
+            query.setParameter("category", category);
 
             return query.list();
 
         } catch (RuntimeException e) {
             logger.error("Get advert list by category error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Advert> getByType(AdvertType type) {
+
+        try {
+            Query query = session.createQuery("from Advert where type = :type ");
+            query.setParameter("type", type);
+
+            return query.list();
+
+        } catch (RuntimeException e) {
+            logger.error("Get advert list by type error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Advert> getByCategoryAndType(Category category, AdvertType type) {
+
+        try {
+            Query query = session.createQuery("from Advert where category = :category and type = :type");
+            query.setParameter("category", category);
+            query.setParameter("type", type);
+
+            return query.list();
+
+        } catch (RuntimeException e) {
+            logger.error("Get advert list by category and type error: " + e.getMessage());
             throw e;
         }
     }
@@ -67,7 +95,22 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     }
 
     @Override
-    public List<Advert> getWithUser() {
+    public List<Advert> getByTitleAndType(String title, AdvertType type) {
+        try {
+            Query query = session.createQuery("from Advert where title like :title and type = :type");
+            query.setParameter("title", "%" + title + "%");
+            query.setParameter("type", type);
+
+            return query.list();
+
+        } catch (RuntimeException e) {
+            logger.error("Get advert list by title and type error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Advert> getAllWithUser() {
         List<Advert> list;
 
         try {
@@ -102,6 +145,48 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
 
         } catch (RuntimeException e) {
             logger.error("Get adverts by category with users error: " + e.getMessage());
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public List<Advert> getByTypeWithUser(AdvertType type) {
+        List<Advert> list;
+
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+            Root root = query.from(Advert.class);
+
+            root.fetch("user", JoinType.INNER);
+            query.select(root).where(builder.equal(root.get("type"), type));
+
+            list = session.createQuery(query).getResultList();
+
+        } catch (RuntimeException e) {
+            logger.error("Get adverts by type with users error: " + e.getMessage());
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public List<Advert> getByCategoryAndTypeWithUser(Category category, AdvertType type) {
+        List<Advert> list;
+
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+            Root root = query.from(Advert.class);
+
+            root.fetch("user", JoinType.INNER);
+            Predicate predicate = builder.and(builder.equal(root.get("category"), category), builder.equal(root.get("type"), type));
+            query.select(root).where(predicate);
+            list = session.createQuery(query).getResultList();
+
+        } catch (RuntimeException e) {
+            logger.error("Get adverts by category and type with users error: " + e.getMessage());
             throw e;
         }
         return list;

@@ -69,7 +69,8 @@ CREATE TABLE IF NOT EXISTS `catalog`.`advert` (
   `category_id` INT NULL,
   `title` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NOT NULL,
-  `price` DECIMAL(12,2) NOT NULL,
+  `price` DECIMAL(12,2) NULL DEFAULT 0,
+  `type` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`advert_id`, `user_id`),
   INDEX `user_advert_fk_idx` (`user_id` ASC) VISIBLE,
   INDEX `category_advert_fk_idx` (`category_id` ASC) VISIBLE,
@@ -88,7 +89,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `catalog`.`vip_info` (
   `advert_id` INT NOT NULL,
   `buy_vip_date` VARCHAR(45) NOT NULL,
-  `end_vip_date` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`advert_id`),
   CONSTRAINT `advert_vip_fk`
     FOREIGN KEY (`advert_id`)
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `catalog`.`comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `advert_id` INT NOT NULL,
   `user_id` INT NULL,
-  `text` VARCHAR(45) NOT NULL,
+  `text` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`comment_id`, `advert_id`),
   INDEX `user_comment_fk_idx` (`user_id` ASC) VISIBLE,
   INDEX `advert_comment_fk_idx` (`advert_id` ASC) VISIBLE,
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `catalog`.`message` (
   `message_id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
   `user_id` INT NULL,
-  `text` VARCHAR(45) NOT NULL,
+  `text` VARCHAR(255) NOT NULL,
   `send_date` DATETIME NOT NULL,
   PRIMARY KEY (`message_id`, `chat_id`),
   INDEX `chat_message_fk_idx` (`chat_id` ASC) VISIBLE,
