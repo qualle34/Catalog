@@ -1,6 +1,7 @@
 package com.senla.catalog.controller;
 
 import com.senla.catalog.entity.*;
+import com.senla.catalog.entity.constants.AdvertType;
 import com.senla.catalog.entity.constants.UserRole;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,6 @@ public class MainController {
 
     //test
     public void start() {
-        printAll();
     }
 
     private void printAll() {
@@ -73,7 +73,7 @@ public class MainController {
             System.out.println("Error");
         }
 
-        Creds creds = new Creds("Mah", "qwerty", UserRole.USER, "mah@mail.ru");
+        Creds creds = new Creds("Mah", "qwerty", UserRole.ADMIN, "mah@mail.ru");
         SellerRating sellerRating = new SellerRating(7.8F, 4);
 
         User user = new User("Маша", "Машина", birthdate, "+375333213882", "Варшава");
@@ -82,5 +82,17 @@ public class MainController {
         user.setRating(sellerRating);
 
         userService.add(user);
+    }
+
+    private void printAdverts() {
+
+        for (Advert advert : advertService.getByTypeSorted(AdvertType.SELL)) {
+            System.out.print(advert.getId() + " " + advert.getTitle() + " " + advert.getUser().getRating().getRating());
+            if (advert.getVipInfo() != null) {
+                System.out.println(" vip");
+            } else {
+                System.out.println(" common");
+            }
+        }
     }
 }

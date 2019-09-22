@@ -2,6 +2,7 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IDealDao;
 import com.senla.catalog.entity.Deal;
+import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IDealService;
 import org.hibernate.Session;
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DealService extends AbstractService<Deal, Integer> implements IDealService {
@@ -34,5 +37,15 @@ public class DealService extends AbstractService<Deal, Integer> implements IDeal
     @Override
     protected Class<Deal> getEntityClass() {
         return Deal.class;
+    }
+
+    @Override
+    public List<Deal> getDealListBySeller(User seller) {
+        return dealDao.getDealListBySeller(seller);
+    }
+
+    @Override
+    public List<Deal> getDealListByBuyer(User buyer) {
+        return dealDao.getDealListByBuyer(buyer);
     }
 }

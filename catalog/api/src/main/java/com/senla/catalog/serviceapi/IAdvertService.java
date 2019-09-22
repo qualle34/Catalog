@@ -19,11 +19,11 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
 
     List<Advert> getByTitleAndType(String title, AdvertType type);
 
-    List<Advert> getAllSortedByVipAndRating();
+    List<Advert> getAllSorted();
 
-    List<Advert> getByCategorySortedByVipAndRating(Category category);
+    List<Advert> getByCategorySorted(Category category);
 
-    List<Advert> getByTypeSortedByVipAndRating(AdvertType type);
+    List<Advert> getByTypeSorted(AdvertType type);
 
-    List<Advert> getByCategoryAndTypeSortedByVipAndRating(Category category, AdvertType type);
+    List<Advert> getByCategoryAndTypeSorted(Category category, AdvertType type);
 }

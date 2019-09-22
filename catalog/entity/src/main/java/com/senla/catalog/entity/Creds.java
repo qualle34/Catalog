@@ -6,13 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
+import javax.persistence.MapsId;
+import javax.persistence.FetchType;
 
 import java.util.Objects;
 
@@ -21,8 +20,6 @@ import java.util.Objects;
 public class Creds {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private int id;
 
     @Column(name = "login")
@@ -39,6 +36,7 @@ public class Creds {
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 

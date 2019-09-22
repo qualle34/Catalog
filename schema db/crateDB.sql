@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `catalog`.`user` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`credentials` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `role` VARCHAR(20) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `catalog`.`credentials` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `catalog`.`seller_rating` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
   `rating` DECIMAL(2,1) NOT NULL,
   `rating_count` INT NOT NULL,
   PRIMARY KEY (`user_id`),

@@ -67,22 +67,22 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<Advert> getAllSortedByVipAndRating() {
+    public List<Advert> getAllSorted() {
         return sort(advertDao.getAllWithUser());
     }
 
     @Override
-    public List<Advert> getByCategorySortedByVipAndRating(Category category) {
+    public List<Advert> getByCategorySorted(Category category) {
         return sort(advertDao.getByCategoryWithUser(category));
     }
 
     @Override
-    public List<Advert> getByTypeSortedByVipAndRating(AdvertType type) {
+    public List<Advert> getByTypeSorted(AdvertType type) {
         return sort(advertDao.getByTypeWithUser(type));
     }
 
     @Override
-    public List<Advert> getByCategoryAndTypeSortedByVipAndRating(Category category, AdvertType type) {
+    public List<Advert> getByCategoryAndTypeSorted(Category category, AdvertType type) {
         return sort(advertDao.getByCategoryAndTypeWithUser(category, type));
     }
 

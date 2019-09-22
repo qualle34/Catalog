@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.MapsId;
 
 import javax.persistence.FetchType;
 
@@ -20,7 +21,10 @@ import java.util.Objects;
 public class VipInfo implements Serializable {
 
     @Id
-    @OneToOne(fetch = FetchType.EAGER)
+    private int id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "advert_id")
     private Advert advert;
 
@@ -34,6 +38,14 @@ public class VipInfo implements Serializable {
     public VipInfo(Advert advert, Date buyDate) {
         this.advert = advert;
         this.buyDate = buyDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Advert getAdvert() {

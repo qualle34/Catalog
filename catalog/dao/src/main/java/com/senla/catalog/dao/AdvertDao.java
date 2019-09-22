@@ -4,6 +4,8 @@ import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
+import com.senla.catalog.entity.SellerRating;
+import com.senla.catalog.entity.User;
 import com.senla.catalog.entity.constants.AdvertType;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -116,10 +118,12 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
         try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+            Root<Advert> root = query.from(Advert.class);
 
-            Root root = query.from(Advert.class);
+            root.fetch("vipInfo", JoinType.LEFT);
+            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
+            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
 
-            root.fetch("user", JoinType.INNER);
             list = session.createQuery(query).getResultList();
 
         } catch (RuntimeException e) {
@@ -136,9 +140,12 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
         try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root root = query.from(Advert.class);
+            Root<Advert> root = query.from(Advert.class);
 
-            root.fetch("user", JoinType.INNER);
+            root.fetch("vipInfo", JoinType.LEFT);
+            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
+            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
+
             query.select(root).where(builder.equal(root.get("category"), category));
 
             list = session.createQuery(query).getResultList();
@@ -157,9 +164,12 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
         try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root root = query.from(Advert.class);
+            Root<Advert> root = query.from(Advert.class);
 
-            root.fetch("user", JoinType.INNER);
+            root.fetch("vipInfo", JoinType.LEFT);
+            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
+            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
+
             query.select(root).where(builder.equal(root.get("type"), type));
 
             list = session.createQuery(query).getResultList();
@@ -178,9 +188,12 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
         try {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root root = query.from(Advert.class);
+            Root<Advert> root = query.from(Advert.class);
 
-            root.fetch("user", JoinType.INNER);
+            root.fetch("vipInfo", JoinType.LEFT);
+            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
+            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
+
             Predicate predicate = builder.and(builder.equal(root.get("category"), category), builder.equal(root.get("type"), type));
             query.select(root).where(predicate);
             list = session.createQuery(query).getResultList();
