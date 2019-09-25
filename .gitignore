@@ -14,7 +14,6 @@ target/
 *.log
 
 # Hibernate #
-
 hibernate.cfg.xml
 
 # Package Files #
