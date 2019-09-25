@@ -11,3 +11,4 @@ Developer: Samoilo Antoniy
 - [x] [fourthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fourthTask) - Maven
 - [x] [fifthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/fifthTask) - Hibernate
 - [x] [sixthTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/sixthTask) - Spring IoC
+- [ ] [seventhTask](https://git-courses.senlainc.com/htp_senla_training/samoila_antoni/tree/seventhTask) - Spring MVC
