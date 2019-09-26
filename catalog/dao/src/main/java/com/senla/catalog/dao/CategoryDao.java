@@ -3,17 +3,17 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.ICategoryDao;
 import com.senla.catalog.entity.Category;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Repository
 public class CategoryDao extends AbstractDao<Category, Integer> implements ICategoryDao {
 
-    @Autowired
-    private Session session;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<Category> getEntityClass() {
@@ -24,12 +24,12 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     public Category getByTitle(String title) {
 
         try {
-            Query query = session.createQuery("from Category where title = :title ");
+            Query query = entityManager.createQuery("from Category where title = :title ");
             query.setParameter("title", title);
 
             return (Category) query.getSingleResult();
 
-        } catch (HibernateException e) {
+        } catch (RuntimeException e) {
             throw e;
         }
     }

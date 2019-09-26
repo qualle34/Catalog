@@ -4,7 +4,6 @@ import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.entity.Chat;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,6 @@ import org.springframework.stereotype.Service;
 public class ChatService extends AbstractService<Chat, Integer> implements IChatService {
 
     private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
-
-    @Autowired
-    private Session session;
 
     @Autowired
     private IChatDao chatDao;

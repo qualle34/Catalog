@@ -10,12 +10,4 @@ public interface IUserService extends IGenericService<User, Integer> {
     List<User> getByName(String name);
 
     User getFullUserById(int id);
-
-    String ObjectToJson(User user);
-
-    String ObjectListToJson(List<User> userList);
-
-    User JsonToObject(String user);
-
-    List<User> JsonToObjectList(String user);
 }

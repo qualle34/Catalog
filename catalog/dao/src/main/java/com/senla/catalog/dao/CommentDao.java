@@ -3,15 +3,16 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.ICommentDao;
 import com.senla.catalog.entity.Comment;
-import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Repository
 public class CommentDao extends AbstractDao<Comment, Integer> implements ICommentDao {
 
-    @Autowired
-    private Session session;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<Comment> getEntityClass() {

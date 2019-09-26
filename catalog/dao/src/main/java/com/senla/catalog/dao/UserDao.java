@@ -3,13 +3,11 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.entity.User;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -19,8 +17,8 @@ import java.util.List;
 @Repository
 public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
-    @Autowired
-    private Session session;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<User> getEntityClass() {
@@ -31,12 +29,12 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
     public List<User> getByName(String name) {
 
         try {
-            Query query = session.createQuery("from User where firstname = :name ");
+            Query query = entityManager.createQuery("from User where firstname = :name ");
             query.setParameter("name", name);
 
-            return query.list();
+            return query.getResultList();
 
-        } catch (HibernateException e) {
+        } catch (RuntimeException e) {
             throw e;
         }
     }
@@ -45,7 +43,7 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
     public User getFullUserById(int id) {
 
         try {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             CriteriaQuery<User> query = cb.createQuery(User.class);
             Root<User> root = query.from(User.class);
 
@@ -59,9 +57,9 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
             query.select(root).where(cb.equal(root.get("id"), id));
 
-            return session.createQuery(query).getSingleResult();
+            return entityManager.createQuery(query).getSingleResult();
 
-        } catch (HibernateException e) {
+        } catch (RuntimeException e) {
             throw e;
         }
     }

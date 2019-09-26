@@ -7,7 +7,6 @@ import com.senla.catalog.entity.User;
 import com.senla.catalog.entity.constants.AdvertType;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IAdvertService;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ import java.util.List;
 public class AdvertService extends AbstractService<Advert, Integer> implements IAdvertService {
 
     private static final Logger logger = LoggerFactory.getLogger(AdvertService.class);
-
-    @Autowired
-    private Session session;
 
     @Autowired
     private IAdvertDao advertDao;

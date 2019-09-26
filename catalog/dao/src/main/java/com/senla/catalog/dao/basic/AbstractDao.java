@@ -1,10 +1,9 @@
 package com.senla.catalog.dao.basic;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
@@ -12,8 +11,8 @@ import java.util.List;
 
 public abstract class AbstractDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
-    @Autowired
-    private Session session;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     protected abstract Class<T> getEntityClass();
 
@@ -23,12 +22,12 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
         Class cls = getEntityClass();
 
         try {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaQuery<T> criteria = builder.createQuery(cls);
             criteria.from(cls);
-            list = session.createQuery(criteria).getResultList();
+            list = entityManager.createQuery(criteria).getResultList();
 
-        } catch (HibernateException e) {
+        } catch (RuntimeException e) {
             throw e;
         }
         return list;
@@ -39,8 +38,9 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
         T t;
 
         try {
-            t = session.get(getEntityClass(), pk);
-        } catch (HibernateException e) {
+            t = entityManager.find(getEntityClass(), pk);
+
+        } catch (RuntimeException e) {
             throw e;
         }
         return t;
@@ -50,8 +50,9 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void add(T t) {
 
         try {
-            session.save(t);
-        } catch (HibernateException e) {
+            entityManager.persist(t);
+
+        } catch (RuntimeException e) {
             throw e;
         }
     }
@@ -60,8 +61,9 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void update(T t) {
 
         try {
-            session.update(t);
-        } catch (HibernateException e) {
+            entityManager.refresh(t);
+
+        } catch (RuntimeException e) {
             throw e;
         }
     }
@@ -70,8 +72,9 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void delete(T t) {
 
         try {
-            session.delete(t);
-        } catch (HibernateException e) {
+            entityManager.remove(t);
+
+        } catch (RuntimeException e) {
             throw e;
         }
     }
