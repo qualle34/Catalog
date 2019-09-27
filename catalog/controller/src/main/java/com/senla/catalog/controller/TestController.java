@@ -1,14 +1,10 @@
 package com.senla.catalog.controller;
 
-import com.senla.catalog.entity.Advert;
-import com.senla.catalog.entity.Creds;
-import com.senla.catalog.entity.SellerRating;
-import com.senla.catalog.entity.User;
+import com.senla.catalog.entity.*;
 import com.senla.catalog.entity.constants.AdvertType;
 import com.senla.catalog.entity.constants.UserRole;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Controller
+@RestController
 public class TestController {
 
     @Autowired
@@ -49,25 +45,24 @@ public class TestController {
     @Autowired
     private IVipInfoService vipInfoService;
 
-    @RequestMapping(value = "/test")
-    public String getPage() {
-        return "test";
+    @RequestMapping(value = "/test/all")
+    private String getAll() {
+        return userService.getAll().toString() +
+                credsService.getAll().toString() +
+                dealService.getAll().toString() +
+                sellerRatingService.getAll().toString() +
+                categoryService.getAll().toString() +
+                advertService.getAll().toString() +
+                commentService.getAll().toString() +
+                chatService.getAll().toString() +
+                messageService.getAll().toString() +
+                vipInfoService.getAll().toString();
     }
 
-    private void printAll() {
-        System.out.println(userService.getAll().toString());
-        System.out.println(credsService.getAll().toString());
-        System.out.println(dealService.getAll().toString());
-        System.out.println(sellerRatingService.getAll().toString());
-        System.out.println(categoryService.getAll().toString());
-        System.out.println(advertService.getAll().toString());
-        System.out.println(commentService.getAll().toString());
-        System.out.println(chatService.getAll().toString());
-        System.out.println(messageService.getAll().toString());
-        System.out.println(vipInfoService.getAll().toString());
-    }
+    // TODO: 27.09.2019 error
+    @RequestMapping(value = "/test/add")
+    private String addUser() {
 
-    private void addUser() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = "1982-08-31";
 
@@ -88,17 +83,27 @@ public class TestController {
         user.setRating(sellerRating);
 
         userService.add(user);
+        return "User added";
     }
 
-    private void printAdverts() {
+    // TODO: 27.09.2019 error
+    @RequestMapping(value = "/test/add_advert")
+    private String addAdvert() {
 
-        for (Advert advert : advertService.getByTypeSorted(AdvertType.SELL)) {
-            System.out.print(advert.getId() + " " + advert.getTitle() + " " + advert.getUser().getRating().getRating());
-            if (advert.getVipInfo() != null) {
-                System.out.println(" vip");
-            } else {
-                System.out.println(" common");
-            }
-        }
+        User user = userService.getById(4);
+        Category category = categoryService.getById(5);
+
+        Advert advert = new Advert("Test", "Test", 1234.4D, AdvertType.BUY,user, category);
+        advertService.add(advert);
+        return "Advert added";
+    }
+
+    @RequestMapping(value = "/test/add_category")
+    private String addCategory() {
+
+        Category category = new Category("Мебель");
+
+        categoryService.add(category);
+        return "Category added";
     }
 }

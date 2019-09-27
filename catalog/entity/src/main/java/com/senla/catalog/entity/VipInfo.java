@@ -21,6 +21,7 @@ import java.util.Objects;
 public class VipInfo implements Serializable {
 
     @Id
+    @Column(name = "advert_id")
     private int id;
 
     @OneToOne(fetch = FetchType.LAZY)

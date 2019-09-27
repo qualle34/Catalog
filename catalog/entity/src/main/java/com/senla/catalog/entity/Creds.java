@@ -13,13 +13,15 @@ import javax.persistence.EnumType;
 import javax.persistence.MapsId;
 import javax.persistence.FetchType;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "credentials")
-public class Creds {
+public class Creds implements Serializable {
 
     @Id
+    @Column(name = "user_id")
     private int id;
 
     @Column(name = "login")

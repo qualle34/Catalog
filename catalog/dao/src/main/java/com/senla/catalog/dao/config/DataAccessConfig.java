@@ -1,17 +1,21 @@
 package com.senla.catalog.dao.config;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
@@ -19,11 +23,17 @@ import java.util.Properties;
 @ComponentScan(basePackages = {"com.senla.catalog"})
 public class DataAccessConfig {
 
-    // TODO: 27.09.2019 error 
+    private static final Logger logger = LoggerFactory.getLogger(DataAccessConfig.class);
+
     @Bean
     DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setConnectionProperties(getProperties());
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        Properties properties = getProperties();
+
+        dataSource.setDriverClass(com.mysql.cj.jdbc.Driver.class);
+        dataSource.setUrl(properties.getProperty("db.url"));
+        dataSource.setUsername(properties.getProperty("db.username"));
+        dataSource.setPassword(properties.getProperty("db.password"));
 
         return dataSource;
     }
@@ -32,7 +42,7 @@ public class DataAccessConfig {
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
-        entityManagerFactory.setPackagesToScan("com.senla.catalog");
+        entityManagerFactory.setPackagesToScan("com.senla.catalog.entity");
         entityManagerFactory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 
         return entityManagerFactory;
@@ -45,12 +55,13 @@ public class DataAccessConfig {
 
     private Properties getProperties() {
         Properties properties = new Properties();
-        properties.setProperty("connection.driver_class", "com.mysql.cj.jdbc.Driver");
-        properties.setProperty("connection.url", "jdbc:mysql://localhost:3306/catalog?serverTimezone=UTC");
-        properties.setProperty("connection.username", "qualle");
-        properties.setProperty("connection.password", "43q21");
-        properties.setProperty("dialect", "org.hibernate.dialect.MySQL8Dialect");
 
+        try (InputStream propertiesFile = getClass().getClassLoader().getResourceAsStream("application.properties")) {
+            properties.load(propertiesFile);
+
+        } catch (IOException e) {
+            logger.error("Load properties error: " + e.getMessage());
+        }
         return properties;
     }
 }

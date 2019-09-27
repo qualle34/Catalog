@@ -9,13 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 import javax.persistence.MapsId;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "seller_rating")
-public class SellerRating {
+public class SellerRating implements Serializable {
 
     @Id
+    @Column(name = "user_id")
     private int id;
 
     @Column(name = "rating")

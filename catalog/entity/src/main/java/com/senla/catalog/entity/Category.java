@@ -30,9 +30,8 @@ public class Category {
     public Category() {
     }
 
-    public Category(String title, Set<Advert> advertSet) {
+    public Category(String title) {
         this.title = title;
-        this.advertSet = advertSet;
     }
 
     public int getId() {
