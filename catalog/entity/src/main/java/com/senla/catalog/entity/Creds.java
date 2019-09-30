@@ -1,6 +1,6 @@
 package com.senla.catalog.entity;
 
-import com.senla.catalog.entity.constants.UserRole;
+import com.senla.catalog.entity.enums.UserRole;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

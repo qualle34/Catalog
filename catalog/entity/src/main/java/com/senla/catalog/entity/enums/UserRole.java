@@ -1,4 +1,4 @@
-package com.senla.catalog.entity.constants;
+package com.senla.catalog.entity.enums;
 
 public enum UserRole {
 

@@ -1,6 +1,10 @@
 package com.senla.catalog.controller;
 
-import com.senla.catalog.entity.constants.AdvertType;
+import com.senla.catalog.dto.CategoryDto;
+import com.senla.catalog.dto.SimpleAdvertDto;
+import com.senla.catalog.entity.Advert;
+import com.senla.catalog.entity.Category;
+import com.senla.catalog.entity.enums.AdvertType;
 import com.senla.catalog.serviceapi.IAdvertService;
 import com.senla.catalog.serviceapi.ICategoryService;
 import org.slf4j.Logger;
@@ -10,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
+@RequestMapping(value = "/")
 public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -21,28 +29,62 @@ public class HomeController {
     @Autowired
     ICategoryService categoryService;
 
-    @RequestMapping(value = "/")
-    public String getPage() {
-        return advertService.getAllSorted().toString();
+    @RequestMapping
+    public List<SimpleAdvertDto> getPage() {
+        List<Advert> advertList = advertService.getAllSorted();
+        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
+
+        for (Advert a : advertList) {
+            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
+        }
+        return advertDtoList;
     }
 
-    @RequestMapping(value = "/",  params = "search")
-    public String getPageBySearch(@RequestParam String search) {
-        return advertService.getByTitle(search).toString();
+    @RequestMapping(params = "search")
+    public List<SimpleAdvertDto> getPageBySearch(@RequestParam String search) {
+        List<Advert> advertList = advertService.getByTitle(search);
+        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
+
+        for (Advert a : advertList) {
+            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
+        }
+        return advertDtoList;
     }
 
-    @RequestMapping(value = "/",  params = "category")
-    public String getPageByCategory (@RequestParam String category) {
-        return advertService.getByCategorySorted(categoryService.getByTitle(category)).toString();
+    @RequestMapping(params = "category")
+    public List<SimpleAdvertDto> getPageByCategory(@RequestParam int id) {
+        Category category = categoryService.getById(id);
+        List<Advert> advertList = advertService.getByCategorySorted(category);
+        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
+
+        for (Advert a : advertList) {
+            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
+        }
+        return advertDtoList;
     }
 
-    @RequestMapping(value = "/",  params = "type")
-    public String getPageByType (@RequestParam String type) {
+    @RequestMapping(params = "type")
+    public List<SimpleAdvertDto> getPageByType(@RequestParam String type) {
 
-        if (type.equals("SELL")) {
-            return advertService.getByTypeSorted(AdvertType.SELL).toString();
+        if (type.equals("SELL") || type.equals("sell")) {
+
+            List<Advert> advertList = advertService.getByTypeSorted(AdvertType.SELL);
+            List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
+
+            for (Advert a : advertList) {
+                advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
+            }
+            return advertDtoList;
+
         } else {
-            return advertService.getByTypeSorted(AdvertType.BUY).toString();
+
+            List<Advert> advertList = advertService.getByTypeSorted(AdvertType.BUY);
+            List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
+
+            for (Advert a : advertList) {
+                advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
+            }
+            return advertDtoList;
         }
     }
 }

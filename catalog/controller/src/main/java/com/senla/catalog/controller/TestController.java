@@ -1,8 +1,8 @@
 package com.senla.catalog.controller;
 
 import com.senla.catalog.entity.*;
-import com.senla.catalog.entity.constants.AdvertType;
-import com.senla.catalog.entity.constants.UserRole;
+import com.senla.catalog.entity.enums.AdvertType;
+import com.senla.catalog.entity.enums.UserRole;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

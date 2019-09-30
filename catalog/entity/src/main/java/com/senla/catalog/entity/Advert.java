@@ -1,6 +1,6 @@
 package com.senla.catalog.entity;
 
-import com.senla.catalog.entity.constants.AdvertType;
+import com.senla.catalog.entity.enums.AdvertType;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -171,9 +171,9 @@ public class Advert implements Comparable<Advert> {
         int rating = Float.compare(this.getUser().getRating().getRating(), o.getUser().getRating().getRating());
         int vip = Boolean.compare(this.isVip(), o.isVip());
 
-        if(vip == 1 || vip == 0 && rating == 1){
+        if (vip == 1 || vip == 0 && rating == 1) {
             return 1;
-        } else if (vip == 0 && rating == 0){
+        } else if (vip == 0 && rating == 0) {
             return 0;
         } else {
             return -1;
