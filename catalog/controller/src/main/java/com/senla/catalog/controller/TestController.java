@@ -5,6 +5,7 @@ import com.senla.catalog.entity.enums.AdvertType;
 import com.senla.catalog.entity.enums.UserRole;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +46,7 @@ public class TestController {
     @Autowired
     private IVipInfoService vipInfoService;
 
-    @RequestMapping(value = "/test/all")
+    @GetMapping(value = "/test/all")
     private String getAll() {
         return userService.getAll().toString() +
                 credsService.getAll().toString() +
@@ -59,8 +60,7 @@ public class TestController {
                 vipInfoService.getAll().toString();
     }
 
-    // TODO: 27.09.2019 error
-    @RequestMapping(value = "/test/add")
+    @GetMapping(value = "/test/add")
     private String addUser() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,8 +86,7 @@ public class TestController {
         return "User added";
     }
 
-    // TODO: 27.09.2019 error
-    @RequestMapping(value = "/test/add_advert")
+    @GetMapping(value = "/test/add_advert")
     private String addAdvert() {
 
         User user = userService.getById(4);
@@ -98,7 +97,7 @@ public class TestController {
         return "Advert added";
     }
 
-    @RequestMapping(value = "/test/add_category")
+    @GetMapping(value = "/test/add_category")
     private String addCategory() {
 
         Category category = new Category("Мебель");

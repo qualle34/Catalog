@@ -65,7 +65,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "chat_id"))
     private Set<Chat> chatSet;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
     private Set<Message> messageSet;
 
     public User() {

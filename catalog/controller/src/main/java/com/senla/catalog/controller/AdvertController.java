@@ -11,7 +11,6 @@ import com.senla.catalog.serviceapi.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Column;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,16 +31,18 @@ public class AdvertController {
     public AdvertDto getAdvertData(@RequestParam int id) {
         Advert advert = advertService.getById(id);
         List<Comment> commentList = commentService.getByAdvert(advert);
-        return objectToDto(advert, commentList);
+        return advertToDto(advert, commentList);
     }
 
-    @GetMapping(params = "comment")
-    public void AddComment(CommentDto commentDto) {
+    @PostMapping(params = "comment")
+    public void AddComment(@RequestBody CommentDto commentDto) {
          commentService.add(commentDtoToObject(commentDto));
     }
 
-    private AdvertDto objectToDto(Advert advert, List<Comment> commentList) {
-        AdvertDto dto = new AdvertDto(advert.getTitle(), advert.getDescription(), advert.getPrice());
+    private AdvertDto advertToDto(Advert advert, List<Comment> commentList) {
+        AdvertDto dto = new AdvertDto(advert.getTitle(), advert.getDescription(), advert.getPrice(),
+                advert.getType(), advert.getUser().getId(), advert.getCategory().getId());
+        dto.setId(advert.getId());
         List<SimpleCommentDto> commentDtoList = new LinkedList<>();
 
         for (Comment comment : commentList) {

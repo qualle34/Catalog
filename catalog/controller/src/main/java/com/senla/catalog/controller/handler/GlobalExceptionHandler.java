@@ -13,8 +13,23 @@ public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Test exception")
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String illegalArgumentExceptionHandler() {
+        logger.error("IllegalArgumentException");
+        return "IllegalArgumentException";
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Test exception")
+    @ExceptionHandler(RuntimeException.class)
+    public String runtimeExceptionHandler() {
+        logger.error("RuntimeException");
+        return "RuntimeException";
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Test exception")
     @ExceptionHandler(Exception.class)
-    public void handleIOException() {
-        logger.error("Test");
+    public String exceptionHandler() {
+        logger.error("Exception");
+        return "Exception";
     }
 }

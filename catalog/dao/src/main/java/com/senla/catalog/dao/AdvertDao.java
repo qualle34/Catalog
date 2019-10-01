@@ -193,4 +193,6 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
             throw e;
         }
     }
+
+
 }

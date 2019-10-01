@@ -47,6 +47,18 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
+    public User getWithChatList(int id) {
+
+        try {
+            return userDao.getWithChatList(id);
+
+        } catch (RuntimeException e) {
+            logger.error("Get with chat list error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
     public User getFullUserById(int id) {
 
         try {

@@ -34,16 +34,4 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     protected Class<Chat> getEntityClass() {
         return Chat.class;
     }
-
-    @Override
-    public List<Chat> getByUser(User user) {
-
-        try {
-            return chatDao.getByUser(user);
-
-        } catch (RuntimeException e) {
-            logger.error("Get chat list by user error: " + e.getMessage());
-            throw e;
-        }
-    }
 }

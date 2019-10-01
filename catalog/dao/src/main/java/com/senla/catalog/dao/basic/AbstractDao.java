@@ -50,6 +50,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void add(T t) {
 
         try {
+            System.out.println(t.toString());
             entityManager.persist(t);
 
         } catch (RuntimeException e) {
@@ -61,7 +62,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void update(T t) {
 
         try {
-            entityManager.refresh(t);
+            entityManager.merge(t);
 
         } catch (RuntimeException e) {
             throw e;
@@ -72,7 +73,7 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void delete(T t) {
 
         try {
-            entityManager.remove(t);
+            entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
 
         } catch (RuntimeException e) {
             throw e;

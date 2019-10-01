@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/chats")
@@ -31,7 +32,7 @@ public class ChatController {
 
     @GetMapping(params = "id")
     public List<ChatDto> getChatsData(@RequestParam int id) {
-        return chatListToDto(chatService.getByUser(userService.getById(id)));
+        return chatListToDto(userService.getWithChatList(id).getChatSet());
     }
 
     @GetMapping(value = "/chat", params = "id")
@@ -41,14 +42,16 @@ public class ChatController {
 
     private List<MessageDto> messageListToDto(List<Message> messagesList) {
         List<MessageDto> dtoList = new LinkedList<>();
+
         for (Message message : messagesList) {
             dtoList.add(new MessageDto(message.getText(), message.getUser().getId(), message.getSendDate()));
         }
         return dtoList;
     }
 
-    private List<ChatDto> chatListToDto(List<Chat> chatList) {
+    private List<ChatDto> chatListToDto(Set<Chat> chatList) {
         List<ChatDto> dtoList = new LinkedList<>();
+
         for (Chat chat : chatList) {
             dtoList.add(new ChatDto(chat.getTitle()));
         }

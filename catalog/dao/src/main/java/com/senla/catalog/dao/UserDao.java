@@ -2,16 +2,15 @@ package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IUserDao;
+import com.senla.catalog.entity.Advert;
+import com.senla.catalog.entity.SellerRating;
 import com.senla.catalog.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -33,6 +32,24 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
             query.setParameter("name", name);
 
             return query.getResultList();
+
+        } catch (RuntimeException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public User getWithChatList(int id) {
+
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> query = cb.createQuery(User.class);
+            Root<User> root = query.from(User.class);
+
+            root.fetch("chatSet", JoinType.LEFT);
+            query.select(root).where(cb.equal(root.get("id"), id));
+
+            return entityManager.createQuery(query).getSingleResult();
 
         } catch (RuntimeException e) {
             throw e;

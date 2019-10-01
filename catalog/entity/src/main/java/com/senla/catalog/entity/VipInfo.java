@@ -1,30 +1,19 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
-import javax.persistence.FetchType;
-
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "vip_info")
-public class VipInfo implements Serializable {
+public class VipInfo {
 
     @Id
     @Column(name = "advert_id")
     private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "advert_id")
     private Advert advert;
@@ -36,8 +25,7 @@ public class VipInfo implements Serializable {
     public VipInfo() {
     }
 
-    public VipInfo(Advert advert, Date buyDate) {
-        this.advert = advert;
+    public VipInfo(Date buyDate) {
         this.buyDate = buyDate;
     }
 
