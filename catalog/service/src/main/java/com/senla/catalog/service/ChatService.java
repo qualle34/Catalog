@@ -2,12 +2,15 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.entity.Chat;
+import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChatService extends AbstractService<Chat, Integer> implements IChatService {
@@ -33,13 +36,13 @@ public class ChatService extends AbstractService<Chat, Integer> implements IChat
     }
 
     @Override
-    public Chat getWithMessagesById(int id) {
+    public List<Chat> getByUser(User user) {
 
         try {
-            return chatDao.getWithMessagesById(id);
+            return chatDao.getByUser(user);
 
         } catch (RuntimeException e) {
-            logger.error("Get with messages by id error: " + e.getMessage());
+            logger.error("Get chat list by user error: " + e.getMessage());
             throw e;
         }
     }

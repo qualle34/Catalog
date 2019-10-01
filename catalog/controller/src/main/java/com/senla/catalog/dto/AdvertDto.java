@@ -8,7 +8,7 @@ public class AdvertDto {
     private String title;
     private String description;
     private double price;
-    private List<CommentDto> comments;
+    private List<SimpleCommentDto> comments;
 
     public AdvertDto() {
     }
@@ -51,11 +51,11 @@ public class AdvertDto {
         this.price = price;
     }
 
-    public List<CommentDto> getComments() {
+    public List<SimpleCommentDto> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentDto> comments) {
+    public void setComments(List<SimpleCommentDto> comments) {
         this.comments = comments;
     }
 }

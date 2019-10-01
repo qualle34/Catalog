@@ -1,6 +1,5 @@
 package com.senla.catalog.controller;
 
-import com.senla.catalog.dto.CategoryDto;
 import com.senla.catalog.dto.SimpleAdvertDto;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
@@ -31,60 +30,36 @@ public class HomeController {
 
     @RequestMapping
     public List<SimpleAdvertDto> getPage() {
-        List<Advert> advertList = advertService.getAllSorted();
-        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
-
-        for (Advert a : advertList) {
-            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
-        }
-        return advertDtoList;
+        return ObjectListToDto(advertService.getAllSorted());
     }
 
     @RequestMapping(params = "search")
     public List<SimpleAdvertDto> getPageBySearch(@RequestParam String search) {
-        List<Advert> advertList = advertService.getByTitle(search);
-        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
-
-        for (Advert a : advertList) {
-            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
-        }
-        return advertDtoList;
+        return ObjectListToDto(advertService.getByTitle(search));
     }
 
     @RequestMapping(params = "category")
     public List<SimpleAdvertDto> getPageByCategory(@RequestParam int id) {
         Category category = categoryService.getById(id);
-        List<Advert> advertList = advertService.getByCategorySorted(category);
-        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
-
-        for (Advert a : advertList) {
-            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
-        }
-        return advertDtoList;
+        return ObjectListToDto(advertService.getByCategorySorted(category));
     }
 
     @RequestMapping(params = "type")
     public List<SimpleAdvertDto> getPageByType(@RequestParam String type) {
 
         if (type.equals("SELL") || type.equals("sell")) {
-
-            List<Advert> advertList = advertService.getByTypeSorted(AdvertType.SELL);
-            List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
-
-            for (Advert a : advertList) {
-                advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
-            }
-            return advertDtoList;
-
+            return ObjectListToDto(advertService.getByTypeSorted(AdvertType.SELL));
         } else {
-
-            List<Advert> advertList = advertService.getByTypeSorted(AdvertType.BUY);
-            List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
-
-            for (Advert a : advertList) {
-                advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
-            }
-            return advertDtoList;
+            return ObjectListToDto(advertService.getByTypeSorted(AdvertType.BUY));
         }
+    }
+
+    private List<SimpleAdvertDto> ObjectListToDto(List<Advert> advertList) {
+        List<SimpleAdvertDto> advertDtoList = new ArrayList<>();
+
+        for (Advert a : advertList) {
+            advertDtoList.add(new SimpleAdvertDto(a.getId(), a.getTitle(), a.getPrice(), a.getType()));
+        }
+        return advertDtoList;
     }
 }

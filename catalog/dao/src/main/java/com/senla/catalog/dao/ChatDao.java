@@ -3,14 +3,13 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.entity.Chat;
+import com.senla.catalog.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
@@ -24,17 +23,13 @@ public class ChatDao extends AbstractDao<Chat, Integer> implements IChatDao {
     }
 
     @Override
-    public Chat getWithMessagesById(int id) {
+    public List<Chat> getByUser(User user) {
 
         try {
-            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Chat> query = cb.createQuery(Chat.class);
-            Root<Chat> root = query.from(Chat.class);
+            Query query = entityManager.createQuery("from Chat where userSet in :user");
+            query.setParameter("user", user);
 
-            root.fetch("messageList", JoinType.LEFT);
-            query.select(root).where(cb.equal(root.get("id"), id));
-
-            return entityManager.createQuery(query).getSingleResult();
+            return query.getResultList();
 
         } catch (RuntimeException e) {
             throw e;

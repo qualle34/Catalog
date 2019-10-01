@@ -1,19 +1,19 @@
 package com.senla.catalog.dto;
 
-public class CommentDto {
+import java.util.Date;
+
+public class MessageDto {
 
     private int id;
     private String text;
-    private int advertId;
     private int userId;
+    private Date sendDate;
 
-    public CommentDto() {
+    public MessageDto() {
     }
 
-    public CommentDto(int id, String text, int advertId, int userId) {
-        this.id = id;
+    public MessageDto(String text, int userId, Date sendDate) {
         this.text = text;
-        this.advertId = advertId;
         this.userId = userId;
     }
 
@@ -33,19 +33,19 @@ public class CommentDto {
         this.text = text;
     }
 
-    public int getAdvertId() {
-        return advertId;
-    }
-
-    public void setAdvertId(int advertId) {
-        this.advertId = advertId;
-    }
-
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Date getSendDate() {
+        return sendDate;
+    }
+
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
     }
 }
