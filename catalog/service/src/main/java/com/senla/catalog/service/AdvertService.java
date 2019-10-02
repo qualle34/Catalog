@@ -1,8 +1,12 @@
 package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IAdvertDao;
+import com.senla.catalog.dto.AdvertDto;
+import com.senla.catalog.dto.SimpleAdvertDto;
+import com.senla.catalog.dto.SimpleCommentDto;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
+import com.senla.catalog.entity.Comment;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.entity.enums.AdvertType;
 import com.senla.catalog.service.basic.AbstractService;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -156,6 +161,40 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
             logger.error("Get adverts by category and type with users error: " + e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    public List<SimpleAdvertDto> advertListToDto(List<Advert> advertList) {
+        List<SimpleAdvertDto> advertDtoList = new LinkedList<>();
+
+        for (Advert advert : advertList) {
+            advertDtoList.add(new SimpleAdvertDto(advert.getId(), advert.getTitle(), advert.getPrice(), advert.getType()));
+        }
+        return advertDtoList;
+    }
+
+    @Override
+    public AdvertDto advertToDto(Advert advert) {
+        AdvertDto dto = new AdvertDto(advert.getTitle(), advert.getDescription(), advert.getPrice(),
+                advert.getType(), advert.getUser().getId(), advert.getCategory().getId());
+        dto.setId(advert.getId());
+        return dto;
+    }
+
+    @Override
+    public Advert updateAdvertFromDto(AdvertDto dto) {
+        Advert advert = advertDao.getById(dto.getId());
+
+        advert.setTitle(dto.getTitle());
+        advert.setDescription(dto.getDescription());
+        advert.setPrice(dto.getPrice());
+        advert.setType(dto.getType());
+        return advert;
+    }
+
+    @Override
+    public Advert dtoToAdvert(AdvertDto dto) {
+        return new Advert(dto.getTitle(), dto.getDescription(), dto.getPrice(), dto.getType());
     }
 
     private List<Advert> sort(List<Advert> advertList) {

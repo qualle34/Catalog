@@ -50,7 +50,6 @@ public abstract class AbstractDao<T, PK extends Serializable> implements IGeneri
     public void add(T t) {
 
         try {
-            System.out.println(t.toString());
             entityManager.persist(t);
 
         } catch (RuntimeException e) {

@@ -28,32 +28,16 @@ public class AdvertController {
     IUserService userService;
 
     @GetMapping(params = "id")
-    public AdvertDto getAdvertData(@RequestParam int id) {
+    public AdvertDto getAdvert(@RequestParam int id) {
         Advert advert = advertService.getById(id);
-        List<Comment> commentList = commentService.getByAdvert(advert);
-        return advertToDto(advert, commentList);
+        AdvertDto advertDto = advertService.advertToDto(advert);
+        advertDto.setComments(commentService.CommentListToDto(commentService.getByAdvert(advert)));
+        return advertDto;
     }
 
     @PostMapping(params = "comment")
-    public void AddComment(@RequestBody CommentDto commentDto) {
-         commentService.add(commentDtoToObject(commentDto));
-    }
-
-    private AdvertDto advertToDto(Advert advert, List<Comment> commentList) {
-        AdvertDto dto = new AdvertDto(advert.getTitle(), advert.getDescription(), advert.getPrice(),
-                advert.getType(), advert.getUser().getId(), advert.getCategory().getId());
-        dto.setId(advert.getId());
-        List<SimpleCommentDto> commentDtoList = new LinkedList<>();
-
-        for (Comment comment : commentList) {
-            commentDtoList.add(new SimpleCommentDto(comment.getId(), comment.getText()));
-        }
-        dto.setComments(commentDtoList);
-
-        return dto;
-    }
-
-    private Comment commentDtoToObject(CommentDto dto) {
-        return new Comment(userService.getById(dto.getUserId()), advertService.getById(dto.getId()), dto.getText());
+    public void AddComment(@RequestBody CommentDto dto) {
+         commentService.add(commentService.dtoToComment(dto, userService.getById(dto.getUserId()),
+                 advertService.getById(dto.getAdvertId())));
     }
 }

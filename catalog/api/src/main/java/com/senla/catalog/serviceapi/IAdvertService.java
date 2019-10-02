@@ -1,5 +1,7 @@
 package com.senla.catalog.serviceapi;
 
+import com.senla.catalog.dto.AdvertDto;
+import com.senla.catalog.dto.SimpleAdvertDto;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
 import com.senla.catalog.entity.User;
@@ -29,4 +31,12 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
     List<Advert> getByTypeSorted(AdvertType type);
 
     List<Advert> getByCategoryAndTypeSorted(Category category, AdvertType type);
+
+    List<SimpleAdvertDto> advertListToDto(List<Advert> advertList);
+
+    AdvertDto advertToDto(Advert advert);
+
+    Advert updateAdvertFromDto(AdvertDto dto);
+
+    Advert dtoToAdvert(AdvertDto dto);
 }

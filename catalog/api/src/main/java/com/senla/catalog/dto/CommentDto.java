@@ -10,8 +10,7 @@ public class CommentDto {
     public CommentDto() {
     }
 
-    public CommentDto(int id, String text, int advertId, int userId) {
-        this.id = id;
+    public CommentDto(String text, int advertId, int userId) {
         this.text = text;
         this.advertId = advertId;
         this.userId = userId;

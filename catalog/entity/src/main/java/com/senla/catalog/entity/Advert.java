@@ -59,6 +59,13 @@ public class Advert implements Comparable<Advert> {
     public Advert() {
     }
 
+    public Advert(String title, String description, double price, AdvertType type) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.type = type;
+    }
+
     public Advert(String title, String description, double price, AdvertType type, User user, Category category) {
         this.title = title;
         this.description = description;

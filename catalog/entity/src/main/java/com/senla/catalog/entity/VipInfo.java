@@ -1,6 +1,16 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.FetchType;
+
 
 import java.util.Date;
 import java.util.Objects;

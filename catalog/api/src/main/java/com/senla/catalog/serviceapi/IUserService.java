@@ -1,5 +1,7 @@
 package com.senla.catalog.serviceapi;
 
+import com.senla.catalog.dto.UserDto;
+import com.senla.catalog.entity.Creds;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 
@@ -12,4 +14,10 @@ public interface IUserService extends IGenericService<User, Integer> {
     User getWithChatList(int id);
 
     User getFullUserById(int id);
+
+    UserDto userToDto(User user, Creds creds);
+
+    User updateUserFromDto(UserDto dto);
+
+    User dtoToUser(UserDto dto);
 }
