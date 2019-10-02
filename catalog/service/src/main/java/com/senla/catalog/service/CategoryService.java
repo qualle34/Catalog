@@ -18,11 +18,6 @@ public class CategoryService extends AbstractService<Category, Integer> implemen
     private ICategoryDao categoryDao;
 
     @Override
-    protected Class getChildClass() {
-        return CategoryService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "categoryDao";
     }

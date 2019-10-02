@@ -24,7 +24,7 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     public Category getByTitle(String title) {
 
         try {
-            Query query = entityManager.createQuery("from Category where title = :title ");
+            Query query = entityManager.createQuery("select c from Category c where c.title = :title ");
             query.setParameter("title", title);
 
             return (Category) query.getSingleResult();

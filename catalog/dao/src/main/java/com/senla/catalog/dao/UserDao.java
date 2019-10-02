@@ -28,8 +28,8 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
     public List<User> getByName(String name) {
 
         try {
-            Query query = entityManager.createQuery("from User where firstname = :name ");
-            query.setParameter("name", name);
+            Query query = entityManager.createQuery("select u from User u where u.firstname Like :name ");
+            query.setParameter("name", "%" + name + "%");
 
             return query.getResultList();
 
@@ -57,6 +57,19 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
     }
 
     @Override
+    public User getWithCredsByEmail(String email) {
+        try {
+            Query query = entityManager.createQuery("select u from User u inner join u.creds c where c.email = :email ");
+            query.setParameter("email", email);
+
+            return (User) query.getSingleResult();
+
+        } catch (RuntimeException e) {
+            throw e;
+        }
+    }
+
+    @Override
     public User getFullUserById(int id) {
 
         try {
@@ -64,8 +77,8 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
             CriteriaQuery<User> query = cb.createQuery(User.class);
             Root<User> root = query.from(User.class);
 
-            root.fetch("creds", JoinType.LEFT);
-            root.fetch("rating", JoinType.LEFT);
+            root.fetch("creds", JoinType.INNER);
+            root.fetch("rating", JoinType.INNER);
             root.fetch("dealSet", JoinType.LEFT);
             root.fetch("advertSet", JoinType.LEFT);
             root.fetch("commentSet", JoinType.LEFT);

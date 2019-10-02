@@ -18,11 +18,6 @@ public class SellerRatingService extends AbstractService<SellerRating, Integer> 
     private ISellerRatingDao sellerRatingDao;
 
     @Override
-    protected Class getChildClass() {
-        return SellerRatingService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "sellerRatingDao";
     }

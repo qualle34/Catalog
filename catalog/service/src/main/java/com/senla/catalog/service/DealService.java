@@ -21,11 +21,6 @@ public class DealService extends AbstractService<Deal, Integer> implements IDeal
     private IDealDao dealDao;
 
     @Override
-    protected Class getChildClass() {
-        return DealService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "dealDao";
     }

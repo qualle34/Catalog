@@ -23,11 +23,6 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     private IUserDao userDao;
 
     @Override
-    protected Class getChildClass() {
-        return UserService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "userDao";
     }
@@ -57,6 +52,18 @@ public class UserService extends AbstractService<User, Integer> implements IUser
 
         } catch (RuntimeException e) {
             logger.error("Get with chat list error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public User getWithCredsByEmail(String email) {
+
+        try {
+            return userDao.getWithCredsByEmail(email);
+
+        } catch (RuntimeException e) {
+            logger.error("Get with creds by email error: " + e.getMessage());
             throw e;
         }
     }

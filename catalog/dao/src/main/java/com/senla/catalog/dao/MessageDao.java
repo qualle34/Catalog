@@ -26,7 +26,7 @@ public class MessageDao extends AbstractDao<Message, Integer> implements IMessag
     public List<Message> getByChat(Chat chat) {
 
         try {
-            Query query = entityManager.createQuery("from Message where chat = :chat ");
+            Query query = entityManager.createQuery("select m from Message m where m.chat = :chat ");
             query.setParameter("chat", chat);
 
             return query.getResultList();

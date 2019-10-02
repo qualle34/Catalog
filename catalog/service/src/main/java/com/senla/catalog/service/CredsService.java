@@ -19,11 +19,6 @@ public class CredsService extends AbstractService<Creds, Integer> implements ICr
     private ICredsDao credsDao;
 
     @Override
-    protected Class getChildClass() {
-        return CredsService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "credsDao";
     }

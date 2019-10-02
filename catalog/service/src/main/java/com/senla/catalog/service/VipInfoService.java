@@ -21,11 +21,6 @@ public class VipInfoService extends AbstractService<VipInfo, Integer> implements
     private IVipInfoDao vipInfoDao;
 
     @Override
-    protected Class getChildClass() {
-        return VipInfoService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "vipInfoDao";
     }

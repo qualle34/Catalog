@@ -53,4 +53,9 @@ public class TestController {
                 messageService.getAll().toString() +
                 vipInfoService.getAll().toString();
     }
+
+    @GetMapping(value = "user")
+    public String user(){
+       return userService.getWithCredsByEmail("vova@gmail.com").toString();
+    }
 }

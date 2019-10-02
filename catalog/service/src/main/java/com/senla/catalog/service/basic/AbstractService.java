@@ -14,7 +14,7 @@ import java.util.Map;
 
 public abstract class AbstractService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
-    private final Logger logger = LoggerFactory.getLogger(getChildClass());
+    private static final Logger logger = LoggerFactory.getLogger(AbstractService.class);
 
     private IGenericDao dao;
 
@@ -22,8 +22,6 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
     private void setDao(Map<String, IGenericDao> daoMap) {
         this.dao = daoMap.get(getDaoClassName());
     }
-
-    protected abstract Class getChildClass();
 
     protected abstract String getDaoClassName();
 
@@ -36,7 +34,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             return dao.getAll();
 
         } catch (RuntimeException e) {
-            logger.error("Get all entities error: " + e.getMessage());
+            logger.error("Get all entities [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
             throw e;
         }
     }
@@ -48,7 +46,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             return (T) dao.getById(pk);
 
         } catch (RuntimeException e) {
-            logger.error("Get entity by id error: " + e.getMessage());
+            logger.error("Get entity [ " + getEntityClass().toString() + " ] by id error: " + e.getMessage());
             throw e;
         }
     }
@@ -61,7 +59,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             dao.add(t);
 
         } catch (RuntimeException e) {
-            logger.error("Add entity error: " + e.getMessage());
+            logger.error("Add entity [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
             throw e;
         }
     }
@@ -74,7 +72,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             dao.update(t);
 
         } catch (RuntimeException e) {
-            logger.error("Update entity error: " + e.getMessage());
+            logger.error("Update entity [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
             throw e;
         }
     }
@@ -87,7 +85,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             dao.delete(t);
 
         } catch (RuntimeException e) {
-            logger.error("Delete entity error: " + e.getMessage());
+            logger.error("Delete entity [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
             throw e;
         }
     }
