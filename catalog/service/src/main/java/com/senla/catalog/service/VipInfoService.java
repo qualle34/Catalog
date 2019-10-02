@@ -2,7 +2,6 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IVipInfoDao;
 import com.senla.catalog.dto.VipInfoDto;
-import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.VipInfo;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IVipInfoService;
@@ -43,8 +42,6 @@ public class VipInfoService extends AbstractService<VipInfo, Integer> implements
 
     @Override
     public VipInfo dtoToVipInfo(VipInfoDto dto) {
-        VipInfo vipInfo = new VipInfo(new Date());
-        vipInfo.setId(dto.getId());
-        return vipInfo;
+        return new VipInfo(dto.getId(), new Date());
     }
 }

@@ -66,7 +66,9 @@ public class UserAdvertController {
 
     // TODO: Fix
     @PostMapping(value = "advert/add_vip")
-    public void addVipInfo(@RequestBody VipInfoDto vipInfoDto) {
-        vipInfoService.add(vipInfoService.dtoToVipInfo(vipInfoDto));
+    public void addVipInfo(@RequestBody VipInfoDto dto) {
+        Advert advert = advertService.getById(dto.getId());
+        advert.setVipInfo(vipInfoService.dtoToVipInfo(dto));
+        advertService.update(advert);
     }
 }

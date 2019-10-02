@@ -21,9 +21,9 @@ public class VipInfo {
 
     @Id
     @Column(name = "advert_id")
-    private int id;
+    private Integer id;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "advert_id")
     private Advert advert;
@@ -35,15 +35,16 @@ public class VipInfo {
     public VipInfo() {
     }
 
-    public VipInfo(Date buyDate) {
+    public VipInfo(int id, Date buyDate) {
+        this.id = id;
         this.buyDate = buyDate;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

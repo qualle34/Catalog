@@ -42,7 +42,7 @@ public class Advert implements Comparable<Advert> {
     @Column(name = "type")
     private AdvertType type;
 
-    @OneToOne(mappedBy = "advert", optional = false, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "advert", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private VipInfo vipInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
