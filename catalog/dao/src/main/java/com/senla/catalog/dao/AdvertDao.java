@@ -30,7 +30,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     public List<Advert> getByCategory(Category category) {
 
         try {
-            Query query = entityManager.createQuery("from Advert where category = :category ");
+            Query query = entityManager.createQuery("select a from Advert a where a.category = :category ");
             query.setParameter("category", category);
 
             return query.getResultList();
@@ -44,7 +44,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     public List<Advert> getByType(AdvertType type) {
 
         try {
-            Query query = entityManager.createQuery("from Advert where type = :type ");
+            Query query = entityManager.createQuery("select a from Advert a where a.type = :type ");
             query.setParameter("type", type);
 
             return query.getResultList();
@@ -58,7 +58,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     public List<Advert> getByCategoryAndType(Category category, AdvertType type) {
 
         try {
-            Query query = entityManager.createQuery("from Advert where category = :category and type = :type");
+            Query query = entityManager.createQuery("select a from Advert a where a.category = :category and a.type = :type");
             query.setParameter("category", category);
             query.setParameter("type", type);
 
@@ -73,7 +73,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     public List<Advert> getByTitle(String title) {
 
         try {
-            Query query = entityManager.createQuery("from Advert where title like :title ");
+            Query query = entityManager.createQuery("select a from Advert a where a.title like :title ");
             query.setParameter("title", "%" + title + "%");
 
             return query.getResultList();
@@ -87,7 +87,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     public List<Advert> getByUser(User user) {
 
         try {
-            Query query = entityManager.createQuery("from Advert where user = :user ");
+            Query query = entityManager.createQuery("select a from Advert a where a.user = :user ");
             query.setParameter("user", user);
 
             return query.getResultList();
@@ -100,7 +100,7 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     @Override
     public List<Advert> getByTitleAndType(String title, AdvertType type) {
         try {
-            Query query = entityManager.createQuery("from Advert where title like :title and type = :type");
+            Query query = entityManager.createQuery("select a from Advert a where a.title like :title and a.type = :type");
             query.setParameter("title", "%" + title + "%");
             query.setParameter("type", type);
 

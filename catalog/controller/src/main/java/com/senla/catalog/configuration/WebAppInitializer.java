@@ -1,7 +1,5 @@
-package com.senla.catalog;
+package com.senla.catalog.configuration;
 
-import com.senla.catalog.configuration.AppConfig;
-import com.senla.catalog.configuration.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

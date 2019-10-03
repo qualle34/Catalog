@@ -13,6 +13,8 @@ public interface IUserService extends IGenericService<User, Integer> {
 
     User getWithChatList(int id);
 
+    User getWithCredsByEmail(String email);
+
     User getFullUserById(int id);
 
     UserDto userToDto(User user, Creds creds);

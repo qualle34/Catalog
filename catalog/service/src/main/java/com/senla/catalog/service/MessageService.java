@@ -21,11 +21,6 @@ public class MessageService extends AbstractService<Message, Integer> implements
     private IMessageDao messageDao;
 
     @Override
-    protected Class getChildClass() {
-        return MessageService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "messageDao";
     }

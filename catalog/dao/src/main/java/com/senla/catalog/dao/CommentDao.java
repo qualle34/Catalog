@@ -27,7 +27,7 @@ public class CommentDao extends AbstractDao<Comment, Integer> implements ICommen
     public List<Comment> getByAdvert(Advert advert) {
 
         try {
-            Query query = entityManager.createQuery("from Comment where advert = :advert ");
+            Query query = entityManager.createQuery("select c from Comment c where c.advert = :advert ");
             query.setParameter("advert", advert);
 
             return query.getResultList();

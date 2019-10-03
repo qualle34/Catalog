@@ -11,5 +11,7 @@ public interface IUserDao extends IGenericDao<User, Integer> {
 
     User getWithChatList(int id);
 
+    User getWithCredsByEmail(String email);
+
     User getFullUserById(int id);
 }

@@ -26,7 +26,7 @@ public class DealDao extends AbstractDao<Deal, Integer> implements IDealDao {
     public List<Deal> getDealListBySeller(User seller) {
 
         try {
-            Query query = entityManager.createQuery("from Deal where seller = :seller ");
+            Query query = entityManager.createQuery("select d from Deal d where d.seller = :seller ");
             query.setParameter("seller", seller);
 
             return query.getResultList();
@@ -40,7 +40,7 @@ public class DealDao extends AbstractDao<Deal, Integer> implements IDealDao {
     public List<Deal> getDealListByBuyer(User buyer) {
 
         try {
-            Query query = entityManager.createQuery("from Deal where buyer = :buyer ");
+            Query query = entityManager.createQuery("select d from Deal d where d.buyer = :buyer ");
             query.setParameter("buyer", buyer);
 
             return query.getResultList();

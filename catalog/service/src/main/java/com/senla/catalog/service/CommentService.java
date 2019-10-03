@@ -25,11 +25,6 @@ public class CommentService extends AbstractService<Comment, Integer> implements
     private ICommentDao commentDao;
 
     @Override
-    protected Class getChildClass() {
-        return CommentService.class;
-    }
-
-    @Override
     protected String getDaoClassName() {
         return "commentDao";
     }
