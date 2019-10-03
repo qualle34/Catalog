@@ -19,6 +19,6 @@ public class RegistrationController {
 
     @PostMapping(value = "/register")
     public void addUser(@RequestBody UserDto dto) {
-        userService.add(userService.dtoToUser(dto));
+        userService.add(dto);
     }
 }

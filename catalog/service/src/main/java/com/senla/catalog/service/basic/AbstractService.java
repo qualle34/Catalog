@@ -34,7 +34,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             return dao.getAll();
 
         } catch (RuntimeException e) {
-            logger.error("Get all entities [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
+            logger.error("Get all entities [" + getEntityClass().toString() + "] error: " + e.getMessage());
             throw e;
         }
     }
@@ -46,7 +46,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             return (T) dao.getById(pk);
 
         } catch (RuntimeException e) {
-            logger.error("Get entity [ " + getEntityClass().toString() + " ] by id error: " + e.getMessage());
+            logger.error("Get entity [" + getEntityClass().toString() + "] by id error: " + e.getMessage());
             throw e;
         }
     }
@@ -59,7 +59,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             dao.add(t);
 
         } catch (RuntimeException e) {
-            logger.error("Add entity [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
+            logger.error("Add entity [" + getEntityClass().toString() + "] error: " + e.getMessage());
             throw e;
         }
     }
@@ -72,7 +72,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             dao.update(t);
 
         } catch (RuntimeException e) {
-            logger.error("Update entity [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
+            logger.error("Update entity [" + getEntityClass().toString() + "] error: " + e.getMessage());
             throw e;
         }
     }
@@ -85,7 +85,7 @@ public abstract class AbstractService<T, PK extends Serializable> implements IGe
             dao.delete(t);
 
         } catch (RuntimeException e) {
-            logger.error("Delete entity [ " + getEntityClass().toString() + " ] error: " + e.getMessage());
+            logger.error("Delete entity [" + getEntityClass().toString() + "] error: " + e.getMessage());
             throw e;
         }
     }

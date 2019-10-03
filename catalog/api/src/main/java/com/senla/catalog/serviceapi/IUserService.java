@@ -11,15 +11,19 @@ public interface IUserService extends IGenericService<User, Integer> {
 
     List<User> getByName(String name);
 
+    UserDto getDtoById(int id);
+
     User getWithChatList(int id);
 
     User getWithCredsByEmail(String email);
 
     User getFullUserById(int id);
 
-    UserDto userToDto(User user, Creds creds);
+    void update(UserDto dto);
 
-    User updateUserFromDto(UserDto dto);
+    void add(UserDto dto);
+
+    UserDto userToDto(User user, Creds creds);
 
     User dtoToUser(UserDto dto);
 }

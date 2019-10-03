@@ -18,12 +18,12 @@ public class ProfileController {
 
     @GetMapping(params = "id")
     public UserDto getProfile(@RequestParam int id) {
-        return userService.userToDto(userService.getById(id), credsService.getById(id));
+        return userService.getDtoById(id);
     }
 
     @PostMapping(value = "/edit")
     public void updateProfile(@RequestBody UserDto dto) {
-        userService.update(userService.updateUserFromDto(dto));
+        userService.update(dto);
     }
 
     @DeleteMapping(value = "/delete/{id}")

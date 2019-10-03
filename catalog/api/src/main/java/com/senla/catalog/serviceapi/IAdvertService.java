@@ -14,25 +14,25 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
 
     List<Advert> getByCategory(Category category);
 
-    List<Advert> getByType(AdvertType type);
+    List<Advert> getByType(String type);
 
-    List<Advert> getByCategoryAndType(Category category, AdvertType type);
+    List<Advert> getByCategoryAndType(Category category, String type);
 
-    List<Advert> getByTitle(String title);
+    List<SimpleAdvertDto> getByTitle(String title);
 
     List<Advert> getByUser(User user);
 
-    List<Advert> getByTitleAndType(String title, AdvertType type);
+    List<Advert> getByTitleAndType(String title, String type);
 
-    List<Advert> getAllSorted();
+    List<SimpleAdvertDto> getAllSorted();
 
-    List<Advert> getByCategorySorted(Category category);
+    List<SimpleAdvertDto> getByCategorySorted(Category category);
 
-    List<Advert> getByTypeSorted(AdvertType type);
+    List<SimpleAdvertDto> getByTypeSorted(String type);
 
-    List<Advert> getByCategoryAndTypeSorted(Category category, AdvertType type);
+    List<SimpleAdvertDto> getByCategoryAndTypeSorted(Category category, String type);
 
-    AdvertDto getByIdWithComments(int id);
+    AdvertDto getDtoByIdWithComments(int id);
 
     AdvertDto getDtoById(int id);
 
@@ -40,7 +40,11 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
 
     AdvertDto advertToDto(Advert advert);
 
-    Advert updateAdvertFromDto(AdvertDto dto);
-
     Advert dtoToAdvert(AdvertDto dto);
+
+    void update(AdvertDto dto);
+
+    void addVip(int id);
+
+    void delete(int id);
 }

@@ -24,36 +24,28 @@ public class HomeController {
 
     @GetMapping
     public List<SimpleAdvertDto> getAdvertList() {
-        return advertService.advertListToDto(advertService.getAllSorted());
+        return advertService.getAllSorted();
     }
 
     @GetMapping(params = "search")
     public List<SimpleAdvertDto> getAdvertListBySearch(@RequestParam String search) {
-        return advertService.advertListToDto(advertService.getByTitle(search));
+        return advertService.getByTitle(search);
     }
 
     @GetMapping(params = "category")
     public List<SimpleAdvertDto> getAdvertListByCategory(@RequestParam int category) {
-        return advertService.advertListToDto(advertService.getByCategorySorted(categoryService.getById(category)));
+        return advertService.getByCategorySorted(categoryService.getById(category));
     }
 
     @GetMapping(params = "type")
     public List<SimpleAdvertDto> getAdvertListByType(@RequestParam String type) {
+        return advertService.getByTypeSorted(type);
 
-        if (type.equals("SELL") || type.equals("sell")) {
-            return advertService.advertListToDto(advertService.getByTypeSorted(AdvertType.SELL));
-        } else {
-            return advertService.advertListToDto(advertService.getByTypeSorted(AdvertType.BUY));
-        }
     }
 
     @GetMapping(params = {"category", "type"})
     public List<SimpleAdvertDto> getAdvertListByCategoryAndTypeSorted(@RequestParam int category, @RequestParam String type) {
+        return advertService.getByCategoryAndTypeSorted(categoryService.getById(category), type);
 
-        if (type.equals("SELL") || type.equals("sell")) {
-            return advertService.advertListToDto(advertService.getByCategoryAndTypeSorted(categoryService.getById(category), AdvertType.SELL));
-        } else {
-            return advertService.advertListToDto(advertService.getByCategoryAndTypeSorted(categoryService.getById(category), AdvertType.BUY));
-        }
     }
 }

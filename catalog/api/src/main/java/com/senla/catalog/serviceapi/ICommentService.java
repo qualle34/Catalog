@@ -14,11 +14,13 @@ public interface ICommentService extends IGenericService<Comment, Integer> {
 
     List<Comment> getByAdvert(Advert advert);
 
-    CommentDto CommentToDto(Comment comment);
+    void addFromDto(CommentDto dto);
 
-    List<SimpleCommentDto> CommentListToDto(List<Comment> commentList);
+    CommentDto commentToDto(Comment comment);
 
-    List<SimpleCommentDto> CommentSetToDto(Set<Comment> commentList);
+    List<SimpleCommentDto> commentListToDto(List<Comment> commentList);
+
+    List<SimpleCommentDto> commentSetToDto(Set<Comment> commentList);
 
     Comment dtoToComment(CommentDto dto, User user , Advert advert);
 }

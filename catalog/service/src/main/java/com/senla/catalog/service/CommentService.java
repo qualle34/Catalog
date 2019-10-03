@@ -7,11 +7,14 @@ import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Comment;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
+import com.senla.catalog.serviceapi.IAdvertService;
 import com.senla.catalog.serviceapi.ICommentService;
+import com.senla.catalog.serviceapi.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +27,12 @@ public class CommentService extends AbstractService<Comment, Integer> implements
 
     @Autowired
     private ICommentDao commentDao;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private IAdvertService advertService;
 
     @Override
     protected String getDaoClassName() {
@@ -48,12 +57,25 @@ public class CommentService extends AbstractService<Comment, Integer> implements
     }
 
     @Override
-    public CommentDto CommentToDto(Comment comment) {
+    @Transactional
+    public void addFromDto(CommentDto dto) {
+
+        try {
+            add(dtoToComment(dto, userService.getById(dto.getUserId()), advertService.getById(dto.getAdvertId())));
+
+        } catch (RuntimeException e) {
+            logger.error("Add comment from dto error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public CommentDto commentToDto(Comment comment) {
         return new CommentDto(comment.getText(), comment.getUser().getId(), comment.getAdvert().getId());
     }
 
     @Override
-    public List<SimpleCommentDto> CommentListToDto(List<Comment> commentList) {
+    public List<SimpleCommentDto> commentListToDto(List<Comment> commentList) {
         List<SimpleCommentDto> commentDtoList = new LinkedList<>();
 
         for (Comment comment : commentList) {
@@ -63,7 +85,7 @@ public class CommentService extends AbstractService<Comment, Integer> implements
     }
 
     @Override
-    public List<SimpleCommentDto> CommentSetToDto(Set<Comment> commentList) {
+    public List<SimpleCommentDto> commentSetToDto(Set<Comment> commentList) {
         List<SimpleCommentDto> commentDtoList = new LinkedList<>();
 
         for (Comment comment : commentList) {

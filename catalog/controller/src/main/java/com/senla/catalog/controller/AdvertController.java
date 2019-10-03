@@ -29,12 +29,11 @@ public class AdvertController {
 
     @GetMapping(params = "id")
     public AdvertDto getAdvert(@RequestParam int id) {
-        return advertService.getByIdWithComments(id);
+        return advertService.getDtoByIdWithComments(id);
     }
 
-    @PostMapping(params = "comment")
+    @PostMapping(value = "comment")
     public void AddComment(@RequestBody CommentDto dto) {
-         commentService.add(commentService.dtoToComment(dto, userService.getById(dto.getUserId()),
-                 advertService.getById(dto.getAdvertId())));
+        commentService.addFromDto(dto);
     }
 }

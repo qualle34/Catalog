@@ -38,7 +38,7 @@ public class UserAdvertController {
     public AdvertDto getUserAdvert(@RequestParam int id) {
         Advert advert = advertService.getById(id);
         AdvertDto advertDto = advertService.advertToDto(advert);
-        advertDto.setComments(commentService.CommentListToDto(commentService.getByAdvert(advert)));
+        advertDto.setComments(commentService.commentListToDto(commentService.getByAdvert(advert)));
         return advertDto;
     }
 
@@ -52,23 +52,16 @@ public class UserAdvertController {
 
     @PostMapping(value = "advert/update")
     public void updateAdvert(@RequestBody AdvertDto dto) {
-        advertService.update(advertService.updateAdvertFromDto(dto));
+        advertService.update(dto);
     }
 
     @DeleteMapping(value = "advert/delete/{id}")
     public void deleteAdvert(@PathVariable(value = "id") int advertId) {
-
-        if (vipInfoService.getById(advertId) != null) {
-            vipInfoService.delete(vipInfoService.getById(advertId));
-        }
-        advertService.delete(advertService.getById(advertId));
+        advertService.delete(advertId);
     }
 
-    // TODO: Fix
     @PostMapping(value = "advert/add_vip")
     public void addVipInfo(@RequestBody VipInfoDto dto) {
-        Advert advert = advertService.getById(dto.getId());
-        advert.setVipInfo(vipInfoService.dtoToVipInfo(dto));
-        advertService.update(advert);
+        advertService.addVip(dto.getId());
     }
 }

@@ -58,11 +58,4 @@ public class TestController {
     public String user(){
        return userService.getWithCredsByEmail("vova@gmail.com").toString();
     }
-
-//    advertDto.setComments(commentService.CommentListToDto(commentService.getByAdvert(advert)));
-//    тоже не очень, сервис должен отдавать ДТО, например
-//    public UserDto getUserById(Long Id);
-//
-//    и принимать ДТО, например
-//    public void saveUser(UserDto user);
 }

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,6 +41,19 @@ public class UserService extends AbstractService<User, Integer> implements IUser
 
         } catch (RuntimeException e) {
             logger.error("Get user by name error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public UserDto getDtoById(int id) {
+
+        try {
+            User user = userDao.getWithCredsById(id);
+            return userToDto(user, user.getCreds());
+
+        } catch (RuntimeException e) {
+            logger.error("Get user dto by id error: " + e.getMessage());
             throw e;
         }
     }
@@ -81,22 +95,43 @@ public class UserService extends AbstractService<User, Integer> implements IUser
     }
 
     @Override
+    @Transactional
+    public void update(UserDto dto) {
+
+        try {
+            User user = userDao.getWithCredsById(dto.getId());
+            user.setFirstname(dto.getFirstname());
+            user.setLastname(dto.getLastname());
+            user.setBirthdate(dto.getBirthdate());
+            user.setPhone(dto.getPhone());
+            user.setLocation(dto.getLocation());
+            userDao.update(user);
+
+        } catch (RuntimeException e) {
+            logger.error("Update user from dto error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void add(UserDto dto) {
+
+        try {
+            userDao.add(dtoToUser(dto));
+
+        } catch (RuntimeException e) {
+            logger.error("Add user from dto error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
     public UserDto userToDto(User user, Creds creds) {
         UserDto dto = new UserDto(user.getFirstname(), user.getLastname(), user.getBirthdate(), user.getPhone(),
                 user.getLocation(), creds.getLogin(), creds.getPassword(), creds.getEmail(), creds.getRole());
         dto.setId(user.getId());
         return dto;
-    }
-
-    @Override
-    public User updateUserFromDto(UserDto dto) {
-        User user = getById(dto.getId());
-        user.setFirstname(dto.getFirstname());
-        user.setLastname(dto.getLastname());
-        user.setBirthdate(dto.getBirthdate());
-        user.setPhone(dto.getPhone());
-        user.setLocation(dto.getLocation());
-        return user;
     }
 
     @Override

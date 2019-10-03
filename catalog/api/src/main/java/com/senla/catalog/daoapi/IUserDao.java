@@ -13,5 +13,7 @@ public interface IUserDao extends IGenericDao<User, Integer> {
 
     User getWithCredsByEmail(String email);
 
+    User getWithCredsById(int id);
+
     User getFullUserById(int id);
 }
