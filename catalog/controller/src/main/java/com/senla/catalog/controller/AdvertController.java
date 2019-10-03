@@ -29,10 +29,7 @@ public class AdvertController {
 
     @GetMapping(params = "id")
     public AdvertDto getAdvert(@RequestParam int id) {
-        Advert advert = advertService.getById(id);
-        AdvertDto advertDto = advertService.advertToDto(advert);
-        advertDto.setComments(commentService.CommentListToDto(commentService.getByAdvert(advert)));
-        return advertDto;
+        return advertService.getByIdWithComments(id);
     }
 
     @PostMapping(params = "comment")

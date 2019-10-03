@@ -11,6 +11,7 @@ import com.senla.catalog.entity.User;
 import com.senla.catalog.entity.enums.AdvertType;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IAdvertService;
+import com.senla.catalog.serviceapi.ICommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
 
     @Autowired
     private IAdvertDao advertDao;
+
+    @Autowired
+    private ICommentService commentService;
 
     @Override
     protected String getDaoClassName() {
@@ -156,6 +160,32 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
             logger.error("Get adverts by category and type with users error: " + e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    public AdvertDto getByIdWithComments(int id) {
+
+        try {
+            Advert advert = advertDao.getByIdWithComments(id);
+            AdvertDto dto = new AdvertDto(advert.getTitle(), advert.getDescription(), advert.getPrice(),
+                    advert.getType(), advert.getUser().getId(), advert.getCategory().getId());
+            dto.setId(advert.getId());
+            dto.setComments(commentService.CommentSetToDto(advert.getCommentSet()));
+            return dto;
+
+        } catch (RuntimeException e) {
+            logger.error("Get advert by id with comments error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public AdvertDto getDtoById(int id) {
+        Advert advert = getById(id);
+        AdvertDto dto = new AdvertDto(advert.getTitle(), advert.getDescription(), advert.getPrice(),
+                advert.getType(), advert.getUser().getId(), advert.getCategory().getId());
+        dto.setId(advert.getId());
+        return dto;
     }
 
     @Override

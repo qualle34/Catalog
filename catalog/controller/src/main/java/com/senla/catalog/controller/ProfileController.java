@@ -26,8 +26,8 @@ public class ProfileController {
         userService.update(userService.updateUserFromDto(dto));
     }
 
-    @DeleteMapping(value = "/delete")
-    public void deleteProfile(@RequestBody UserDto dto) {
-        userService.delete(userService.getById(dto.getId()));
+    @DeleteMapping(value = "/delete/{id}")
+    public void deleteProfile(@PathVariable(value = "id") int userId) {
+        userService.delete(userService.getById(userId));
     }
 }

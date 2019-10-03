@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CommentService extends AbstractService<Comment, Integer> implements ICommentService {
@@ -53,6 +54,16 @@ public class CommentService extends AbstractService<Comment, Integer> implements
 
     @Override
     public List<SimpleCommentDto> CommentListToDto(List<Comment> commentList) {
+        List<SimpleCommentDto> commentDtoList = new LinkedList<>();
+
+        for (Comment comment : commentList) {
+            commentDtoList.add(new SimpleCommentDto(comment.getId(), comment.getText()));
+        }
+        return commentDtoList;
+    }
+
+    @Override
+    public List<SimpleCommentDto> CommentSetToDto(Set<Comment> commentList) {
         List<SimpleCommentDto> commentDtoList = new LinkedList<>();
 
         for (Comment comment : commentList) {

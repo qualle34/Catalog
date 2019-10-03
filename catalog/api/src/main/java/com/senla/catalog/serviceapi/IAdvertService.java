@@ -32,6 +32,10 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
 
     List<Advert> getByCategoryAndTypeSorted(Category category, AdvertType type);
 
+    AdvertDto getByIdWithComments(int id);
+
+    AdvertDto getDtoById(int id);
+
     List<SimpleAdvertDto> advertListToDto(List<Advert> advertList);
 
     AdvertDto advertToDto(Advert advert);

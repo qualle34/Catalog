@@ -2,6 +2,7 @@ package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IAdvertDao;
+import com.senla.catalog.dto.AdvertDto;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
 import com.senla.catalog.entity.SellerRating;
@@ -194,5 +195,11 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
         }
     }
 
+    @Override
+    public Advert getByIdWithComments(int id) {
+        Query query = entityManager.createQuery("select a from Advert a join a.commentSet c where a.id = :id ");
+        query.setParameter("id", id);
 
+        return (Advert) query.getSingleResult();
+    }
 }

@@ -55,13 +55,13 @@ public class UserAdvertController {
         advertService.update(advertService.updateAdvertFromDto(dto));
     }
 
-    @DeleteMapping(value = "advert/delete")
-    public void deleteAdvert(@RequestBody AdvertDto dto) {
+    @DeleteMapping(value = "advert/delete/{id}")
+    public void deleteAdvert(@PathVariable(value = "id") int advertId) {
 
-        if (vipInfoService.getById(dto.getId()) != null) {
-            vipInfoService.delete(vipInfoService.getById(dto.getId()));
+        if (vipInfoService.getById(advertId) != null) {
+            vipInfoService.delete(vipInfoService.getById(advertId));
         }
-        advertService.delete(advertService.getById(dto.getId()));
+        advertService.delete(advertService.getById(advertId));
     }
 
     // TODO: Fix

@@ -1,6 +1,7 @@
 package com.senla.catalog.daoapi;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
+import com.senla.catalog.dto.AdvertDto;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
 import com.senla.catalog.entity.User;
@@ -29,4 +30,6 @@ public interface IAdvertDao extends IGenericDao<Advert, Integer> {
     List<Advert> getByTypeWithUser(AdvertType type);
 
     List<Advert> getByCategoryAndTypeWithUser(Category category, AdvertType type);
+
+    Advert getByIdWithComments(int id);
 }
