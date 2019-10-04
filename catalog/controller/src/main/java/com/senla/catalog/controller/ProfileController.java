@@ -28,6 +28,6 @@ public class ProfileController {
 
     @DeleteMapping(value = "/delete/{id}")
     public void deleteProfile(@PathVariable(value = "id") int userId) {
-        userService.delete(userService.getById(userId));
+        userService.delete(userId);
     }
 }

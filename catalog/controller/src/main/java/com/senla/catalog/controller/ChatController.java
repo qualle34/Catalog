@@ -28,7 +28,7 @@ public class ChatController {
 
     @GetMapping(params = "id")
     public List<ChatDto> getChats(@RequestParam int id) { // param - user id
-        return chatService.chatSetToDto(userService.getWithChatList(id).getChatSet());
+        return userService.getChatsDtoByUserId(id);
     }
 
     @GetMapping(value = "/chat", params = "id")

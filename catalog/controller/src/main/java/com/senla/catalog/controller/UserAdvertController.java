@@ -3,7 +3,6 @@ package com.senla.catalog.controller;
 import com.senla.catalog.dto.AdvertDto;
 import com.senla.catalog.dto.SimpleAdvertDto;
 import com.senla.catalog.dto.VipInfoDto;
-import com.senla.catalog.entity.Advert;
 import com.senla.catalog.serviceapi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,23 +30,17 @@ public class UserAdvertController {
 
     @GetMapping(value = "adverts", params = "id") // param - user id
     public List<SimpleAdvertDto> getUserAdverts(@RequestParam int id) {
-        return advertService.advertListToDto(advertService.getByUser(userService.getById(id)));
+        return advertService.getDtoByUserId(id);
     }
 
     @GetMapping(value = "advert", params = "id") // param - advert id
     public AdvertDto getUserAdvert(@RequestParam int id) {
-        Advert advert = advertService.getById(id);
-        AdvertDto advertDto = advertService.advertToDto(advert);
-        advertDto.setComments(commentService.commentListToDto(commentService.getByAdvert(advert)));
-        return advertDto;
+        return advertService.getDtoByIdWithComments(id);
     }
 
     @PostMapping(value = "/add")
     public void addAdvert(@RequestBody AdvertDto dto) {
-        Advert advert = advertService.dtoToAdvert(dto);
-        advert.setUser(userService.getById(dto.getUserId()));
-        advert.setCategory(categoryService.getById(dto.getCategoryId()));
-        advertService.add(advert);
+        advertService.add(dto);
     }
 
     @PostMapping(value = "advert/update")

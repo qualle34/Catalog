@@ -11,25 +11,27 @@ import java.util.List;
 
 public interface IAdvertDao extends IGenericDao<Advert, Integer> {
 
-    List<Advert> getByCategory(Category category);
+    List<Advert> getByCategory(int categoryId);
 
     List<Advert> getByType(AdvertType type);
 
-    List<Advert> getByCategoryAndType(Category category, AdvertType type);
+    List<Advert> getByCategoryAndType(int categoryId, AdvertType type);
 
     List<Advert> getByTitle(String title);
 
-    List<Advert> getByUser(User user);
+    List<Advert> getByUserId(int userId);
 
     List<Advert> getByTitleAndType(String title, AdvertType type);
 
     List<Advert> getAllWithUser();
 
-    List<Advert> getByCategoryWithUser(Category category);
+    List<Advert> getByCategoryWithUser(int categoryId);
 
     List<Advert> getByTypeWithUser(AdvertType type);
 
-    List<Advert> getByCategoryAndTypeWithUser(Category category, AdvertType type);
+    List<Advert> getByCategoryAndTypeWithUser(int categoryId, AdvertType type);
 
     Advert getByIdWithComments(int id);
+
+    void delete(int id);
 }

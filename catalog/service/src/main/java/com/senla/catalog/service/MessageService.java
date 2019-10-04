@@ -55,7 +55,9 @@ public class MessageService extends AbstractService<Message, Integer> implements
             List<MessageDto> dtoList = new LinkedList<>();
 
             for (Message message : messageDao.getByChat(chatService.getById(chatId))) {
-                dtoList.add(new MessageDto(message.getText(), message.getUser().getId(), message.getSendDate()));
+                MessageDto dto = new MessageDto(message.getText(), message.getUser().getId(), message.getSendDate());
+                dto.setId(message.getId());
+                dtoList.add(dto);
             }
             return dtoList;
 

@@ -53,7 +53,7 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
         Join<User, Creds> creds = root.join("creds", JoinType.INNER);
         Predicate predicate = cb.equal(creds.get("email"), email);
-        query.where(predicate);
+        query.select(root).where(predicate);
 
         return entityManager.createQuery(query).getSingleResult();
     }
@@ -87,5 +87,11 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
         query.select(root).where(cb.equal(root.get("id"), id));
 
         return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public void delete(int id) {
+        Query query = entityManager.createQuery("DELETE FROM User u WHERE u.id = :id");
+        query.setParameter("id", id);
     }
 }

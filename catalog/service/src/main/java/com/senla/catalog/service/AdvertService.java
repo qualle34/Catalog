@@ -9,9 +9,7 @@ import com.senla.catalog.entity.User;
 import com.senla.catalog.entity.VipInfo;
 import com.senla.catalog.entity.enums.AdvertType;
 import com.senla.catalog.service.basic.AbstractService;
-import com.senla.catalog.serviceapi.IAdvertService;
-import com.senla.catalog.serviceapi.ICommentService;
-import com.senla.catalog.serviceapi.IVipInfoService;
+import com.senla.catalog.serviceapi.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,12 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     @Autowired
     private IVipInfoService vipInfoService;
 
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private ICategoryService categoryService;
+
     @Override
     protected String getDaoClassName() {
         return "advertDao";
@@ -48,10 +52,10 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<Advert> getByCategory(Category category) {
+    public List<Advert> getByCategory(int categoryId) {
 
         try {
-            return advertDao.getByCategory(category);
+            return advertDao.getByCategory(categoryId);
 
         } catch (RuntimeException e) {
             logger.error("Get advert list by category error: " + e.getMessage());
@@ -72,10 +76,10 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<Advert> getByCategoryAndType(Category category, String type) {
+    public List<Advert> getByCategoryAndType(int categoryId, String type) {
 
         try {
-            return advertDao.getByCategoryAndType(category, getType(type));
+            return advertDao.getByCategoryAndType(categoryId, getType(type));
 
         } catch (RuntimeException e) {
             logger.error("Get advert list by category and type error: " + e.getMessage());
@@ -96,10 +100,10 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<Advert> getByUser(User user) {
+    public List<Advert> getByUserId(int userId) {
 
         try {
-            return advertDao.getByUser(user);
+            return advertDao.getByUserId(userId);
 
         } catch (RuntimeException e) {
             logger.error("Get advert list by user error: " + e.getMessage());
@@ -132,10 +136,10 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<SimpleAdvertDto> getByCategorySorted(Category category) {
+    public List<SimpleAdvertDto> getByCategorySorted(int categoryId) {
 
         try {
-            return advertListToDto(sort(advertDao.getByCategoryWithUser(category)));
+            return advertListToDto(sort(advertDao.getByCategoryWithUser(categoryId)));
 
         } catch (RuntimeException e) {
             logger.error("Get adverts by category with users error: " + e.getMessage());
@@ -156,13 +160,25 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
     }
 
     @Override
-    public List<SimpleAdvertDto> getByCategoryAndTypeSorted(Category category, String type) {
+    public List<SimpleAdvertDto> getByCategoryAndTypeSorted(int categoryId, String type) {
 
         try {
-            return advertListToDto(sort(advertDao.getByCategoryAndTypeWithUser(category, getType(type))));
+            return advertListToDto(sort(advertDao.getByCategoryAndTypeWithUser(categoryId, getType(type))));
 
         } catch (RuntimeException e) {
             logger.error("Get adverts by category and type with users error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<SimpleAdvertDto> getDtoByUserId(int userId) {
+
+        try {
+            return advertListToDto(advertDao.getByUserId(userId));
+
+        } catch (RuntimeException e) {
+            logger.error("Get adverts dto by user error: " + e.getMessage());
             throw e;
         }
     }
@@ -226,6 +242,22 @@ public class AdvertService extends AbstractService<Advert, Integer> implements I
 
         } catch (RuntimeException e) {
             logger.error("Update advert from dto error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void add(AdvertDto dto) {
+
+        try {
+            Advert advert = dtoToAdvert(dto);
+            advert.setUser(userService.getById(dto.getUserId()));
+            advert.setCategory(categoryService.getById(dto.getCategoryId()));
+            add(advert);
+
+        } catch (RuntimeException e) {
+            logger.error("Add advert from dto error: " + e.getMessage());
             throw e;
         }
     }

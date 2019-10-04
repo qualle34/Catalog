@@ -16,4 +16,6 @@ public interface IUserDao extends IGenericDao<User, Integer> {
     User getWithCredsById(int id);
 
     User getFullUserById(int id);
+
+    void delete(int id);
 }

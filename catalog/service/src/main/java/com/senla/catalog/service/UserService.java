@@ -1,11 +1,13 @@
 package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IUserDao;
+import com.senla.catalog.dto.ChatDto;
 import com.senla.catalog.dto.UserDto;
 import com.senla.catalog.entity.Creds;
 import com.senla.catalog.entity.SellerRating;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
+import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ public class UserService extends AbstractService<User, Integer> implements IUser
 
     @Autowired
     private IUserDao userDao;
+
+    @Autowired
+    IChatService chatService;
 
     @Override
     protected String getDaoClassName() {
@@ -124,6 +129,24 @@ public class UserService extends AbstractService<User, Integer> implements IUser
             logger.error("Add user from dto error: " + e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+
+        try {
+            userDao.delete(id);
+
+        } catch (RuntimeException e) {
+            logger.error("Delete user by id error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<ChatDto> getChatsDtoByUserId(int userId) {
+        return chatService.chatSetToDto(getWithChatList(userId).getChatSet());
     }
 
     @Override

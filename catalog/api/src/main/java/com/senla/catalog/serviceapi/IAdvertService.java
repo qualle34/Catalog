@@ -12,25 +12,27 @@ import java.util.List;
 
 public interface IAdvertService extends IGenericService<Advert, Integer> {
 
-    List<Advert> getByCategory(Category category);
+    List<Advert> getByCategory(int categoryId);
 
     List<Advert> getByType(String type);
 
-    List<Advert> getByCategoryAndType(Category category, String type);
+    List<Advert> getByCategoryAndType(int categoryId, String type);
 
     List<SimpleAdvertDto> getByTitle(String title);
 
-    List<Advert> getByUser(User user);
+    List<Advert> getByUserId(int userId);
 
     List<Advert> getByTitleAndType(String title, String type);
 
     List<SimpleAdvertDto> getAllSorted();
 
-    List<SimpleAdvertDto> getByCategorySorted(Category category);
+    List<SimpleAdvertDto> getByCategorySorted(int categoryId);
 
     List<SimpleAdvertDto> getByTypeSorted(String type);
 
-    List<SimpleAdvertDto> getByCategoryAndTypeSorted(Category category, String type);
+    List<SimpleAdvertDto> getByCategoryAndTypeSorted(int categoryId, String type);
+
+    List<SimpleAdvertDto> getDtoByUserId(int userId);
 
     AdvertDto getDtoByIdWithComments(int id);
 
@@ -43,6 +45,8 @@ public interface IAdvertService extends IGenericService<Advert, Integer> {
     Advert dtoToAdvert(AdvertDto dto);
 
     void update(AdvertDto dto);
+
+    void add(AdvertDto dto);
 
     void addVip(int id);
 
