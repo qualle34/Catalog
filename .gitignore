@@ -4,9 +4,6 @@ out/
 *.iml
 META-INF/
 
-# config #
-hibernate.cfg.xml
-
 # Maven #
 target/
 
@@ -15,6 +12,9 @@ target/
 
 # Log file
 *.log
+
+# Hibernate #
+hibernate.cfg.xml
 
 # Package Files #
 *.war

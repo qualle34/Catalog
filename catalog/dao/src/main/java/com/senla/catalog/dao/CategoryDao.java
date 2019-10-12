@@ -3,26 +3,18 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.ICategoryDao;
 import com.senla.catalog.entity.Category;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class CategoryDao extends AbstractDao<Category, Integer> implements ICategoryDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(CategoryDao.class);
-
-    @Autowired
-    private Session session;
-
-    @Override
-    protected Class getChildClass() {
-        return CategoryDao.class;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<Category> getEntityClass() {
@@ -30,17 +22,17 @@ public class CategoryDao extends AbstractDao<Category, Integer> implements ICate
     }
 
     @Override
-    public Category getByTitle(String title) {
+    public List<Category> getByTitle(String title) {
+        Query query = entityManager.createQuery("SELECT c FROM Category c WHERE c.title LIKE :title ", Category.class);
+        query.setParameter("title", "%" + title + "%");
 
-        try {
-            Query query = session.createQuery("from Category where title = :title ");
-            query.setParameter("title", title);
+        return query.getResultList();
+    }
 
-            return (Category) query.getSingleResult();
-
-        } catch (RuntimeException e) {
-            logger.error("Get category with adverts by name error: " + e.getMessage());
-            throw e;
-        }
+    @Override
+    public void delete(int id) {
+        Query query = entityManager.createQuery("DELETE FROM Category c WHERE c.id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }

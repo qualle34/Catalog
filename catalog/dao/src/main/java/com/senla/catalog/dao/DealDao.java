@@ -3,28 +3,18 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IDealDao;
 import com.senla.catalog.entity.Deal;
-import com.senla.catalog.entity.User;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class DealDao extends AbstractDao<Deal, Integer> implements IDealDao {
+public class DealDao extends AbstractDao<Deal, Long> implements IDealDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(DealDao.class);
-
-    @Autowired
-    private Session session;
-
-    @Override
-    protected Class getChildClass() {
-        return DealDao.class;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<Deal> getEntityClass() {
@@ -32,32 +22,25 @@ public class DealDao extends AbstractDao<Deal, Integer> implements IDealDao {
     }
 
     @Override
-    public List<Deal> getDealListBySeller(User seller) {
+    public List<Deal> getBySellerId(long sellerId) {
+        Query query = entityManager.createQuery("SELECT d FROM Deal d WHERE d.seller.id = :sellerId ", Deal.class);
+        query.setParameter("sellerId", sellerId);
 
-        try {
-            Query query = session.createQuery("from Deal where seller = :seller ");
-            query.setParameter("seller", seller);
-
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get deal list by seller error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
-    public List<Deal> getDealListByBuyer(User buyer) {
+    public List<Deal> getByBuyerId(long buyerId) {
+        Query query = entityManager.createQuery("SELECT d FROM Deal d WHERE d.buyer.id = :buyerId ", Deal.class);
+        query.setParameter("buyerId", buyerId);
 
-        try {
-            Query query = session.createQuery("from Deal where buyer = :buyer ");
-            query.setParameter("buyer", buyer);
+        return query.getResultList();
+    }
 
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get deal list by buyer error: " + e.getMessage());
-            throw e;
-        }
+    @Override
+    public void delete(long id) {
+        Query query = entityManager.createQuery("DELETE FROM Deal d WHERE d.id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }

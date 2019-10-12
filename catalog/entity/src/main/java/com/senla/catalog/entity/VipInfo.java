@@ -5,23 +5,23 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
+import javax.persistence.MapsId;
 import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.MapsId;
-
 import javax.persistence.FetchType;
 
-import java.io.Serializable;
+
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "vip_info")
-public class VipInfo implements Serializable {
+public class VipInfo {
 
     @Id
-    private int id;
+    @Column(name = "advert_id")
+    private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -35,16 +35,16 @@ public class VipInfo implements Serializable {
     public VipInfo() {
     }
 
-    public VipInfo(Advert advert, Date buyDate) {
-        this.advert = advert;
+    public VipInfo(long id, Date buyDate) {
+        this.id = id;
         this.buyDate = buyDate;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

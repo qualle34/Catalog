@@ -1,6 +1,6 @@
 package com.senla.catalog.entity;
 
-import com.senla.catalog.entity.constants.AdvertType;
+import com.senla.catalog.entity.enums.AdvertType;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -27,7 +27,7 @@ public class Advert implements Comparable<Advert> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "advert_id")
-    private int id;
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -42,7 +42,7 @@ public class Advert implements Comparable<Advert> {
     @Column(name = "type")
     private AdvertType type;
 
-    @OneToOne(mappedBy = "advert", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "advert", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private VipInfo vipInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,6 +59,13 @@ public class Advert implements Comparable<Advert> {
     public Advert() {
     }
 
+    public Advert(String title, String description, double price, AdvertType type) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.type = type;
+    }
+
     public Advert(String title, String description, double price, AdvertType type, User user, Category category) {
         this.title = title;
         this.description = description;
@@ -68,11 +75,11 @@ public class Advert implements Comparable<Advert> {
         this.category = category;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -118,6 +125,7 @@ public class Advert implements Comparable<Advert> {
 
     public void setVipInfo(VipInfo vipInfo) {
         this.vipInfo = vipInfo;
+        vipInfo.setAdvert(this);
     }
 
     public User getUser() {
@@ -171,9 +179,9 @@ public class Advert implements Comparable<Advert> {
         int rating = Float.compare(this.getUser().getRating().getRating(), o.getUser().getRating().getRating());
         int vip = Boolean.compare(this.isVip(), o.isVip());
 
-        if(vip == 1 || vip == 0 && rating == 1){
+        if (vip == 1 || vip == 0 && rating == 1) {
             return 1;
-        } else if (vip == 0 && rating == 0){
+        } else if (vip == 0 && rating == 0) {
             return 0;
         } else {
             return -1;

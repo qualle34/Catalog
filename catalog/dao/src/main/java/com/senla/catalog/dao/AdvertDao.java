@@ -4,31 +4,22 @@ import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Category;
-import com.senla.catalog.entity.SellerRating;
+import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.User;
-import com.senla.catalog.entity.constants.AdvertType;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.senla.catalog.entity.enums.AdvertType;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
-public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDao {
+public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(AdvertDao.class);
-
-    @Autowired
-    private Session session;
-
-    @Override
-    protected Class getChildClass() {
-        return AdvertDao.class;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<Advert> getEntityClass() {
@@ -36,172 +27,134 @@ public class AdvertDao extends AbstractDao<Advert, Integer> implements IAdvertDa
     }
 
     @Override
-    public List<Advert> getByCategory(Category category) {
+    public List<Advert> getByCategoryId(int categoryId) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.category.id = :categoryId ", Advert.class);
+        query.setParameter("categoryId", categoryId);
 
-        try {
-            Query query = session.createQuery("from Advert where category = :category ");
-            query.setParameter("category", category);
-
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get advert list by category error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
     public List<Advert> getByType(AdvertType type) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.type = :type ", Advert.class);
+        query.setParameter("type", type);
 
-        try {
-            Query query = session.createQuery("from Advert where type = :type ");
-            query.setParameter("type", type);
-
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get advert list by type error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
-    public List<Advert> getByCategoryAndType(Category category, AdvertType type) {
+    public List<Advert> getByCategoryIdAndType(int categoryId, AdvertType type) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.category.id = :categoryId and a.type = :type", Advert.class);
+        query.setParameter("categoryId", categoryId);
+        query.setParameter("type", type);
 
-        try {
-            Query query = session.createQuery("from Advert where category = :category and type = :type");
-            query.setParameter("category", category);
-            query.setParameter("type", type);
-
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get advert list by category and type error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
     public List<Advert> getByTitle(String title) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.title like :title ", Advert.class);
+        query.setParameter("title", "%" + title + "%");
 
-        try {
-            Query query = session.createQuery("from Advert where title like :title ");
-            query.setParameter("title", "%" + title + "%");
+        return query.getResultList();
+    }
 
-            return query.list();
+    @Override
+    public List<Advert> getByUserId(long userId) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.user.id = :user ", Advert.class);
+        query.setParameter("user", userId);
 
-        } catch (RuntimeException e) {
-            logger.error("Get advert list by title error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
     public List<Advert> getByTitleAndType(String title, AdvertType type) {
-        try {
-            Query query = session.createQuery("from Advert where title like :title and type = :type");
-            query.setParameter("title", "%" + title + "%");
-            query.setParameter("type", type);
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.title like :title and a.type = :type", Advert.class);
+        query.setParameter("title", "%" + title + "%");
+        query.setParameter("type", type);
 
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get advert list by title and type error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
     public List<Advert> getAllWithUser() {
-        List<Advert> list;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+        Root<Advert> root = query.from(Advert.class);
 
-        try {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root<Advert> root = query.from(Advert.class);
+        root.fetch("vipInfo", JoinType.LEFT);
+        Fetch<Advert, User> user = root.fetch("user", JoinType.INNER);
+        Fetch<User, UserRating> rating = user.fetch("rating", JoinType.INNER);
 
-            root.fetch("vipInfo", JoinType.LEFT);
-            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
-            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
-
-            list = session.createQuery(query).getResultList();
-
-        } catch (RuntimeException e) {
-            logger.error("Get adverts with users error: " + e.getMessage());
-            throw e;
-        }
-        return list;
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
-    public List<Advert> getByCategoryWithUser(Category category) {
-        List<Advert> list;
+    public List<Advert> getWithUserByCategoryId(int categoryId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+        Root<Advert> root = query.from(Advert.class);
 
-        try {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root<Advert> root = query.from(Advert.class);
+        root.fetch("vipInfo", JoinType.LEFT);
+        Join<Advert, Category> category = root.join("category", JoinType.LEFT);
+        Fetch<Advert, User> user = root.fetch("user", JoinType.INNER);
+        Fetch<User, UserRating> rating = user.fetch("rating", JoinType.INNER);
 
-            root.fetch("vipInfo", JoinType.LEFT);
-            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
-            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
+        Predicate predicate = builder.equal(category.get("id"), categoryId);
+        query.select(root).where(predicate);
 
-            query.select(root).where(builder.equal(root.get("category"), category));
-
-            list = session.createQuery(query).getResultList();
-
-        } catch (RuntimeException e) {
-            logger.error("Get adverts by category with users error: " + e.getMessage());
-            throw e;
-        }
-        return list;
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
-    public List<Advert> getByTypeWithUser(AdvertType type) {
-        List<Advert> list;
+    public List<Advert> getWithUserByType(AdvertType type) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+        Root<Advert> root = query.from(Advert.class);
 
-        try {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root<Advert> root = query.from(Advert.class);
+        root.fetch("vipInfo", JoinType.LEFT);
+        Fetch<Advert, User> user = root.fetch("user", JoinType.INNER);
+        Fetch<User, UserRating> rating = user.fetch("rating", JoinType.INNER);
 
-            root.fetch("vipInfo", JoinType.LEFT);
-            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
-            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
+        query.select(root).where(builder.equal(root.get("type"), type));
 
-            query.select(root).where(builder.equal(root.get("type"), type));
-
-            list = session.createQuery(query).getResultList();
-
-        } catch (RuntimeException e) {
-            logger.error("Get adverts by type with users error: " + e.getMessage());
-            throw e;
-        }
-        return list;
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
-    public List<Advert> getByCategoryAndTypeWithUser(Category category, AdvertType type) {
-        List<Advert> list;
+    public List<Advert> getWithUserByCategoryIdAndType(int categoryId, AdvertType type) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+        Root<Advert> root = query.from(Advert.class);
 
-        try {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
-            Root<Advert> root = query.from(Advert.class);
+        root.fetch("vipInfo", JoinType.LEFT);
+        Join<Advert, Category> category = root.join("category", JoinType.LEFT);
+        Fetch<Advert, User> user = root.fetch("user", JoinType.INNER);
+        Fetch<User, UserRating> rating = user.fetch("rating", JoinType.INNER);
 
-            root.fetch("vipInfo", JoinType.LEFT);
-            Fetch<Advert, User> users = root.fetch("user", JoinType.INNER);
-            Fetch<User, SellerRating> ratings = users.fetch("rating", JoinType.INNER);
+        Predicate predicate = builder.and(builder.equal(category.get("id"), categoryId), builder.equal(root.get("type"), type));
+        query.select(root).where(predicate);
 
-            Predicate predicate = builder.and(builder.equal(root.get("category"), category), builder.equal(root.get("type"), type));
-            query.select(root).where(predicate);
-            list = session.createQuery(query).getResultList();
+        return entityManager.createQuery(query).getResultList();
+    }
 
-        } catch (RuntimeException e) {
-            logger.error("Get adverts by category and type with users error: " + e.getMessage());
-            throw e;
-        }
-        return list;
+    @Override
+    public Advert getWithCommentsById(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Advert> query = builder.createQuery(Advert.class);
+        Root<Advert> root = query.from(Advert.class);
+
+        root.fetch("commentSet", JoinType.LEFT);
+
+        query.select(root).where(builder.equal(root.get("id"), id));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public void delete(long id) {
+        Query query = entityManager.createQuery("DELETE FROM Advert a WHERE a.id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }

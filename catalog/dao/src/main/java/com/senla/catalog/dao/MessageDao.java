@@ -3,28 +3,36 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IMessageDao;
 import com.senla.catalog.entity.Message;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
+
 @Repository
-public class MessageDao extends AbstractDao<Message, Integer> implements IMessageDao {
+public class MessageDao extends AbstractDao<Message, Long> implements IMessageDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageDao.class);
-
-    @Autowired
-    private Session session;
-
-    @Override
-    protected Class getChildClass() {
-        return MessageDao.class;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<Message> getEntityClass() {
         return Message.class;
+    }
+
+    @Override
+    public List<Message> getByChatId(long chatId) {
+        Query query = entityManager.createQuery("SELECT m FROM Message m WHERE m.chat.id = :chatId ", Message.class);
+        query.setParameter("chatId", chatId);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public void delete(long id) {
+        Query query = entityManager.createQuery("DELETE FROM Message m WHERE m.id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }

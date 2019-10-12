@@ -1,29 +1,53 @@
 package com.senla.catalog.serviceapi;
 
+import com.senla.catalog.dto.advert.AdvertDto;
+import com.senla.catalog.dto.advert.SimpleAdvertDto;
 import com.senla.catalog.entity.Advert;
-import com.senla.catalog.entity.Category;
-import com.senla.catalog.entity.constants.AdvertType;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 
 import java.util.List;
 
-public interface IAdvertService extends IGenericService<Advert, Integer> {
+public interface IAdvertService extends IGenericService<Advert, Long> {
 
-    List<Advert> getByCategory(Category category);
+    List<Advert> getByCategoryId(int categoryId);
 
-    List<Advert> getByType(AdvertType type);
+    List<Advert> getByType(String type);
 
-    List<Advert> getByCategoryAndType(Category category, AdvertType type);
+    List<Advert> getByCategoryIdAndType(int categoryId, String type);
 
     List<Advert> getByTitle(String title);
 
-    List<Advert> getByTitleAndType(String title, AdvertType type);
+    List<Advert> getByUserId(long userId);
 
-    List<Advert> getAllSorted();
+    List<Advert> getByTitleAndType(String title, String type);
 
-    List<Advert> getByCategorySorted(Category category);
+    List<SimpleAdvertDto> getDtoByTitle(String title);
 
-    List<Advert> getByTypeSorted(AdvertType type);
+    List<SimpleAdvertDto> getAllDtoSorted();
 
-    List<Advert> getByCategoryAndTypeSorted(Category category, AdvertType type);
+    List<SimpleAdvertDto> getDtoByCategorySorted(int categoryId);
+
+    List<SimpleAdvertDto> getDtoByTypeSorted(String type);
+
+    List<SimpleAdvertDto> getDtoByCategoryAndTypeSorted(int categoryId, String type);
+
+    List<SimpleAdvertDto> getDtoByUserId(long userId);
+
+    AdvertDto getDtoById(long id);
+
+    AdvertDto getDtoWithCommentsById(long id);
+
+    AdvertDto advertToDto(Advert advert);
+
+    Advert dtoToAdvert(AdvertDto dto);
+
+    List<SimpleAdvertDto> advertListToDto(List<Advert> advertList);
+
+    void add(AdvertDto dto);
+
+    void addVip(long id);
+
+    void update(AdvertDto dto);
+
+    void delete(long id);
 }

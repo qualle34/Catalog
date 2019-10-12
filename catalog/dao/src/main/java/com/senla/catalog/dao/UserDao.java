@@ -2,33 +2,21 @@ package com.senla.catalog.dao;
 
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IUserDao;
+import com.senla.catalog.entity.Creds;
 import com.senla.catalog.entity.User;
-
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
-public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
+public class UserDao extends AbstractDao<User, Long> implements IUserDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
-
-    @Autowired
-    private Session session;
-
-    @Override
-    protected Class getChildClass() {
-        return UserDao.class;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<User> getEntityClass() {
@@ -37,47 +25,103 @@ public class UserDao extends AbstractDao<User, Integer> implements IUserDao {
 
     @Override
     public List<User> getByName(String name) {
+        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.firstname LIKE :name ", User.class);
+        query.setParameter("name", "%" + name + "%");
 
-        try {
-            Query query = session.createQuery("from User where firstname = :name ");
-            query.setParameter("name", name);
-
-            return query.list();
-
-        } catch (RuntimeException e) {
-            logger.error("Get user by name error: " + e.getMessage());
-            throw e;
-        }
+        return query.getResultList();
     }
 
     @Override
-    public User getFullUserById(int id) {
-        User user;
-        CriteriaBuilder cb;
-        CriteriaQuery query;
-        Root root;
+    public User getWithChatListById(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
 
-        try {
-            cb = session.getCriteriaBuilder();
-            query = cb.createQuery(User.class);
-            root = query.from(User.class);
+        root.fetch("chatSet", JoinType.LEFT);
+        query.select(root).where(builder.equal(root.get("id"), id));
 
-            root.fetch("creds", JoinType.LEFT);
-            root.fetch("rating", JoinType.LEFT);
-            root.fetch("dealSet", JoinType.LEFT);
-            root.fetch("advertSet", JoinType.LEFT);
-            root.fetch("commentSet", JoinType.LEFT);
-            root.fetch("chatSet", JoinType.LEFT);
-            root.fetch("messageSet", JoinType.LEFT);
+        return entityManager.createQuery(query).getSingleResult();
+    }
 
-            query.select(root).where(cb.equal(root.get("id"), id));
+    @Override
+    public User getWithCredsByLogin(String login) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
 
-            user = (User) this.session.createQuery(query).getSingleResult();
+        root.fetch("creds", JoinType.INNER);
+        root.fetch("roleSet", JoinType.LEFT);
+        Join<User, Creds> creds = root.join("creds", JoinType.INNER);
 
-        } catch (RuntimeException e) {
-            logger.error("Get full user by id error: " + e.getMessage());
-            throw e;
-        }
-        return user;
+        Predicate predicate = builder.equal(creds.get("login"), login);
+        query.select(root).where(predicate);
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public User getWithCredsById(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+
+        root.fetch("creds", JoinType.INNER);
+        root.fetch("roleSet", JoinType.LEFT);
+        query.select(root).where(builder.equal(root.get("id"), id));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public User getWithRatingById(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+
+        root.fetch("rating", JoinType.INNER);
+        query.select(root).where(builder.equal(root.get("id"), id));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public User getWithCredsAndRatingById(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+
+        root.fetch("creds", JoinType.INNER);
+        root.fetch("rating", JoinType.INNER);
+        root.fetch("roleSet", JoinType.LEFT);
+        query.select(root).where(builder.equal(root.get("id"), id));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public User getFullById(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+
+        root.fetch("creds", JoinType.INNER);
+        root.fetch("rating", JoinType.INNER);
+        root.fetch("roleSet", JoinType.LEFT);
+        root.fetch("dealSet", JoinType.LEFT);
+        root.fetch("advertSet", JoinType.LEFT);
+        root.fetch("commentSet", JoinType.LEFT);
+        root.fetch("chatSet", JoinType.LEFT);
+        root.fetch("messageSet", JoinType.LEFT);
+
+        query.select(root).where(builder.equal(root.get("id"), id));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public void delete(long id) {
+        Query query = entityManager.createQuery("DELETE FROM User u WHERE u.id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 }

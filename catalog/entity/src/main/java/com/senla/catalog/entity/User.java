@@ -1,5 +1,7 @@
 package com.senla.catalog.entity;
 
+import com.senla.catalog.entity.enums.UserRole;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -15,8 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
-
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,8 +28,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private int id;
+    @Column(name = "user_id", updatable = false)
+    private long id;
 
     @Column(name = "firstname")
     private String firstname;
@@ -49,7 +51,12 @@ public class User {
     private Creds creds;
 
     @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private SellerRating rating;
+    private UserRating rating;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+    private Set<Role> roleSet;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Deal> dealSet;
@@ -79,7 +86,7 @@ public class User {
         this.location = location;
     }
 
-    public User(String firstname, String lastname, Date birthdate, String phone, String location, Creds creds, SellerRating rating) {
+    public User(String firstname, String lastname, Date birthdate, String phone, String location, Creds creds, UserRating rating, Set<UserRole> roleSet) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
@@ -89,13 +96,18 @@ public class User {
         creds.setUser(this);
         this.rating = rating;
         rating.setUser(this);
+        Set<Role> roles = new HashSet<>();
+        for (UserRole role : roleSet) {
+            roles.add(new Role(role));
+        }
+        this.roleSet = roles;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -148,13 +160,29 @@ public class User {
         creds.setUser(this);
     }
 
-    public SellerRating getRating() {
+    public UserRating getRating() {
         return rating;
     }
 
-    public void setRating(SellerRating rating) {
+    public void setRating(UserRating rating) {
         this.rating = rating;
         rating.setUser(this);
+    }
+
+    public Set<UserRole> getRoleSet() {
+        Set<UserRole> roles = new HashSet<>();
+        for (Role role : roleSet) {
+            roles.add(role.getRole());
+        }
+        return roles;
+    }
+
+    public void setRoleSet(Set<UserRole> roleSet) {
+        Set<Role> roles = new HashSet<>();
+        for (UserRole role : roleSet) {
+            roles.add(new Role(role));
+        }
+        this.roleSet = roles;
     }
 
     public Set<Deal> getDealSet() {
@@ -219,4 +247,5 @@ public class User {
     public String toString() {
         return firstname + " " + lastname + " " + birthdate + " " + phone + " " + location;
     }
+
 }

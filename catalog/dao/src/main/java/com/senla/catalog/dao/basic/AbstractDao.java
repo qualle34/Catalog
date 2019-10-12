@@ -1,11 +1,9 @@
 package com.senla.catalog.dao.basic;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
@@ -13,80 +11,39 @@ import java.util.List;
 
 public abstract class AbstractDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
-    private final Logger logger = LoggerFactory.getLogger(getChildClass());
-
-    @Autowired
-    private Session session;
-
-    protected abstract Class getChildClass();
+    @PersistenceContext
+    private EntityManager entityManager;
 
     protected abstract Class<T> getEntityClass();
 
     @Override
     public List<T> getAll() {
-        List<T> list;
         Class cls = getEntityClass();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(cls);
 
-        try {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<T> criteria = builder.createQuery(cls);
-            criteria.from(cls);
-            list = session.createQuery(criteria).getResultList();
+        query.from(cls);
 
-        } catch (RuntimeException e) {
-            logger.error("Get all entities error: " + e.getMessage());
-            throw e;
-        }
-        return list;
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
     public T getById(PK pk) {
-        T t;
-
-        try {
-            t = session.get(getEntityClass(), pk);
-
-        } catch (RuntimeException e) {
-            logger.error("Get entity error: " + e.getMessage());
-            throw e;
-        }
-        return t;
+        return entityManager.find(getEntityClass(), pk);
     }
 
     @Override
     public void add(T t) {
-
-        try {
-            session.save(t);
-
-        } catch (RuntimeException e) {
-            logger.error("Add entity error: " + e.getMessage());
-            throw e;
-        }
+        entityManager.persist(t);
     }
 
     @Override
     public void update(T t) {
-
-        try {
-            session.update(t);
-
-        } catch (RuntimeException e) {
-            logger.error("Update entity error: " + e.getMessage());
-            throw e;
-        }
+        entityManager.merge(t);
     }
 
     @Override
     public void delete(T t) {
-
-        try {
-            session.delete(t);
-
-        } catch (RuntimeException e) {
-            logger.error("Delete entity error: " + e.getMessage());
-            throw e;
-        }
+        entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
     }
 }

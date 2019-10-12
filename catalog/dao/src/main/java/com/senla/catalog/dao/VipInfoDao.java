@@ -1,26 +1,18 @@
 package com.senla.catalog.dao;
 
-import com.senla.catalog.daoapi.IVipInfoDao;
 import com.senla.catalog.dao.basic.AbstractDao;
+import com.senla.catalog.daoapi.IVipInfoDao;
 import com.senla.catalog.entity.VipInfo;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Repository
-public class VipInfoDao extends AbstractDao<VipInfo, Integer> implements IVipInfoDao {
+public class VipInfoDao extends AbstractDao<VipInfo, Long> implements IVipInfoDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(DealDao.class);
-
-    @Autowired
-    private Session session;
-
-    @Override
-    protected Class getChildClass() {
-        return VipInfoDao.class;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     protected Class<VipInfo> getEntityClass() {

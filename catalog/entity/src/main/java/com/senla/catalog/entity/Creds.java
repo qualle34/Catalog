@@ -1,18 +1,13 @@
 package com.senla.catalog.entity;
 
-import com.senla.catalog.entity.constants.UserRole;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
 import javax.persistence.MapsId;
 import javax.persistence.FetchType;
-
 import java.util.Objects;
 
 @Entity
@@ -20,17 +15,14 @@ import java.util.Objects;
 public class Creds {
 
     @Id
-    private int id;
+    @Column(name = "user_id")
+    private long id;
 
     @Column(name = "login")
     private String login;
 
     @Column(name = "password")
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private UserRole role;
 
     @Column(name = "email")
     private String email;
@@ -43,18 +35,17 @@ public class Creds {
     public Creds() {
     }
 
-    public Creds(String login, String password, UserRole role, String email) {
+    public Creds(String login, String password, String email) {
         this.login = login;
         this.password = password;
-        this.role = role;
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -72,14 +63,6 @@ public class Creds {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
     }
 
     public String getEmail() {
@@ -106,17 +89,16 @@ public class Creds {
         return id == creds.id &&
                 Objects.equals(login, creds.login) &&
                 Objects.equals(password, creds.password) &&
-                Objects.equals(role, creds.role) &&
                 Objects.equals(email, creds.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, role, email);
+        return Objects.hash(id, login, password, email);
     }
 
     @Override
     public String toString() {
-        return id + " " + login + " " + password + " " + role + " " + email;
+        return id + " " + login + " " + password + " " + email;
     }
 }

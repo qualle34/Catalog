@@ -22,7 +22,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id")
-    private int id;
+    private long id;
 
     @Column(name = "text")
     private String text;
@@ -49,11 +49,11 @@ public class Message {
         this.user = user;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

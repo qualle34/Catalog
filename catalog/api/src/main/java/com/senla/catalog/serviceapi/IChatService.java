@@ -1,9 +1,16 @@
 package com.senla.catalog.serviceapi;
 
+import com.senla.catalog.dto.chat.ChatDto;
 import com.senla.catalog.entity.Chat;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 
-public interface IChatService extends IGenericService<Chat, Integer> {
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-    Chat getWithMessagesById(int id);
+public interface IChatService extends IGenericService<Chat, Long> {
+
+    ChatDto getDtoById(long id);
+
+    List<ChatDto> chatsToDto(Collection<Chat> chatList);
 }

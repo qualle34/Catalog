@@ -1,30 +1,24 @@
 package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IVipInfoDao;
+import com.senla.catalog.dto.advert.VipInfoDto;
 import com.senla.catalog.entity.VipInfo;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IVipInfoService;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
-public class VipInfoService extends AbstractService<VipInfo, Integer> implements IVipInfoService {
+public class VipInfoService extends AbstractService<VipInfo, Long> implements IVipInfoService {
 
     private static final Logger logger = LoggerFactory.getLogger(DealService.class);
 
     @Autowired
-    private Session session;
-
-    @Autowired
     private IVipInfoDao vipInfoDao;
-
-    @Override
-    protected Class getChildClass() {
-        return VipInfoService.class;
-    }
 
     @Override
     protected String getDaoClassName() {
@@ -34,5 +28,15 @@ public class VipInfoService extends AbstractService<VipInfo, Integer> implements
     @Override
     protected Class<VipInfo> getEntityClass() {
         return VipInfo.class;
+    }
+
+    @Override
+    public VipInfoDto vipInfoToDto(VipInfo vipInfo) {
+        return new VipInfoDto(vipInfo.getId(), vipInfo.getBuyDate());
+    }
+
+    @Override
+    public VipInfo dtoToVipInfo(VipInfoDto dto) {
+        return new VipInfo(dto.getId(), new Date());
     }
 }

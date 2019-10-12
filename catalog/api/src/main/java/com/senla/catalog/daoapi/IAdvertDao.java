@@ -2,28 +2,33 @@ package com.senla.catalog.daoapi;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Advert;
-import com.senla.catalog.entity.Category;
-import com.senla.catalog.entity.constants.AdvertType;
+import com.senla.catalog.entity.enums.AdvertType;
 
 import java.util.List;
 
-public interface IAdvertDao extends IGenericDao<Advert, Integer> {
+public interface IAdvertDao extends IGenericDao<Advert, Long> {
 
-    List<Advert> getByCategory(Category category);
+    List<Advert> getByCategoryId(int categoryId);
 
     List<Advert> getByType(AdvertType type);
 
-    List<Advert> getByCategoryAndType(Category category, AdvertType type);
+    List<Advert> getByCategoryIdAndType(int categoryId, AdvertType type);
 
     List<Advert> getByTitle(String title);
+
+    List<Advert> getByUserId(long userId);
 
     List<Advert> getByTitleAndType(String title, AdvertType type);
 
     List<Advert> getAllWithUser();
 
-    List<Advert> getByCategoryWithUser(Category category);
+    List<Advert> getWithUserByCategoryId(int categoryId);
 
-    List<Advert> getByTypeWithUser(AdvertType type);
+    List<Advert> getWithUserByType(AdvertType type);
 
-    List<Advert> getByCategoryAndTypeWithUser(Category category, AdvertType type);
+    List<Advert> getWithUserByCategoryIdAndType(int categoryId, AdvertType type);
+
+    Advert getWithCommentsById(long id);
+
+    void delete(long id);
 }
