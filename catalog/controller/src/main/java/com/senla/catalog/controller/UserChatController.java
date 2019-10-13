@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/chats")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserChatController {
 
     @Autowired
