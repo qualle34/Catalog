@@ -32,8 +32,6 @@ public class AccessFilter extends BasicAuthenticationFilter {
             filterChain.doFilter(request, response);
 
         } else {
-            token.setAuthenticated(false);
-            SecurityContextHolder.getContext().setAuthentication(token);
             filterChain.doFilter(request, response);
         }
     }
