@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {LoginService} from './login.service';
 import {Auth} from '../model/auth.model';
+import {Token} from '../model/token.model';
 
 @Component({
   selector: 'app-login',
@@ -9,16 +10,17 @@ import {Auth} from '../model/auth.model';
 })
 
 export class LoginComponent {
-  auth: Auth;
-  login: string;
-  password: string;
+  private auth: Auth;
+  private token: Token;
 
   constructor(private loginService: LoginService) {
   }
 
-  authorize() {
-    this.auth.login = this.login;
-    this.auth.password = this.password;
-    this.loginService.authorize(this.auth);
+  authorize(event) {
+    event.preventDefault();
+    this.auth = new Auth();
+    this.auth.login = event.target.querySelector('#login').value;
+    this.auth.password = event.target.querySelector('#password').value;
+    console.log(this.loginService.authorize(this.auth));
   }
 }

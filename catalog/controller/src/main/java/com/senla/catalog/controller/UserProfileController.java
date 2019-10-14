@@ -2,7 +2,6 @@ package com.senla.catalog.controller;
 
 import com.senla.catalog.dto.user.DealDto;
 import com.senla.catalog.dto.user.UserDto;
-import com.senla.catalog.entity.User;
 import com.senla.catalog.service.security.token.TokenUtil;
 import com.senla.catalog.serviceapi.IDealService;
 import com.senla.catalog.serviceapi.IUserService;
@@ -13,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/my/profile")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserProfileController {
 
     @Autowired

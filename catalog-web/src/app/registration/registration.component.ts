@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component} from '@angular/core';
+import {RegistrationUser} from '../model/registration-user.model';
+import {RegistrationService} from './registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,11 +8,19 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./registration.component.css']
 })
 
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
+  private user: RegistrationUser;
 
-  constructor(private ar: ActivatedRoute) {
+  constructor(private registrationService: RegistrationService) {
   }
 
-  ngOnInit() {
+  register(event) {
+    event.preventDefault();
+    this.user = new RegistrationUser();
+    this.user.login = event.target.querySelector('#login').value;
+    this.user.firstname = event.target.querySelector('#firstname').value;
+    this.user.email = event.target.querySelector('#email').value;
+    this.user.password = event.target.querySelector('#password').value;
+    this.registrationService.register(this.user);
   }
 }

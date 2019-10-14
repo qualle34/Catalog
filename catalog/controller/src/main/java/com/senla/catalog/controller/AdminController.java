@@ -3,15 +3,12 @@ package com.senla.catalog.controller;
 import com.senla.catalog.dto.advert.CategoryDto;
 import com.senla.catalog.serviceapi.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Base64;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/admin")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
 
     @Autowired

@@ -1,6 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Auth} from '../model/auth.model';
+import {Token} from '../model/token.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,7 @@ export class LoginService {
   constructor(private http: HttpClient) {
   }
 
-  authorize(auth: object) {
-    this.http.post(this.url, auth).toPromise().then(data => {
-      console.log(data);
-    });
+  authorize(auth: Auth) {
+    return this.http.post<Token>(this.url, auth);
   }
 }

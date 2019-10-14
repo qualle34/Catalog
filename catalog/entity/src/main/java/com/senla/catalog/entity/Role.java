@@ -2,7 +2,16 @@ package com.senla.catalog.entity;
 
 import com.senla.catalog.entity.enums.UserRole;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import java.util.Objects;
 import java.util.Set;
 

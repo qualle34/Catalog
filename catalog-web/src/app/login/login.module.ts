@@ -16,7 +16,7 @@ import {BrowserModule} from '@angular/platform-browser';
     FormsModule,
     BrowserModule
   ],
-  providers: [LoginService]
+  providers: [LoginService ]
 })
 
 export class LoginModule {

@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new AccessFilter(authenticationManager()), BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/advert", "/profile").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/advert", "/profile", "/categories").permitAll()
                 .antMatchers("/login", "/registration/**", "/login-error").permitAll()
                 .antMatchers("/my/**", "/chats/**").hasAuthority("USER")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")

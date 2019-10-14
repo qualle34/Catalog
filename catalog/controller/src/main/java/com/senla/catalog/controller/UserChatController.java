@@ -3,7 +3,6 @@ package com.senla.catalog.controller;
 import com.senla.catalog.dto.chat.ChatDto;
 import com.senla.catalog.dto.chat.MessageDto;
 import com.senla.catalog.service.security.token.TokenUtil;
-import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IMessageService;
 import com.senla.catalog.serviceapi.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/chats")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserChatController {
 
     @Autowired
     private IUserService userService;
-
-    @Autowired
-    private IChatService chatService;
 
     @Autowired
     private IMessageService messageService;

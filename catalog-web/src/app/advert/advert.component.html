@@ -1,26 +1,40 @@
-<div>
+<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+  <a class="sidebar-brand-text mx-5 mx-5-l" href="/"> Catalog.by</a>
+</nav>
 
-            <div class="col-xl-10" *ngIf="advert">
-              <div class="card shadow mb-4">
+<div *ngIf="advert">
+  <div class="col-xl-8 advert">
+    <div class="card shadow mb-4">
 
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">{{ advert.title }}  {{ advert.price }}</h6>
-                </div>
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h5 class="m-0 font-weight-bold text-primary">{{ advert.title }}</h5>
+      </div>
 
-                <!-- Card Body -->
-                <div class="card-body">
+      <div class="card-body">
+        <p> Цена - {{ advert.price }} р.</p>
+        <p>
+          {{ advert.description }}
+        </p>
+      </div>
 
-                 <p>
-                   {{ advert.description }}
-                 </p>
-                 <p *ngFor="let comment of advert.comments">
-                     {{ comment.text }}
-                 </p>
+    </div>
+  </div>
 
-                </div>
-              </div>
-            </div>
-          </div>
-
+  <div class="col-xl-8 comment" *ngFor="let comment of advert.comments">
+    <div class="card shadow mb-4">
+      <h6>
+        {{ comment.text }}
+      </h6>
+    </div>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>

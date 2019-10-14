@@ -1,3 +1,46 @@
-<p>registration works!</p>
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="col-xl-10 col-lg-12 col-md-9">
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <div class="row">
+            <div class="col-lg-6 d-none d-lg-block bg-gradient-primary"></div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4"> Войти </h1>
+                </div>
+                <form class="user" (submit)="register($event)">
+
+                  <div class="form-group">
+                    <input name="login" type="login" class="form-control form-control-user" id="login"
+                           placeholder="Логин">
+                  </div>
+                  <div class="form-group">
+                    <input name="firstname" type="login" class="form-control form-control-user" id="firstname"
+                           placeholder="Имя">
+                  </div>
+                  <div class="form-group">
+                    <input name="email" type="email" class="form-control form-control-user" id="email"
+                           placeholder="Почта">
+                  </div>
+                  <div class="form-group">
+                    <input name="password" type="password" class="form-control form-control-user" id="password"
+                           placeholder="Пароль">
+                  </div>
+
+                  <input type="submit" class="btn btn-success" value="Войти">
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <router-outlet></router-outlet>

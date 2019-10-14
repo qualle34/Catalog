@@ -1,24 +1,62 @@
-<div class="container">
+<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
+  <div class="sidebar-brand-text mx-5 mx-5-l"> Catalog.by</div>
+  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <div class="input-group">
+      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search"
+             aria-describedby="basic-addon2"  (keyup)="bySearch($event)" >
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button">
+          <i class="fas fa-search fa-sm"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</nav>
 
- <div class="mb-4" *ngFor="let advert of adverts">
-   <a class="advert-link" href="/advert/{{ advert.id }}">
-     <div class="card border-left-primary shadow h-100 py-2">
-       <div class="card-body">
-         <div class="row no-gutters align-items-center">
-           <div class="col mr-2">
-             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ advert.title }}</div>
-               <div class="h5 mb-0 font-weight-bold text-gray-800">{{ advert.price }} р. </div>
-             </div>
-             <div class="col-auto">
+<div class="main">
+
+  <div class="sidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <li class="nav-item active" *ngFor="let category of categories">
+        <a class="nav-link" (click)="byCategory(category.id)">
+          <div>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span> {{ category.title }} </span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="mb-4" *ngFor="let advert of adverts">
+      <a class="advert-link" href="/advert/{{ advert.id }}">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ advert.title }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ advert.price }} р.</div>
+              </div>
+              <div class="col-auto">
                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
-             </div>
-         </div>
-       </div>
-     </div>
-   </a>
- </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
 
 </div>
 
 <router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>

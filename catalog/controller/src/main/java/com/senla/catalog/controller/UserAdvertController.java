@@ -3,7 +3,6 @@ package com.senla.catalog.controller;
 import com.senla.catalog.dto.advert.AdvertDto;
 import com.senla.catalog.dto.advert.SimpleAdvertDto;
 import com.senla.catalog.dto.advert.VipInfoDto;
-import com.senla.catalog.entity.User;
 import com.senla.catalog.service.security.token.TokenUtil;
 import com.senla.catalog.serviceapi.IAdvertService;
 import com.senla.catalog.serviceapi.IUserService;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/my")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserAdvertController {
 
     @Autowired

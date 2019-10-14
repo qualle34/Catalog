@@ -3,6 +3,7 @@ package com.senla.catalog.serviceapi;
 import com.senla.catalog.dto.chat.ChatDto;
 import com.senla.catalog.dto.user.UserDto;
 import com.senla.catalog.dto.user.UserRatingDto;
+import com.senla.catalog.dto.user.UserRegistrationDto;
 import com.senla.catalog.entity.Creds;
 import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.User;
@@ -29,6 +30,8 @@ public interface IUserService extends IGenericService<User, Long> {
     User dtoToUser(UserDto dto);
 
     void add(UserDto dto);
+
+    void add(UserRegistrationDto dto);
 
     void update(UserDto dto);
 

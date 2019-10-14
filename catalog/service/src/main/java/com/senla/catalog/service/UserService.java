@@ -4,6 +4,7 @@ import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.dto.chat.ChatDto;
 import com.senla.catalog.dto.user.UserDto;
 import com.senla.catalog.dto.user.UserRatingDto;
+import com.senla.catalog.dto.user.UserRegistrationDto;
 import com.senla.catalog.entity.Creds;
 import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.User;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -130,7 +132,7 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     @Override
     public User dtoToUser(UserDto dto) {
         User user = new User(dto.getFirstname(), dto.getLastname(), dto.getBirthdate(), dto.getPhone(), dto.getLocation());
-        user.setCreds(new Creds(dto.getLogin(), dto.getPassword(), dto.getEmail()));
+        user.setCreds(new Creds(dto.getLogin(), encoder.encode(dto.getPassword()), dto.getEmail()));
         user.setRoleSet(new HashSet<>(Collections.singletonList(UserRole.USER)));
         user.setRating(new UserRating(0, 0));
         return user;
@@ -141,12 +143,29 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     public void add(UserDto dto) {
 
         try {
-            User user = dtoToUser(dto);
-            user.getCreds().setPassword(encoder.encode(dto.getPassword()));
-            userDao.add(user);
+            userDao.add(dtoToUser(dto));
 
         } catch (RuntimeException e) {
             logger.error("Add user from dto error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void add(UserRegistrationDto dto) {
+
+        try {
+            User user = new User();
+            user.setFirstname(dto.getFirstname());
+            user.setCreds(new Creds(dto.getLogin(), encoder.encode(dto.getPassword()), dto.getEmail()));
+            user.getRoleSet().add(UserRole.USER);
+            user.setRating(new UserRating(0, 0));
+
+            userDao.add(user);
+
+        } catch (RuntimeException e) {
+            logger.error("Add user from registration dto error: " + e.getMessage());
             throw e;
         }
     }
@@ -203,7 +222,7 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
         int newRatingCount = oldRatingCount + 1;
         float newRating;
 
-        if (oldRatingCount != 0){
+        if (oldRatingCount != 0) {
             newRating = (addRating + (oldRating * oldRatingCount)) / newRatingCount;
 
         } else {
