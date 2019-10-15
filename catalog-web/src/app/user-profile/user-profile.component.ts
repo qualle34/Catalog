@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {SimpleUser} from '../model/simple-user.model';
+import {CookieService} from 'ngx-cookie-service';
+import {UserProfileService} from './user-profile.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,10 +10,14 @@ import {ActivatedRoute} from '@angular/router';
 })
 
 export class UserProfileComponent implements OnInit {
+  user: SimpleUser;
 
-  constructor(private ar: ActivatedRoute) {
+  constructor(private userProfileService: UserProfileService, private cookieService: CookieService) {
   }
 
   ngOnInit() {
+    const token: string = this.cookieService.get('token');
+    return this.userProfileService.getUser(token)
+      .subscribe(data => this.user = data);
   }
 }

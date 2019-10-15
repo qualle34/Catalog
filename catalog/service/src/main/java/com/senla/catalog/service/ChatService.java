@@ -9,12 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ChatService extends AbstractService<Chat, Long> implements IChatService {
@@ -38,10 +36,7 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     public ChatDto getDtoById(long id) {
 
         try {
-            Chat chat = chatDao.getById(id);
-            ChatDto dto = new ChatDto(chat.getTitle());
-            dto.setId(chat.getId());
-            return dto;
+            return chatToDto(chatDao.getById(id));
 
         } catch (RuntimeException e) {
             logger.error("Get chat dto by id error: " + e.getMessage());
@@ -54,8 +49,15 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
         List<ChatDto> dtoList = new LinkedList<>();
 
         for (Chat chat : chatList) {
-            dtoList.add(new ChatDto(chat.getTitle()));
+            dtoList.add(chatToDto(chat));
         }
         return dtoList;
+    }
+
+    @Override
+    public ChatDto chatToDto(Chat chat) {
+        ChatDto dto = new ChatDto(chat.getTitle());
+        dto.setId(chat.getId());
+        return dto;
     }
 }

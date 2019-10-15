@@ -6,11 +6,12 @@ import com.senla.catalog.serviceapi.basic.IGenericService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public interface IChatService extends IGenericService<Chat, Long> {
 
     ChatDto getDtoById(long id);
 
     List<ChatDto> chatsToDto(Collection<Chat> chatList);
+
+    ChatDto chatToDto(Chat chat);
 }

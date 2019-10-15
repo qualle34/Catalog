@@ -32,6 +32,14 @@ public class UserDao extends AbstractDao<User, Long> implements IUserDao {
     }
 
     @Override
+    public long getIdByLogin(String login) {
+        Query query = entityManager.createQuery("SELECT c.id FROM Creds c WHERE c.login = :login ");
+        query.setParameter("login", login);
+
+        return (long) query.getSingleResult();
+    }
+
+    @Override
     public User getWithChatListById(long id) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);

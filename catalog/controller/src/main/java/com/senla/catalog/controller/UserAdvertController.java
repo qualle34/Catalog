@@ -23,8 +23,7 @@ public class UserAdvertController {
 
     @GetMapping(value = "adverts")
     public List<SimpleAdvertDto> getUserAdverts(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        return advertService.getDtoByUserId(id);
+        return advertService.getDtoByUserId(userService.getIdByToken(token));
     }
 
     @GetMapping(value = "advert", params = "id") // param - advert id

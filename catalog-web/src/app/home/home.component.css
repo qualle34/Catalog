@@ -23,3 +23,11 @@
   padding-top: 30px;
   width: 85%;
 }
+
+.header-btn a {
+  margin: 0 10px;
+}
+
+.advert-box {
+  margin-right: 10%;
+}

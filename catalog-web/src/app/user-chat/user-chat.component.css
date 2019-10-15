@@ -1,0 +1,5 @@
+.container {
+  display: table-cell;
+  padding-top: 30px;
+  width: 85%;
+}

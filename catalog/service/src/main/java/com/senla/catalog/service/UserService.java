@@ -2,14 +2,16 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.user.SimpleUserDto;
 import com.senla.catalog.dto.user.UserDto;
 import com.senla.catalog.dto.user.UserRatingDto;
 import com.senla.catalog.dto.user.UserRegistrationDto;
 import com.senla.catalog.entity.Creds;
-import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.User;
+import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.enums.UserRole;
 import com.senla.catalog.service.basic.AbstractService;
+import com.senla.catalog.service.security.token.TokenUtil;
 import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IUserRatingService;
 import com.senla.catalog.serviceapi.IUserService;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -61,6 +62,19 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
 
         } catch (RuntimeException e) {
             logger.error("Get users by name error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public long getIdByToken(String token) {
+
+        try {
+            String login = TokenUtil.getLogin(token);
+            return userDao.getIdByLogin(login);
+
+        } catch (RuntimeException e) {
+            logger.error("Get user id by token error: " + e.getMessage());
             throw e;
         }
     }
@@ -110,6 +124,19 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
 
         } catch (RuntimeException e) {
             logger.error("Get user dto by id error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public SimpleUserDto getSimpleDtoById(int id) {
+
+        try {
+            User user = userDao.getWithRatingById(id);
+            return new SimpleUserDto(id, user.getFirstname(), user.getLastname(), user.getPhone(), user.getLocation(), user.getRating().getRating());
+
+        } catch (RuntimeException e) {
+            logger.error("Get simple user dto by id error: " + e.getMessage());
             throw e;
         }
     }

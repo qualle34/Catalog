@@ -15,26 +15,37 @@
         <p>
           {{ advert.description }}
         </p>
+        <a href="/profile/{{advert.userId}}">
+          Продавец
+        </a>
       </div>
 
     </div>
   </div>
 
-  <div class="col-xl-8 comment" *ngFor="let comment of advert.comments">
+
+  <div class="col-xl-8 comment-box">
     <div class="card shadow mb-4">
-      <h6>
-        {{ comment.text }}
-      </h6>
+
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Комментарии</h6>
+      </div>
+
+      <div *ngFor="let comment of advert.comments">
+        <h6 class="comment">
+          {{ comment.text }}
+        </h6>
+
+      </div>
     </div>
   </div>
-</div>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
-<footer class="sticky-footer bg-white">
-  <div class="container my-auto">
-    <div class="copyright text-center my-auto">
-      <span>Copyright &copy; Catalog.by 2019</span>
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; Catalog.by 2019</span>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>

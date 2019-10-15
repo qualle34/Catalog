@@ -1,3 +1,8 @@
 export class Token {
-  value: string;
+  token: string;
+
+  constructor(obj?: any) {
+    Object.assign(this, obj);
+  }
 }
+

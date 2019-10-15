@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {Message} from '../model/message.model';
+import {Chat} from '../model/chat.model';
+import {UserChatService} from './user-chat.service';
 
 @Component({
   selector: 'app-user-chat',
@@ -8,10 +11,15 @@ import {ActivatedRoute} from '@angular/router';
 })
 
 export class UserChatComponent implements OnInit {
+  messages: Message[];
+  chats: Chat[];
 
-  constructor(private ar: ActivatedRoute) {
+  constructor(private userChatService: UserChatService, private cookieService: CookieService) {
   }
 
   ngOnInit() {
+    const token: string = this.cookieService.get('token');
+    return this.userChatService.getChats(token)
+      .subscribe(data => this.chats = data);
   }
 }

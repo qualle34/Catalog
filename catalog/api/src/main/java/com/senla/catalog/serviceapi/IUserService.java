@@ -1,6 +1,7 @@
 package com.senla.catalog.serviceapi;
 
 import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.user.SimpleUserDto;
 import com.senla.catalog.dto.user.UserDto;
 import com.senla.catalog.dto.user.UserRatingDto;
 import com.senla.catalog.dto.user.UserRegistrationDto;
@@ -15,6 +16,8 @@ public interface IUserService extends IGenericService<User, Long> {
 
     List<User> getByName(String name);
 
+    long getIdByToken(String token);
+
     User getWithChatList(long id);
 
     User getWithCredsByLogin(String login);
@@ -22,6 +25,8 @@ public interface IUserService extends IGenericService<User, Long> {
     User getFullById(long id);
 
     UserDto getDtoById(long id);
+
+    SimpleUserDto getSimpleDtoById(int id);
 
     List<ChatDto> getChatsDtoByUserId(long userId);
 

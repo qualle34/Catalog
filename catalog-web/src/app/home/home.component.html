@@ -10,8 +10,16 @@
           <i class="fas fa-search fa-sm"></i>
         </button>
       </div>
+
     </div>
   </form>
+
+  <div class="header-btn">
+    <a href="/login"> Войти </a>
+    <a href="/registration"> Регистрация </a>
+    <a href="/my/profile"> Профиль </a>
+  </div>
+
 </nav>
 
 <div class="main">
@@ -30,7 +38,7 @@
   </div>
 
   <div class="container">
-    <div class="mb-4" *ngFor="let advert of adverts">
+    <div class="mb-4 advert-box" *ngFor="let advert of adverts">
       <a class="advert-link" href="/advert/{{ advert.id }}">
         <div class="card border-left-primary shadow h-100 py-2">
           <div class="card-body">

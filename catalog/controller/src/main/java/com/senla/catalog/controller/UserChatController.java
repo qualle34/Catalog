@@ -22,8 +22,7 @@ public class UserChatController {
 
     @GetMapping
     public List<ChatDto> getChats(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        return userService.getChatsDtoByUserId(id);
+        return userService.getChatsDtoByUserId(userService.getIdByToken(token));
     }
 
     @GetMapping(value = "/chat", params = "id")

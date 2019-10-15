@@ -1,3 +1,35 @@
-<p>user-profile works!</p>
+<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+  <a class="sidebar-brand-text mx-5 mx-5-l" href="/"> Catalog.by</a>
+</nav>
+
+<div *ngIf="user">
+  <div class="col-xl-8 profile">
+    <div class="card shadow mb-4">
+
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h5 class="m-0 font-weight-bold text-primary"></h5>
+      </div>
+
+      <div class="card-body">
+        <ul>
+          <li>Имя -  {{ user.firstname }} </li>
+          <li>Фамилия - {{ user.lastname }}</li>
+          <li>Телефон - {{ user.phone }}</li>
+          <li>Город - {{ user.location }}</li>
+          <li>Рейтинг - {{ user.rating }}</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>

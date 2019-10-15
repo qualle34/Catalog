@@ -22,8 +22,7 @@ public class UserProfileController {
 
     @GetMapping
     public UserDto getProfile(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        return userService.getDtoById(id);
+        return userService.getDtoById(userService.getIdByToken(token));
     }
 
     @PutMapping(value = "/edit")
@@ -33,26 +32,22 @@ public class UserProfileController {
 
     @DeleteMapping(value = "/delete")
     public void deleteProfile(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        userService.delete(id);
+        userService.delete(userService.getIdByToken(token));
     }
 
     @GetMapping(value = "/deals/buy")
     public List<DealDto> getBuyerDeals(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        return dealService.getDtoByBuyerId(id);
+        return dealService.getDtoByBuyerId(userService.getIdByToken(token));
     }
 
     @GetMapping(value = "/deals/sell")
     public List<DealDto> getSellerDeals(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        return dealService.getDtoBySellerId(id);
+        return dealService.getDtoBySellerId(userService.getIdByToken(token));
     }
 
     @DeleteMapping(value = "/deals/delete")
     public void deleteDeal(@RequestHeader("token") String token) {
-        long id = userService.getWithCredsByLogin(TokenUtil.getLogin(token)).getId();
-        dealService.delete(id);
+        dealService.delete(userService.getIdByToken(token));
     }
 }
 

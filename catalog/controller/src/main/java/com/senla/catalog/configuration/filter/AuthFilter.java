@@ -44,8 +44,6 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
             login = authRequest.getLogin();
             password = authRequest.getPassword();
 
-            System.out.println(login + this.toString());
-
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login, password);
             setDetails(request, token);
 
@@ -69,6 +67,7 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 
         out.print(objectMapper.writeValueAsString(TokenUtil.create(login, password)));
         out.flush();

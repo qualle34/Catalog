@@ -9,6 +9,8 @@ public interface IUserDao extends IGenericDao<User, Long> {
 
     List<User> getByName(String name);
 
+    long getIdByLogin(String login);
+
     User getWithChatListById(long id);
 
     User getWithCredsByLogin(String login);

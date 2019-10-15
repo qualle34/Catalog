@@ -3,15 +3,16 @@ import {RegistrationUser} from '../model/registration-user.model';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
+
 export class RegistrationService {
-  url = 'localhost:8080/registration/register';
+    url = 'http://localhost:8080/registration/register';
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  register(user: RegistrationUser) {
-    this.http.post(this.url, user);
-  }
+    register(user: RegistrationUser) {
+        this.http.post(this.url, user).subscribe();
+    }
 }

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {LoginService} from './login.service';
 import {Auth} from '../model/auth.model';
+import {CookieService} from 'ngx-cookie-service';
 import {Token} from '../model/token.model';
 
 @Component({
@@ -13,14 +14,15 @@ export class LoginComponent {
   private auth: Auth;
   private token: Token;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private cookieService: CookieService) {
   }
 
-  authorize(event) {
+  async authorize(event) {
     event.preventDefault();
     this.auth = new Auth();
     this.auth.login = event.target.querySelector('#login').value;
     this.auth.password = event.target.querySelector('#password').value;
-    console.log(this.loginService.authorize(this.auth));
+    this.token = await this.loginService.authorize(this.auth);
+    this.cookieService.set('token', this.token.token);
   }
 }

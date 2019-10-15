@@ -1,3 +1,7 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+  <a class="sidebar-brand-text mx-5 mx-5-l" href="/"> Catalog.by</a>
+</nav>
+
 <div class="container">
 
   <div class="row justify-content-center">
@@ -9,7 +13,7 @@
             <div class="col-lg-6">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4"> Войти </h1>
+                  <h1 class="h4 text-gray-900 mb-4"> Регистрация </h1>
                 </div>
                 <form class="user" (submit)="register($event)">
 
@@ -30,7 +34,7 @@
                            placeholder="Пароль">
                   </div>
 
-                  <input type="submit" class="btn btn-success" value="Войти">
+                  <input type="submit" class="btn btn-success" value="Зарегистрироваться">
 
                 </form>
               </div>
@@ -44,3 +48,11 @@
 </div>
 
 <router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>
