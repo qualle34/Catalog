@@ -24,27 +24,32 @@ public class HomeController {
 
     @GetMapping
     public List<SimpleAdvertDto> getAdvertList() {
-        return advertService.getAllDtoSorted();
-    }
-
-    @GetMapping(params = "search")
-    public List<SimpleAdvertDto> getAdvertListBySearch(@RequestParam String search) {
-        return advertService.getDtoByTitle(search);
+        return advertService.getAllSorted();
     }
 
     @GetMapping(params = "category")
     public List<SimpleAdvertDto> getAdvertListByCategory(@RequestParam int category) {
-        return advertService.getDtoByCategorySorted(category);
+        return advertService.getByCategory(category);
     }
 
     @GetMapping(params = "type")
     public List<SimpleAdvertDto> getAdvertListByType(@RequestParam String type) {
-        return advertService.getDtoByTypeSorted(type);
+        return advertService.getByType(type);
+    }
+
+    @GetMapping(params = "search")
+    public List<SimpleAdvertDto> getAdvertListByTitle(@RequestParam String search) {
+        return advertService.getByTitle(search);
     }
 
     @GetMapping(params = {"category", "type"})
-    public List<SimpleAdvertDto> getAdvertListByCategoryAndTypeSorted(@RequestParam int category, @RequestParam String type) {
-        return advertService.getDtoByCategoryAndTypeSorted(category, type);
+    public List<SimpleAdvertDto> getAdvertListByCategoryAndType(@RequestParam int category, @RequestParam String type) {
+        return advertService.getByCategoryAndType(category, type);
+    }
+
+    @GetMapping(params = {"search", "type"})
+    public List<SimpleAdvertDto> getAdvertListByTitleAndType(@RequestParam String search, @RequestParam String type) {
+        return advertService.getByTitleAndType(search, type);
     }
 
     @GetMapping(value = "categories")

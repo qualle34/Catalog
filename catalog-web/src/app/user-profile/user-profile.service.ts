@@ -7,12 +7,12 @@ import {User} from '../model/user.model';
 })
 
 export class UserProfileService {
-  apiUrl = 'http://localhost:8080/my/profile';
+  url = 'http://localhost:8080/my/profile';
 
   constructor(private http: HttpClient) {
   }
 
   getUser(token: string) {
-    return this.http.get<User>(this.apiUrl, {headers: {'token': token}});
+    return this.http.get<User>(this.url, {headers: {'token': token}});
   }
 }

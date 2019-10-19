@@ -23,6 +23,6 @@ export class LoginComponent {
     this.auth.login = event.target.querySelector('#login').value;
     this.auth.password = event.target.querySelector('#password').value;
     this.token = await this.loginService.authorize(this.auth);
-    this.cookieService.set('token', this.token.token);
+    this.cookieService.set('token', this.token.token, 1);
   }
 }

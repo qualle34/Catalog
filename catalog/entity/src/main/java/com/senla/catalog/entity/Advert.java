@@ -22,7 +22,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "advert")
-public class Advert implements Comparable<Advert> {
+public class Advert {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -172,19 +172,5 @@ public class Advert implements Comparable<Advert> {
     @Override
     public String toString() {
         return id + " " + title + " " + description + " " + price + " " + type;
-    }
-
-    @Override
-    public int compareTo(Advert o) {
-        int rating = Float.compare(this.getUser().getRating().getRating(), o.getUser().getRating().getRating());
-        int vip = Boolean.compare(this.isVip(), o.isVip());
-
-        if (vip == 1 || vip == 0 && rating == 1) {
-            return 1;
-        } else if (vip == 0 && rating == 0) {
-            return 0;
-        } else {
-            return -1;
-        }
     }
 }

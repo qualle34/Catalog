@@ -5,16 +5,19 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
-import {AdvertModule} from './advert/advert.module';
 import {HttpClientModule} from '@angular/common/http';
 import {ProfileModule} from './profile/profile.module';
 import {AdminModule} from './admin/admin.module';
 import {LoginModule} from './login/login.module';
 import {RegistrationModule} from './registration/registration.module';
-import {UserAdvertModule} from './user-advert/user-advert.module';
-import {UserChatModule} from './user-chat/user-chat.module';
+import {UserAdvertModule} from './user-adverts/user-advert/user-advert.module';
+import {UserChatsModule} from './user-chats/user-chats.module';
 import {UserProfileModule} from './user-profile/user-profile.module';
 import {HomeModule} from './home/home.module';
+import {ErrorModule} from './error/error.module';
+import {ChatModule} from './user-chats/chat/chat.module';
+import {UserAdvertsModule} from './user-adverts/user-adverts.module';
+import {AdvertModule} from './home/advert/advert.module';
 
 @NgModule({
   declarations: [
@@ -30,9 +33,12 @@ import {HomeModule} from './home/home.module';
     LoginModule,
     ProfileModule,
     RegistrationModule,
+    UserAdvertsModule,
     UserAdvertModule,
-    UserChatModule,
+    UserChatsModule,
+    ChatModule,
     UserProfileModule,
+    ErrorModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+  <a class="sidebar-brand-text mx-5 mx-5-l" href="/"> Catalog.by</a>
+</nav>
+
+<div class="container">
+  <div class="mb-4 advert-box" *ngFor="let advert of adverts">
+    <a class="advert-link" href="/my/advert/{{ advert.id }}">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ advert.title }}</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ advert.price }} р.</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>

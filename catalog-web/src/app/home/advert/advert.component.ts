@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AdvertService} from './advert.service';
-import {Advert} from '../model/advert.model';
+import {Advert} from '../../model/advert.model';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

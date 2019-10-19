@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {UserAdvertRoutingModule} from './user-advert-routing.module';
 import {UserAdvertComponent} from './user-advert.component';
-import {UserAdvertService} from './user-advert.service';
+import {UserAdvertsService} from '../user-adverts.service';
 
 @NgModule({
   declarations: [UserAdvertComponent],
@@ -11,7 +11,7 @@ import {UserAdvertService} from './user-advert.service';
     CommonModule,
     UserAdvertRoutingModule
   ],
-  providers: [UserAdvertService]
+  providers: [UserAdvertsService]
 })
 
 export class UserAdvertModule {

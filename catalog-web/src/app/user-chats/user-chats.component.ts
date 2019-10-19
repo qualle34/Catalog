@@ -1,20 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Message} from '../model/message.model';
 import {Chat} from '../model/chat.model';
-import {UserChatService} from './user-chat.service';
+import {UserChatsService} from './user-chats.service';
 
 @Component({
   selector: 'app-user-chat',
-  templateUrl: './user-chat.component.html',
-  styleUrls: ['./user-chat.component.css']
+  templateUrl: './user-chats.component.html',
+  styleUrls: ['./user-chats.component.css']
 })
 
-export class UserChatComponent implements OnInit {
-  messages: Message[];
+export class UserChatsComponent implements OnInit {
   chats: Chat[];
 
-  constructor(private userChatService: UserChatService, private cookieService: CookieService) {
+  constructor(private userChatService: UserChatsService, private cookieService: CookieService) {
   }
 
   ngOnInit() {

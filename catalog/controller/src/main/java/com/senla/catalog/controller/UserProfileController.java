@@ -2,7 +2,6 @@ package com.senla.catalog.controller;
 
 import com.senla.catalog.dto.user.DealDto;
 import com.senla.catalog.dto.user.UserDto;
-import com.senla.catalog.service.security.token.TokenUtil;
 import com.senla.catalog.serviceapi.IDealService;
 import com.senla.catalog.serviceapi.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class UserProfileController {
 
     @PutMapping(value = "/edit")
     public void updateProfile(@RequestHeader("token") String token, @RequestBody UserDto dto) {
-        userService.update(dto);
+        userService.update(dto, token);
     }
 
     @DeleteMapping(value = "/delete")
@@ -37,17 +36,12 @@ public class UserProfileController {
 
     @GetMapping(value = "/deals/buy")
     public List<DealDto> getBuyerDeals(@RequestHeader("token") String token) {
-        return dealService.getDtoByBuyerId(userService.getIdByToken(token));
+        return dealService.getByBuyer(userService.getIdByToken(token));
     }
 
     @GetMapping(value = "/deals/sell")
     public List<DealDto> getSellerDeals(@RequestHeader("token") String token) {
-        return dealService.getDtoBySellerId(userService.getIdByToken(token));
-    }
-
-    @DeleteMapping(value = "/deals/delete")
-    public void deleteDeal(@RequestHeader("token") String token) {
-        dealService.delete(userService.getIdByToken(token));
+        return dealService.getBySeller(userService.getIdByToken(token));
     }
 }
 

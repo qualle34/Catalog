@@ -103,6 +103,13 @@ public class MessageService extends AbstractService<Message, Long> implements IM
 
     @Override
     @Transactional
+    public void add(MessageDto dto, String token) {
+        dto.setUserId(userService.getIdByToken(token));
+        add(dto);
+    }
+
+    @Override
+    @Transactional
     public void delete(long id) {
 
         try {

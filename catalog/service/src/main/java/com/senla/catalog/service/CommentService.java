@@ -82,7 +82,7 @@ public class CommentService extends AbstractService<Comment, Long> implements IC
     public void add(CommentDto dto) {
 
         try {
-            add(dtoToComment(dto, userService.getById(dto.getUserId()), advertService.getById(dto.getAdvertId())));
+            super.add(dtoToComment(dto, userService.getById(dto.getUserId()), advertService.getById(dto.getAdvertId())));
 
         } catch (RuntimeException e) {
             logger.error("Add comment from dto error: " + e.getMessage());

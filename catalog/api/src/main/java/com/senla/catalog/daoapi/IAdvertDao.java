@@ -20,14 +20,6 @@ public interface IAdvertDao extends IGenericDao<Advert, Long> {
 
     List<Advert> getByTitleAndType(String title, AdvertType type);
 
-    List<Advert> getAllWithUser();
-
-    List<Advert> getWithUserByCategoryId(int categoryId);
-
-    List<Advert> getWithUserByType(AdvertType type);
-
-    List<Advert> getWithUserByCategoryIdAndType(int categoryId, AdvertType type);
-
     Advert getWithCommentsById(long id);
 
     void delete(long id);

@@ -24,14 +24,6 @@ public class UserDao extends AbstractDao<User, Long> implements IUserDao {
     }
 
     @Override
-    public List<User> getByName(String name) {
-        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.firstname LIKE :name ", User.class);
-        query.setParameter("name", "%" + name + "%");
-
-        return query.getResultList();
-    }
-
-    @Override
     public long getIdByLogin(String login) {
         Query query = entityManager.createQuery("SELECT c.id FROM Creds c WHERE c.login = :login ");
         query.setParameter("login", login);

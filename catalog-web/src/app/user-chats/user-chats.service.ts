@@ -7,8 +7,8 @@ import {Message} from '../model/message.model';
   providedIn: 'root'
 })
 
-export class UserChatService {
-  url = 'http://localhost:8080';
+export class UserChatsService {
+  url = 'http://localhost:8080/my';
 
   constructor(private http: HttpClient) {
   }
@@ -17,7 +17,11 @@ export class UserChatService {
     return this.http.get<Chat[]>(this.url + '/chats', {headers: {'token': token}});
   }
 
-  getChatMessages(chatId: number, token: string) {
-    return this.http.get<Message[]>(this.url + '/chats/chat?id=' + chatId, {headers: {'token': token}});
+  getChatMessages(chatId: string, token: string) {
+    return this.http.get<Message[]>(this.url + '/chat?id=' + chatId, {headers: {'token': token}});
+  }
+
+  addMessage(message: Message, token: string) {
+    this.http.post(this.url + '/chat/add', message, {headers: {'token': token}}).subscribe();
   }
 }

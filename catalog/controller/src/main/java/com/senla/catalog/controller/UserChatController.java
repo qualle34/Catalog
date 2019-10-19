@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/chats")
+@RequestMapping(value = "my")
 public class UserChatController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class UserChatController {
     @Autowired
     private IMessageService messageService;
 
-    @GetMapping
+    @GetMapping("/chats")
     public List<ChatDto> getChats(@RequestHeader("token") String token) {
         return userService.getChatsDtoByUserId(userService.getIdByToken(token));
     }
@@ -32,7 +32,7 @@ public class UserChatController {
 
     @PostMapping(value = "/chat/add")
     public void addMessage(@RequestHeader("token") String token, @RequestBody MessageDto dto) {
-        messageService.add(dto);
+        messageService.add(dto, token);
     }
 
     @DeleteMapping(value = "/chat/delete/{id}")

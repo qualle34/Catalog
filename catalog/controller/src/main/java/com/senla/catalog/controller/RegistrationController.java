@@ -19,7 +19,6 @@ public class RegistrationController {
 
     @PostMapping(value = "/register")
     public void addUser(@RequestBody UserRegistrationDto dto) {
-        System.out.println(dto.getEmail());
         userService.add(dto);
     }
 }

@@ -36,11 +36,4 @@ public class DealDao extends AbstractDao<Deal, Long> implements IDealDao {
 
         return query.getResultList();
     }
-
-    @Override
-    public void delete(long id) {
-        Query query = entityManager.createQuery("DELETE FROM Deal d WHERE d.id = :id ");
-        query.setParameter("id", id);
-        query.executeUpdate();
-    }
 }

@@ -23,12 +23,12 @@ public class UserAdvertController {
 
     @GetMapping(value = "adverts")
     public List<SimpleAdvertDto> getUserAdverts(@RequestHeader("token") String token) {
-        return advertService.getDtoByUserId(userService.getIdByToken(token));
+        return advertService.getByUser(userService.getIdByToken(token));
     }
 
     @GetMapping(value = "advert", params = "id") // param - advert id
     public AdvertDto getUserAdvert(@RequestHeader("token") String token, @RequestParam int id) {
-        return advertService.getDtoWithCommentsById(id);
+        return advertService.getWithCommentsById(id);
     }
 
     @PostMapping(value = "advert/add")

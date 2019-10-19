@@ -53,19 +53,6 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
         return User.class;
     }
 
-
-    @Override
-    public List<User> getByName(String name) {
-
-        try {
-            return userDao.getByName(name);
-
-        } catch (RuntimeException e) {
-            logger.error("Get users by name error: " + e.getMessage());
-            throw e;
-        }
-    }
-
     @Override
     public long getIdByToken(String token) {
 
@@ -87,18 +74,6 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
 
         } catch (RuntimeException e) {
             logger.error("Get user with chats error: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    @Override
-    public User getWithCredsByLogin(String login) {
-
-        try {
-            return userDao.getWithCredsByLogin(login);
-
-        } catch (RuntimeException e) {
-            logger.error("Get user with creds by login error: " + e.getMessage());
             throw e;
         }
     }
@@ -166,6 +141,20 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     }
 
     @Override
+    public User dtoToOldUser(UserDto dto) {
+        User user = userDao.getWithCredsById(dto.getId());
+        user.setFirstname(isNotEmpty(dto.getFirstname()) ? dto.getFirstname() : user.getFirstname());
+        user.setLastname(isNotEmpty(dto.getLastname()) ? dto.getLastname() : user.getLastname());
+        user.setBirthdate(isNotEmpty(dto.getBirthdate().toString()) ? dto.getBirthdate() : user.getBirthdate());
+        user.setPhone(isNotEmpty(dto.getPhone()) ? dto.getPhone() : user.getPhone());
+        user.setLocation(isNotEmpty(dto.getLocation()) ? dto.getLocation() : user.getLocation());
+        user.getCreds().setEmail(isNotEmpty(dto.getEmail()) ? dto.getEmail() : user.getCreds().getEmail());
+        user.getCreds().setPassword(isNotEmpty(dto.getPassword()) ? encoder.encode(dto.getPassword()) : user.getCreds().getPassword());
+
+        return user;
+    }
+
+    @Override
     @Transactional
     public void add(UserDto dto) {
 
@@ -202,13 +191,22 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     public void update(UserDto dto) {
 
         try {
-            User user = userDao.getWithCredsById(dto.getId());
-            user.setFirstname(dto.getFirstname());
-            user.setLastname(dto.getLastname());
-            user.setBirthdate(dto.getBirthdate());
-            user.setPhone(dto.getPhone());
-            user.setLocation(dto.getLocation());
-            userDao.update(user);
+            userDao.update(dtoToOldUser(dto));
+
+        } catch (RuntimeException e) {
+            logger.error("Update user from dto error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void update(UserDto dto, String token) {
+
+        try {
+            if (dto.getId() == getIdByToken(token)) {
+                userDao.update(dtoToOldUser(dto));
+            }
 
         } catch (RuntimeException e) {
             logger.error("Update user from dto error: " + e.getMessage());
@@ -243,6 +241,20 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
         }
     }
 
+    @Override
+    public void delete(long id, String token) {
+
+        try {
+            if (id == getIdByToken(token)) {
+                userDao.delete(id);
+            }
+
+        } catch (RuntimeException e) {
+            logger.error("Delete user by id error: " + e.getMessage());
+            throw e;
+        }
+    }
+
     private UserRating updateRating(UserRating userRating, int addRating) {
         float oldRating = userRating.getRating();
         int oldRatingCount = userRating.getRatingCount();
@@ -260,5 +272,9 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
         userRating.setRating(newRating);
 
         return userRating;
+    }
+
+    private boolean isNotEmpty(String value) {
+        return value != null && !value.equals("");
     }
 }

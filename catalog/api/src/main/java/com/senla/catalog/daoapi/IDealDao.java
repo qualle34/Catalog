@@ -10,6 +10,4 @@ public interface IDealDao extends IGenericDao<Deal, Long> {
     List<Deal> getBySellerId(long sellerId);
 
     List<Deal> getByBuyerId(long buyerId);
-
-    void delete(long id);
 }

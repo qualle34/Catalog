@@ -9,33 +9,23 @@ import java.util.List;
 
 public interface IAdvertService extends IGenericService<Advert, Long> {
 
-    List<Advert> getByCategoryId(int categoryId);
+    List<SimpleAdvertDto> getAllSorted();
 
-    List<Advert> getByType(String type);
+    List<SimpleAdvertDto> getByCategory(int categoryId);
 
-    List<Advert> getByCategoryIdAndType(int categoryId, String type);
+    List<SimpleAdvertDto> getByType(String type);
 
-    List<Advert> getByTitle(String title);
+    List<SimpleAdvertDto> getByTitle(String title);
 
-    List<Advert> getByUserId(long userId);
+    List<SimpleAdvertDto> getByCategoryAndType(int categoryId, String type);
 
-    List<Advert> getByTitleAndType(String title, String type);
+    List<SimpleAdvertDto> getByTitleAndType(String title, String type);
 
-    List<SimpleAdvertDto> getDtoByTitle(String title);
-
-    List<SimpleAdvertDto> getAllDtoSorted();
-
-    List<SimpleAdvertDto> getDtoByCategorySorted(int categoryId);
-
-    List<SimpleAdvertDto> getDtoByTypeSorted(String type);
-
-    List<SimpleAdvertDto> getDtoByCategoryAndTypeSorted(int categoryId, String type);
-
-    List<SimpleAdvertDto> getDtoByUserId(long userId);
+    List<SimpleAdvertDto> getByUser(long userId);
 
     AdvertDto getDtoById(long id);
 
-    AdvertDto getDtoWithCommentsById(long id);
+    AdvertDto getWithCommentsById(long id);
 
     AdvertDto advertToDto(Advert advert);
 

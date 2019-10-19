@@ -38,10 +38,10 @@ public class DealService extends AbstractService<Deal, Long> implements IDealSer
     }
 
     @Override
-    public List<Deal> getBySellerId(long sellerId) {
+    public List<DealDto> getBySeller(long sellerId) {
 
         try {
-            return dealDao.getBySellerId(sellerId);
+            return dealListToDto(dealDao.getBySellerId(sellerId));
 
         } catch (RuntimeException e) {
             logger.error("Get deal list by seller error: " + e.getMessage());
@@ -50,25 +50,15 @@ public class DealService extends AbstractService<Deal, Long> implements IDealSer
     }
 
     @Override
-    public List<Deal> getByBuyerId(long buyerId) {
+    public List<DealDto> getByBuyer(long buyerId) {
 
         try {
-            return dealDao.getByBuyerId(buyerId);
+            return dealListToDto(dealDao.getByBuyerId(buyerId));
 
         } catch (RuntimeException e) {
             logger.error("Get deal list by buyer error: " + e.getMessage());
             throw e;
         }
-    }
-
-    @Override
-    public List<DealDto> getDtoBySellerId(long sellerId) {
-        return dealListToDto(getBySellerId(sellerId));
-    }
-
-    @Override
-    public List<DealDto> getDtoByBuyerId(long buyerId) {
-        return dealListToDto(getByBuyerId(buyerId));
     }
 
     @Override
@@ -89,22 +79,8 @@ public class DealService extends AbstractService<Deal, Long> implements IDealSer
         List<DealDto> dtoList = new LinkedList<>();
 
         for (Deal deal : dealList) {
-            DealDto dto = dealToDto(deal);
-            dtoList.add(dto);
+            dtoList.add(dealToDto(deal));
         }
         return dtoList;
-    }
-
-    @Override
-    @Transactional
-    public void delete(long id) {
-
-        try {
-            dealDao.delete(id);
-
-        } catch (RuntimeException e) {
-            logger.error("Delete deal by id error: " + e.getMessage());
-            throw e;
-        }
     }
 }

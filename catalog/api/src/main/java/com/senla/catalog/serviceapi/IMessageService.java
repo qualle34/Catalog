@@ -20,5 +20,7 @@ public interface IMessageService extends IGenericService<Message, Long> {
 
     void add(MessageDto dto);
 
+    void add(MessageDto dto, String token);
+
     void delete(long id);
 }

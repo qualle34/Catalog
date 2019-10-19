@@ -20,8 +20,7 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-
-    return this.profileService.getUser(this.id)
+    this.profileService.getUserProfile(this.id)
       .subscribe(data => this.user = data);
   }
 }

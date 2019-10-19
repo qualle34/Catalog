@@ -14,13 +14,9 @@ import java.util.List;
 
 public interface IUserService extends IGenericService<User, Long> {
 
-    List<User> getByName(String name);
-
     long getIdByToken(String token);
 
     User getWithChatList(long id);
-
-    User getWithCredsByLogin(String login);
 
     User getFullById(long id);
 
@@ -34,13 +30,19 @@ public interface IUserService extends IGenericService<User, Long> {
 
     User dtoToUser(UserDto dto);
 
+    User dtoToOldUser(UserDto dto);
+
     void add(UserDto dto);
 
     void add(UserRegistrationDto dto);
 
     void update(UserDto dto);
 
+    void update(UserDto dto, String token);
+
     void updateRating(UserRatingDto dto);
 
     void delete(long id);
+
+    void delete(long id, String token);
 }

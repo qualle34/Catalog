@@ -8,19 +8,13 @@ import java.util.List;
 
 public interface IDealService extends IGenericService<Deal, Long> {
 
-    List<Deal> getBySellerId(long sellerId);
+    List<DealDto> getBySeller(long sellerId);
 
-    List<Deal> getByBuyerId(long buyerId);
-
-    List<DealDto> getDtoBySellerId(long sellerId);
-
-    List<DealDto> getDtoByBuyerId(long buyerId);
+    List<DealDto> getByBuyer(long buyerId);
 
     DealDto dealToDto(Deal deal);
 
     Deal dtoToDeal(DealDto dto);
 
     List<DealDto> dealListToDto(List<Deal> dealList);
-
-    void delete(long id);
 }

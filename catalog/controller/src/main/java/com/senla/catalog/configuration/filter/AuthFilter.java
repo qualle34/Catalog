@@ -50,13 +50,13 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
             return this.getAuthenticationManager().authenticate(token);
 
         } catch (JsonParseException | JsonMappingException je) {
-            throw new AuthenticationServiceException("Json exception");
+            throw new AuthenticationServiceException("Json exception: " + je.getMessage());
 
         } catch (IOException ioe) {
-            throw new AuthenticationServiceException("IOException");
+            throw new AuthenticationServiceException("IOException: " + ioe.getMessage());
 
-        } catch (InternalAuthenticationServiceException e) {
-            throw new InternalAuthenticationServiceException("Authentication exception");
+        } catch (AuthenticationException e) {
+            throw new AuthenticationServiceException("Authentication exception: " + e.getMessage());
         }
     }
 

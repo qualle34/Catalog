@@ -7,12 +7,12 @@ import {SimpleUser} from '../model/simple-user.model';
 })
 
 export class ProfileService {
-  apiUrl = 'http://localhost:8080/profile?id=';
+  url = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
   }
 
-  getUser(id) {
-    return this.http.get<SimpleUser>(this.apiUrl + id);
+  getUserProfile(id) {
+    return this.http.get<SimpleUser>(this.url + '/profile?id=' + id);
   }
 }
