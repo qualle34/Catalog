@@ -7,6 +7,8 @@ import com.senla.catalog.entity.Advert;
 import com.senla.catalog.entity.Comment;
 import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
+import com.senla.catalog.service.security.token.TokenException;
+import com.senla.catalog.service.security.token.TokenUtil;
 import com.senla.catalog.serviceapi.IAdvertService;
 import com.senla.catalog.serviceapi.ICommentService;
 import com.senla.catalog.serviceapi.IUserService;
@@ -19,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CommentService extends AbstractService<Comment, Long> implements ICommentService {
@@ -46,13 +47,13 @@ public class CommentService extends AbstractService<Comment, Long> implements IC
     }
 
     @Override
-    public List<Comment> getByAdvertId(long advertId) {
+    public List<Comment> getByAdvert(long advertId) {
 
         try {
-            return commentDao.getByAdvertId(advertId);
+            return commentDao.getByAdvert(advertId);
 
         } catch (RuntimeException e) {
-            logger.error("Get comment list by advert id error: " + e.getMessage());
+            logger.error("Get comment list by advert error: " + e.getMessage());
             throw e;
         }
     }
@@ -82,11 +83,23 @@ public class CommentService extends AbstractService<Comment, Long> implements IC
     public void add(CommentDto dto) {
 
         try {
-            super.add(dtoToComment(dto, userService.getById(dto.getUserId()), advertService.getById(dto.getAdvertId())));
+            add(dtoToComment(dto, userService.getById(dto.getUserId()), advertService.getById(dto.getAdvertId())));
 
         } catch (RuntimeException e) {
             logger.error("Add comment from dto error: " + e.getMessage());
             throw e;
+        }
+    }
+
+    @Override
+    @Transactional
+    public void add(CommentDto dto, String token) {
+
+        if (TokenUtil.isValid(token)) {
+            add(dto);
+
+        } else {
+            throw new TokenException("Token exception");
         }
     }
 

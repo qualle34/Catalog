@@ -9,11 +9,10 @@ import com.senla.catalog.serviceapi.basic.IGenericService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public interface ICommentService extends IGenericService<Comment, Long> {
 
-    List<Comment> getByAdvertId(long advertId);
+    List<Comment> getByAdvert(long advertId);
 
     CommentDto commentToDto(Comment comment);
 
@@ -22,6 +21,8 @@ public interface ICommentService extends IGenericService<Comment, Long> {
     List<SimpleCommentDto> commentsToDto(Collection<Comment> commentList);
 
     void add(CommentDto dto);
+
+    void add(CommentDto dto, String token);
 
     void delete(long id);
 }

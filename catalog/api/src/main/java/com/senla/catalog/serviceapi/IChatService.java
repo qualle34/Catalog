@@ -11,6 +11,8 @@ public interface IChatService extends IGenericService<Chat, Long> {
 
     ChatDto getDtoById(long id);
 
+    Chat getByUser(long userId, long chatId);
+
     List<ChatDto> chatsToDto(Collection<Chat> chatList);
 
     ChatDto chatToDto(Chat chat);

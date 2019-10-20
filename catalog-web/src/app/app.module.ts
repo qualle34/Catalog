@@ -18,6 +18,7 @@ import {ErrorModule} from './error/error.module';
 import {ChatModule} from './user-chats/chat/chat.module';
 import {UserAdvertsModule} from './user-adverts/user-adverts.module';
 import {AdvertModule} from './home/advert/advert.module';
+import {LogoutModule} from './login/logout/logout.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {AdvertModule} from './home/advert/advert.module';
     AdminModule,
     AdvertModule,
     LoginModule,
+    LogoutModule,
     ProfileModule,
     RegistrationModule,
     UserAdvertsModule,

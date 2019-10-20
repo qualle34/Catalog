@@ -119,10 +119,6 @@ public class Advert {
         return vipInfo;
     }
 
-    public boolean isVip() {
-        return this.getVipInfo() != null;
-    }
-
     public void setVipInfo(VipInfo vipInfo) {
         this.vipInfo = vipInfo;
         vipInfo.setAdvert(this);

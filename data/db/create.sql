@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS `catalog`.`credentials` (
   `password` VARCHAR(100) NOT NULL,
   `email` VARCHAR(65) NOT NULL,
   PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   CONSTRAINT `user_creds_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `catalog`.`user` (`user_id`)

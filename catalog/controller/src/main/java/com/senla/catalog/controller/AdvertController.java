@@ -23,7 +23,7 @@ public class AdvertController {
     }
 
     @PostMapping(value = "comment")
-    public void AddComment(@RequestBody CommentDto dto) {
-        commentService.add(dto);
+    public void AddComment(@RequestHeader("token") String token, @RequestBody CommentDto dto) {
+        commentService.add(dto, token);
     }
 }

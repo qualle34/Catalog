@@ -22,7 +22,7 @@ public class CommentDao extends AbstractDao<Comment, Long> implements ICommentDa
     }
 
     @Override
-    public List<Comment> getByAdvertId(long advertId) {
+    public List<Comment> getByAdvert(long advertId) {
         Query query = entityManager.createQuery("SELECT c FROM Comment c WHERE c.advert.id = :advertId ", Comment.class);
         query.setParameter("advertId", advertId);
 

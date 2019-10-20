@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
-import java.util.List;
 
 @Repository
 public class UserDao extends AbstractDao<User, Long> implements IUserDao {

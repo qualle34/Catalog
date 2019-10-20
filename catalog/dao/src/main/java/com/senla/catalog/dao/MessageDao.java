@@ -22,9 +22,18 @@ public class MessageDao extends AbstractDao<Message, Long> implements IMessageDa
     }
 
     @Override
-    public List<Message> getByChatId(long chatId) {
+    public List<Message> getByChat(long chatId) {
         Query query = entityManager.createQuery("SELECT m FROM Message m WHERE m.chat.id = :chatId ", Message.class);
         query.setParameter("chatId", chatId);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Message> getByChat(long chatId, long userId) {
+        Query query = entityManager.createQuery("SELECT m FROM Message m WHERE m.chat.id = :chatId and m.user.id = :userId ", Message.class);
+        query.setParameter("chatId", chatId);
+        query.setParameter("userId", userId);
 
         return query.getResultList();
     }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICommentDao extends IGenericDao<Comment, Long> {
 
-    List<Comment> getByAdvertId(long advertId);
+    List<Comment> getByAdvert(long advertId);
 
     void delete(long id);
 }

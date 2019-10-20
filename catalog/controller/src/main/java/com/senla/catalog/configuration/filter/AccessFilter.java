@@ -25,7 +25,7 @@ public class AccessFilter extends BasicAuthenticationFilter {
         String encodedToken = request.getHeader("token");
         UsernamePasswordAuthenticationToken token = getAuthentication(encodedToken);
 
-        if (encodedToken != null && TokenUtil.isValid(encodedToken)) {
+        if (TokenUtil.isValid(encodedToken)) {
             Authentication authentication = this.getAuthenticationManager().authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);

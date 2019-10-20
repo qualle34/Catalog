@@ -14,7 +14,6 @@ import java.util.Map;
 public abstract class AbstractService<T, PK extends Serializable> implements IGenericService<T, PK> {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractService.class);
-
     private IGenericDao dao;
 
     @Autowired

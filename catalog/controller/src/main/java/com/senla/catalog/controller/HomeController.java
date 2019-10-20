@@ -24,7 +24,7 @@ public class HomeController {
 
     @GetMapping
     public List<SimpleAdvertDto> getAdvertList() {
-        return advertService.getAllSorted();
+        return advertService.getAllDto();
     }
 
     @GetMapping(params = "category")

@@ -2,7 +2,9 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IMessageDao;
 import com.senla.catalog.dto.chat.MessageDto;
+import com.senla.catalog.entity.Chat;
 import com.senla.catalog.entity.Message;
+import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IMessageService;
@@ -42,25 +44,25 @@ public class MessageService extends AbstractService<Message, Long> implements IM
     }
 
     @Override
-    public List<Message> getByChatId(long chatId) {
+    public List<MessageDto> getByChat(long chatId) {
 
         try {
-            return messageDao.getByChatId(chatId);
+            return messageListToDto(messageDao.getByChat(chatId));
 
         } catch (RuntimeException e) {
-            logger.error("Get messages by chat id error: " + e.getMessage());
+            logger.error("Get message list by chat error: " + e.getMessage());
             throw e;
         }
     }
 
     @Override
-    public List<MessageDto> getDtoByChatId(long chatId) {
+    public List<MessageDto> getByChat(long chatId, String token) {
 
         try {
-            return messageListToDto(messageDao.getByChatId(chatId));
+            return messageListToDto(messageDao.getByChat(chatId, userService.getIdByToken(token)));
 
         } catch (RuntimeException e) {
-            logger.error("Get message dto list by chat error: " + e.getMessage());
+            logger.error("Get message list by chat and user error: " + e.getMessage());
             throw e;
         }
     }
@@ -104,8 +106,18 @@ public class MessageService extends AbstractService<Message, Long> implements IM
     @Override
     @Transactional
     public void add(MessageDto dto, String token) {
-        dto.setUserId(userService.getIdByToken(token));
-        add(dto);
+
+        try {
+            long userId = userService.getIdByToken(token);
+            User user = userService.getById(userId);
+            Chat chat = chatService.getByUser(userId, dto.getChatId());
+            Message message = new Message(dto.getText(), new Date(), chat, user);
+            messageDao.add(message);
+
+        } catch (RuntimeException e) {
+            logger.error("Add message from dto error: " + e.getMessage());
+            throw e;
+        }
     }
 
     @Override

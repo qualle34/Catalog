@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -41,7 +40,7 @@ public class DealService extends AbstractService<Deal, Long> implements IDealSer
     public List<DealDto> getBySeller(long sellerId) {
 
         try {
-            return dealListToDto(dealDao.getBySellerId(sellerId));
+            return dealListToDto(dealDao.getBySeller(sellerId));
 
         } catch (RuntimeException e) {
             logger.error("Get deal list by seller error: " + e.getMessage());
@@ -50,15 +49,25 @@ public class DealService extends AbstractService<Deal, Long> implements IDealSer
     }
 
     @Override
+    public List<DealDto> getBySeller(String token) {
+        return getBySeller(userService.getIdByToken(token));
+    }
+
+    @Override
     public List<DealDto> getByBuyer(long buyerId) {
 
         try {
-            return dealListToDto(dealDao.getByBuyerId(buyerId));
+            return dealListToDto(dealDao.getByBuyer(buyerId));
 
         } catch (RuntimeException e) {
             logger.error("Get deal list by buyer error: " + e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    public List<DealDto> getByBuyer(String token) {
+        return getByBuyer(userService.getIdByToken(token));
     }
 
     @Override

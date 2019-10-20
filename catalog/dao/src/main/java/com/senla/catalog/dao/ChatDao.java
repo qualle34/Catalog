@@ -19,4 +19,13 @@ public class ChatDao extends AbstractDao<Chat, Long> implements IChatDao {
     protected Class<Chat> getEntityClass() {
         return Chat.class;
     }
+
+    @Override
+    public Chat getByUser(long userId, long chatId) {
+        Query query = entityManager.createQuery("SELECT c FROM Chat c WHERE c.id = :chatId AND (SELECT u From User u where u.id = :userId) MEMBER OF c.userSet ", Chat.class);
+        query.setParameter("userId", userId);
+        query.setParameter("chatId", chatId);
+
+        return (Chat) query.getSingleResult();
+    }
 }

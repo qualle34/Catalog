@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface IMessageService extends IGenericService<Message, Long> {
 
-    List<Message> getByChatId(long chatId);
+    List<MessageDto> getByChat(long chatId);
 
-    List<MessageDto> getDtoByChatId(long chatId);
+    List<MessageDto> getByChat(long chatId, String token);
 
     MessageDto messageToDto(Message message);
 

@@ -28,7 +28,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", updatable = false)
+    @Column(name = "user_id")
     private long id;
 
     @Column(name = "firstname")
@@ -183,6 +183,10 @@ public class User {
             roles.add(new Role(role));
         }
         this.roleSet = roles;
+    }
+
+    public void addRole(UserRole role) {
+        this.roleSet.add(new Role(role));
     }
 
     public Set<Deal> getDealSet() {

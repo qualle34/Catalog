@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/my/profile")
+@RequestMapping(value = "/my")
 public class UserProfileController {
 
     @Autowired
@@ -19,29 +19,28 @@ public class UserProfileController {
     @Autowired
     private IDealService dealService;
 
-    @GetMapping
+    @GetMapping(value = "/profile")
     public UserDto getProfile(@RequestHeader("token") String token) {
-        return userService.getDtoById(userService.getIdByToken(token));
+        return userService.getDtoByToken(token);
     }
 
-    @PutMapping(value = "/edit")
+    @PutMapping(value = "/profile/edit")
     public void updateProfile(@RequestHeader("token") String token, @RequestBody UserDto dto) {
         userService.update(dto, token);
     }
 
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping(value = "/profile/delete")
     public void deleteProfile(@RequestHeader("token") String token) {
-        userService.delete(userService.getIdByToken(token));
+        userService.delete(token);
     }
 
     @GetMapping(value = "/deals/buy")
     public List<DealDto> getBuyerDeals(@RequestHeader("token") String token) {
-        return dealService.getByBuyer(userService.getIdByToken(token));
+        return dealService.getByBuyer(token);
     }
 
     @GetMapping(value = "/deals/sell")
     public List<DealDto> getSellerDeals(@RequestHeader("token") String token) {
-        return dealService.getBySeller(userService.getIdByToken(token));
+        return dealService.getBySeller(token);
     }
 }
-

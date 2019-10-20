@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+  <a class="sidebar-brand-text mx-5 mx-5-l" href="/"> Catalog.by</a>
 
-  <div class="sidebar-brand-text mx-5 mx-5-l"> Catalog.by</div>
   <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
     <div class="input-group">
       <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search"
-             aria-describedby="basic-addon2"  (keyup)="bySearch($event)" >
+             aria-describedby="basic-addon2" (keyup)="bySearch($event)">
       <div class="input-group-append">
         <button class="btn btn-primary" type="button">
           <i class="fas fa-search fa-sm"></i>
@@ -15,9 +15,10 @@
   </form>
 
   <div class="header-btn">
-    <a href="/login"> Войти </a>
-    <a href="/registration"> Регистрация </a>
-    <a href="/my/profile"> Профиль </a>
+    <a *ngIf="!isTokenExists()" href="/login"> Войти </a>
+    <a *ngIf="!isTokenExists()" href="/registration"> Регистрация </a>
+    <a *ngIf="isTokenExists()" href="/my/profile"> Профиль </a>
+    <a *ngIf="isTokenExists()" href="/logout"> Выйти </a>
   </div>
 
 </nav>
@@ -27,7 +28,7 @@
   <div class="sidebar">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <li class="nav-item active" *ngFor="let category of categories">
-        <a class="nav-link" (click)="byCategory(category.id)">
+        <a class="nav-link category-link" (click)="setCategory(category.id)">
           <div>
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span> {{ category.title }} </span>
@@ -38,6 +39,12 @@
   </div>
 
   <div class="container">
+
+    <div class="type-selector">
+      <a class="nav-link type-link" (click)="setType('sell')">Купить</a>
+      <a class="nav-link type-link" (click)="setType('buy')">Продать</a>
+    </div>
+
     <div class="mb-4 advert-box" *ngFor="let advert of adverts">
       <a class="advert-link" href="/advert/{{ advert.id }}">
         <div class="card border-left-primary shadow h-100 py-2">

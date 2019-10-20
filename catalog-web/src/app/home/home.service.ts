@@ -21,11 +21,23 @@ export class HomeService {
     return this.http.get<Category[]>(this.url + '/categories');
   }
 
-  getAdvertsByCategory(categoryId) {
+  getAdvertsByCategory(categoryId: number) {
     return this.http.get<SimpleAdvert[]>(this.url + '?category=' + categoryId);
   }
 
-  getBySearch(search) {
+  getAdvertsByType(type: string) {
+    return this.http.get<SimpleAdvert[]>(this.url + '?type=' + type);
+  }
+
+  getAdvertsByCategoryAndType(categoryId: number, type: string) {
+    return this.http.get<SimpleAdvert[]>(this.url + '?category=' + categoryId + '&type=' + type);
+  }
+
+  getBySearch(search: string) {
     return this.http.get<SimpleAdvert[]>(this.url + '?search=' + search);
+  }
+
+  getAdvertsBySearchAndType(search: string, type: string) {
+    return this.http.get<SimpleAdvert[]>(this.url + '?search=' + search + '&type=' + type);
   }
 }

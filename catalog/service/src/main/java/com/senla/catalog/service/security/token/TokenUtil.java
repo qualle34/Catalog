@@ -25,19 +25,18 @@ public class TokenUtil {
     }
 
     public static boolean isValid(String encodedToken) {
-        return Long.parseLong(getPart(encodedToken, 2)) > System.currentTimeMillis();
+        return encodedToken != null && !encodedToken.equals("") && Long.parseLong(getPart(encodedToken, 2)) > System.currentTimeMillis();
     }
 
     private static String getPart(String encodedToken, int part) {
 
-        if (encodedToken != null && !encodedToken.equals("")) {
-
+        try {
             byte[] login = Base64.getDecoder().decode(encodedToken);
             String token = new String(login);
             String[] arr = token.split(separator);
             return arr[part];
 
-        } else {
+        } catch (RuntimeException e) {
             return null;
         }
     }

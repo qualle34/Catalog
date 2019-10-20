@@ -3,8 +3,6 @@ import {UserChatsService} from '../user-chats.service';
 import {Message} from '../../model/message.model';
 import {ActivatedRoute} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
-import {interval, Subscription} from 'rxjs';
-import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',

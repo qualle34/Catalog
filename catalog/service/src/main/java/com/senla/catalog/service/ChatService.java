@@ -45,6 +45,18 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     }
 
     @Override
+    public Chat getByUser(long userId, long chatId) {
+
+        try {
+            return chatDao.getByUser(userId, chatId);
+
+        } catch (RuntimeException e) {
+            logger.error("Get chat dto by id error: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
     public List<ChatDto> chatsToDto(Collection<Chat> chatList) {
         List<ChatDto> dtoList = new LinkedList<>();
 

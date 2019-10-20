@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IDealDao extends IGenericDao<Deal, Long> {
 
-    List<Deal> getBySellerId(long sellerId);
+    List<Deal> getBySeller(long sellerId);
 
-    List<Deal> getByBuyerId(long buyerId);
+    List<Deal> getByBuyer(long buyerId);
 }

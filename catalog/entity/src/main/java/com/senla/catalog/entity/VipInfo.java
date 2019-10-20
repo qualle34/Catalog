@@ -11,7 +11,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.FetchType;
 
-
 import java.util.Date;
 import java.util.Objects;
 
@@ -80,11 +79,6 @@ public class VipInfo {
 
     @Override
     public String toString() {
-        String line = buyDate.toString();
-
-        if (advert != null) {
-            line = advert.getId() + " " + line;
-        }
-        return line;
+        return id + " " + buyDate;
     }
 }

@@ -11,6 +11,7 @@ import com.senla.catalog.entity.User;
 import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.enums.UserRole;
 import com.senla.catalog.service.basic.AbstractService;
+import com.senla.catalog.service.security.token.TokenException;
 import com.senla.catalog.service.security.token.TokenUtil;
 import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IUserRatingService;
@@ -67,7 +68,7 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     }
 
     @Override
-    public User getWithChatList(long id) {
+    public User getWithChatListById(long id) {
 
         try {
             return userDao.getWithChatListById(id);
@@ -104,7 +105,12 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     }
 
     @Override
-    public SimpleUserDto getSimpleDtoById(int id) {
+    public UserDto getDtoByToken(String token) {
+        return getDtoById(getIdByToken(token));
+    }
+
+    @Override
+    public SimpleUserDto getSimpleDtoById(long id) {
 
         try {
             User user = userDao.getWithRatingById(id);
@@ -117,8 +123,13 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     }
 
     @Override
-    public List<ChatDto> getChatsDtoByUserId(long userId) {
-        return chatService.chatsToDto(getWithChatList(userId).getChatSet());
+    public List<ChatDto> getChatsByUser(long userId) {
+        return chatService.chatsToDto(getWithChatListById(userId).getChatSet());
+    }
+
+    @Override
+    public List<ChatDto> getChatsByUser(String token) {
+        return getChatsByUser(getIdByToken(token));
     }
 
     @Override
@@ -230,6 +241,18 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
 
     @Override
     @Transactional
+    public void updateRating(UserRatingDto dto, String token) {
+
+        if (TokenUtil.isValid(token)) {
+            updateRating(dto);
+
+        } else {
+            throw new TokenException("Token exception");
+        }
+    }
+
+    @Override
+    @Transactional
     public void delete(long id) {
 
         try {
@@ -242,12 +265,11 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     }
 
     @Override
-    public void delete(long id, String token) {
+    @Transactional
+    public void delete(String token) {
 
         try {
-            if (id == getIdByToken(token)) {
-                userDao.delete(id);
-            }
+            userDao.delete(getIdByToken(token));
 
         } catch (RuntimeException e) {
             logger.error("Delete user by id error: " + e.getMessage());

@@ -34,10 +34,9 @@ public class Chat {
     public Chat() {
     }
 
-    public Chat(String title, Set<User> userSet, Set<Message> messageSet) {
+    public Chat(String title, Set<User> userSet) {
         this.title = title;
         this.userSet = userSet;
-        this.messageSet = messageSet;
     }
 
     public long getId() {

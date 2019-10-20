@@ -10,17 +10,17 @@ INSERT INTO catalog.user(firstname, lastname, birthdate, phone, location) values
 INSERT INTO catalog.user(firstname, lastname, birthdate, phone, location) values('Катя', 'Катева', '1956-12-09', '+375112223344', 'Киев');
 INSERT INTO catalog.user(firstname, lastname, birthdate, phone, location) values('Admin', 'Admin', '1998-12-09', '+375000000000', 'Москва');
 
-INSERT INTO catalog.credentials values(1, 'A1n', '$2a$10$n8vz9RSwa/tukPEYMW.yaetMqRjnDZ0CRC1RI06bKuUr73VUCrHQi', 'andrey@gmail.com');           # password- 2345uytr
-INSERT INTO catalog.credentials values(2, 'Dimmer', '$2a$10$Y3VcTkUR0ZwZ0kIZee9e9etFPR1HsctICjNXHGbjzxc3hbGlrDjYK', 'dima@gmail.com');          # password- hgfd3456
-INSERT INTO catalog.credentials values(3, 'Maximer', '$2a$10$ge8V9B.RtVvf8/2SlGLemui1ohaz93UGiepzPCGiGZVnm/hnCSkxm', 'max.makasin@gmail.com');  # password- iuty3465
-INSERT INTO catalog.credentials values(4, 'Vova', '$2a$10$/SftPQLuet74uEXbzap17e3JJyt6wO8RTzulmY71U8GlURTnvqdwi', 'vova@gmail.com');            # password- poiu7890
-INSERT INTO catalog.credentials values(5, 'Anna', '$2a$10$HgqfPiefsadzs8H5AxBvpeuu.gajP2nHuAORmyf4sPK3PB/EML/i6', 'anna@mail.ru');              # password- mnbv1234
-INSERT INTO catalog.credentials values(6, 'Kola', '$2a$10$wGrKQj/d6zpi1q5XWyPByeGgVLUd4zhBzI.2Y9oWkBdFGzgsTxGPC', 'kola@gmail.com');            # password- zxcv0987
-INSERT INTO catalog.credentials values(7, 'Svet', '$2a$10$Q9VU53RuOuY772z0/uei2ODhWXq.rWGFCLCi5ysehAfCUrm1KjOnu', 'svet34@tut.by');             # password- sdfg8567
-INSERT INTO catalog.credentials values(8, 'Tanya', '$2a$10$o67Y3mfdnC//M/9CoSgBcOKjQrzL/LJ0M2IyrXyEPWqaD7vNEejzm', 'tanya8@gmail.com');         # password- dfgh3456
-INSERT INTO catalog.credentials values(9, 'Egor', '$2a$10$4hXHWtwzje2gXb8gCM772.Pd3DQX.bQLTX7fNL1Tmu2zXdbY4Q7VW',  'error@gmail.com');          # password- asdf0987
-INSERT INTO catalog.credentials values(10, 'Katya', '$2a$10$vjsSVPqs4Cu7im3JoxkVMu67to9xtADpSJuRzL5XnOpgqEQmP0SWC', 'kater@mail.ru');           # password- qwer7654
-INSERT INTO catalog.credentials values(11, 'admin', '$2a$10$dt1Jmg.w/sgjVSo2u7Vks.CD6wOGe2PqX.vB9uVPfVswyIeS99/46', 'admin@gmail.com');         # password- admin
+INSERT INTO catalog.credentials values(1, 'A1n', '$2a$10$n8vz9RSwa/tukPEYMW.yaetMqRjnDZ0CRC1RI06bKuUr73VUCrHQi', 'andrey@gmail.com');
+INSERT INTO catalog.credentials values(2, 'Dimmer', '$2a$10$Y3VcTkUR0ZwZ0kIZee9e9etFPR1HsctICjNXHGbjzxc3hbGlrDjYK', 'dima@gmail.com');
+INSERT INTO catalog.credentials values(3, 'Maximer', '$2a$10$ge8V9B.RtVvf8/2SlGLemui1ohaz93UGiepzPCGiGZVnm/hnCSkxm', 'max.makasin@gmail.com');
+INSERT INTO catalog.credentials values(4, 'Vova', '$2a$10$/SftPQLuet74uEXbzap17e3JJyt6wO8RTzulmY71U8GlURTnvqdwi', 'vova@gmail.com');     
+INSERT INTO catalog.credentials values(5, 'Anna', '$2a$10$HgqfPiefsadzs8H5AxBvpeuu.gajP2nHuAORmyf4sPK3PB/EML/i6', 'anna@mail.ru');         
+INSERT INTO catalog.credentials values(6, 'Kola', '$2a$10$wGrKQj/d6zpi1q5XWyPByeGgVLUd4zhBzI.2Y9oWkBdFGzgsTxGPC', 'kola@gmail.com');            
+INSERT INTO catalog.credentials values(7, 'Svet', '$2a$10$Q9VU53RuOuY772z0/uei2ODhWXq.rWGFCLCi5ysehAfCUrm1KjOnu', 'svet34@tut.by');            
+INSERT INTO catalog.credentials values(8, 'Tanya', '$2a$10$o67Y3mfdnC//M/9CoSgBcOKjQrzL/LJ0M2IyrXyEPWqaD7vNEejzm', 'tanya8@gmail.com');       
+INSERT INTO catalog.credentials values(9, 'Egor', '$2a$10$4hXHWtwzje2gXb8gCM772.Pd3DQX.bQLTX7fNL1Tmu2zXdbY4Q7VW',  'error@gmail.com');         
+INSERT INTO catalog.credentials values(10, 'Katya', '$2a$10$vjsSVPqs4Cu7im3JoxkVMu67to9xtADpSJuRzL5XnOpgqEQmP0SWC', 'kater@mail.ru');       
+INSERT INTO catalog.credentials values(11, 'admin', '$2a$10$dt1Jmg.w/sgjVSo2u7Vks.CD6wOGe2PqX.vB9uVPfVswyIeS99/46', 'admin@gmail.com');        
 
 INSERT INTO catalog.user_rating values(1, 0, 0);
 INSERT INTO catalog.user_rating values(2, 7.0, 3);
@@ -137,17 +137,17 @@ INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(2, 2, 'З�
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(2, 3, 'Здрасте', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(3, 7, 'Привет', '2019-07-11 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(3, 2, 'Здрасте', '2019-08-13 09:34:30');
-INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(4, 9, 'Здрасте', '2019-07-13 09:34:30');
+INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(4, 9, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(4, 8, 'Здрасте', '2019-07-13 09:34:30');
-INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(5, 4, 'Здрасте', '2019-07-13 09:34:30');
+INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(5, 4, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(5, 2, 'Здрасте', '2019-04-12 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(6, 3, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(6, 1, 'Здрасте', '2019-07-13 09:34:30');
-INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(7, 1, 'Здрасте', '2019-07-13 09:34:30');
+INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(7, 1, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(7, 2, 'Здрасте', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(8, 6, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(8, 3, 'Можно скидку?', '2019-07-13 09:34:30');
-INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(9, 5, 'Здрасте', '2019-07-13 09:34:30');
+INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(9, 5, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(9, 8, 'Здрасте', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(10, 10, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(10, 9, 'Можно скидку?', '2019-07-13 09:34:30');

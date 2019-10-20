@@ -1,9 +1,16 @@
 .advert-link:hover {
-    text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.category-link:hover {
+  text-decoration: none;
+  cursor: pointer;
+  color: #b6c1be !important;
 }
 
 .card:hover {
-    background-color: #f4f4f4;
+  background-color: #f4f4f4;
 }
 
 .main {
@@ -30,4 +37,28 @@
 
 .advert-box {
   margin-right: 10%;
+}
+
+.type-selector {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+
+  background: #4e73df;
+  border-radius: 10px;
+}
+
+.type-link {
+  display: inline;
+}
+
+.type-selector a{
+  color: white;
+}
+
+.type-link:hover {
+  text-decoration: none;
+  cursor: pointer;
+  color: #b6c1be !important;
 }

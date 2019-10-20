@@ -2,7 +2,6 @@ package com.senla.catalog.service.security;
 
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.entity.User;
-import com.senla.catalog.serviceapi.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,13 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws AuthenticationException {
-        User user = userDao.getWithCredsByLogin(login);
-        return new UserDetail(user);
+
+        try {
+            User user = userDao.getWithCredsByLogin(login);
+            return new UserDetail(user);
+
+        } catch (RuntimeException e){
+            throw new UsernameNotFoundException("User not found");
+        }
     }
 }

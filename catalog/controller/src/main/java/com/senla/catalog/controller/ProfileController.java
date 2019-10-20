@@ -14,12 +14,12 @@ public class ProfileController {
     private IUserService userService;
 
     @GetMapping(params = "id")
-    public SimpleUserDto getProfile(@RequestParam int id) {
+    public SimpleUserDto getProfile(@RequestParam long id) {
         return userService.getSimpleDtoById(id);
     }
 
     @PutMapping
-    public void updateRating(@RequestBody UserRatingDto dto) {
-        userService.updateRating(dto);
+    public void updateRating(@RequestHeader("token") String token, @RequestBody UserRatingDto dto) {
+        userService.updateRating(dto, token);
     }
 }

@@ -22,7 +22,7 @@ public class DealDao extends AbstractDao<Deal, Long> implements IDealDao {
     }
 
     @Override
-    public List<Deal> getBySellerId(long sellerId) {
+    public List<Deal> getBySeller(long sellerId) {
         Query query = entityManager.createQuery("SELECT d FROM Deal d WHERE d.seller.id = :sellerId ", Deal.class);
         query.setParameter("sellerId", sellerId);
 
@@ -30,7 +30,7 @@ public class DealDao extends AbstractDao<Deal, Long> implements IDealDao {
     }
 
     @Override
-    public List<Deal> getByBuyerId(long buyerId) {
+    public List<Deal> getByBuyer(long buyerId) {
         Query query = entityManager.createQuery("SELECT d FROM Deal d WHERE d.buyer.id = :buyerId ", Deal.class);
         query.setParameter("buyerId", buyerId);
 

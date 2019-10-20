@@ -16,15 +16,19 @@ public interface IUserService extends IGenericService<User, Long> {
 
     long getIdByToken(String token);
 
-    User getWithChatList(long id);
+    User getWithChatListById(long id);
 
     User getFullById(long id);
 
     UserDto getDtoById(long id);
 
-    SimpleUserDto getSimpleDtoById(int id);
+    UserDto getDtoByToken(String token);
 
-    List<ChatDto> getChatsDtoByUserId(long userId);
+    SimpleUserDto getSimpleDtoById(long id);
+
+    List<ChatDto> getChatsByUser(long userId);
+
+    List<ChatDto> getChatsByUser(String token);
 
     UserDto userToDto(User user, Creds creds, UserRating rating);
 
@@ -42,7 +46,9 @@ public interface IUserService extends IGenericService<User, Long> {
 
     void updateRating(UserRatingDto dto);
 
+    void updateRating(UserRatingDto dto, String token);
+
     void delete(long id);
 
-    void delete(long id, String token);
+    void delete(String token);
 }

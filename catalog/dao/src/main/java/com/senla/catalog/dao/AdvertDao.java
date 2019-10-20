@@ -35,7 +35,16 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
     }
 
     @Override
-    public List<Advert> getByCategoryId(int categoryId) {
+    public Advert getById(long id, long userId) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.id = :id and a.user.id = :userId ", Advert.class);
+        query.setParameter("id", id);
+        query.setParameter("userId", userId);
+
+        return (Advert) query.getSingleResult();
+    }
+
+    @Override
+    public List<Advert> getByCategory(int categoryId) {
         Query query = entityManager.createQuery("SELECT a FROM Advert a LEFT JOIN a.vipInfo v INNER JOIN a.user u INNER JOIN u.rating r " +
                 "WHERE a.category.id = :categoryId  " +
                 "ORDER BY v.buyDate DESC, r.rating DESC", Advert.class);
@@ -55,7 +64,7 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
     }
 
     @Override
-    public List<Advert> getByCategoryIdAndType(int categoryId, AdvertType type) {
+    public List<Advert> getByCategoryAndType(int categoryId, AdvertType type) {
         Query query = entityManager.createQuery("SELECT a FROM Advert a LEFT JOIN a.vipInfo v INNER JOIN a.user u INNER JOIN u.rating r " +
                 "WHERE a.category.id = :categoryId and a.type = :type " +
                 "ORDER BY v.buyDate DESC, r.rating DESC", Advert.class);
@@ -76,9 +85,9 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
     }
 
     @Override
-    public List<Advert> getByUserId(long userId) {
-        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.user.id = :user ", Advert.class);
-        query.setParameter("user", userId);
+    public List<Advert> getByUser(long userId) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a WHERE a.user.id = :userId ", Advert.class);
+        query.setParameter("userId", userId);
 
         return query.getResultList();
     }
@@ -106,9 +115,29 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
     }
 
     @Override
+    public Advert getWithCommentsById(long id, long userId) {
+        Query query = entityManager.createQuery("SELECT a FROM Advert a LEFT JOIN FETCH a.commentSet c " +
+                "WHERE a.id = :id and a.user.id = :userId ", Advert.class);
+        query.setParameter("id", id);
+        query.setParameter("userId", userId);
+
+        return (Advert) query.getSingleResult();
+    }
+
+    @Override
     public void delete(long id) {
         Query query = entityManager.createQuery("DELETE FROM Advert a WHERE a.id = :id ");
         query.setParameter("id", id);
+
+        query.executeUpdate();
+    }
+
+    @Override
+    public void delete(long id, long userId) {
+        Query query = entityManager.createQuery("DELETE FROM Advert a WHERE a.id = :id AND a.user.id = :userId ");
+        query.setParameter("id", id);
+        query.setParameter("userId", userId);
+
         query.executeUpdate();
     }
 }
