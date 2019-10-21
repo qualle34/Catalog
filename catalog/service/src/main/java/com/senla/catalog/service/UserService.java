@@ -2,6 +2,7 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.chat.SimpleChatDto;
 import com.senla.catalog.dto.user.SimpleUserDto;
 import com.senla.catalog.dto.user.UserDto;
 import com.senla.catalog.dto.user.UserRatingDto;
@@ -123,12 +124,12 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     }
 
     @Override
-    public List<ChatDto> getChatsByUser(long userId) {
+    public List<SimpleChatDto> getChatsByUser(long userId) {
         return chatService.chatsToDto(getWithChatListById(userId).getChatSet());
     }
 
     @Override
-    public List<ChatDto> getChatsByUser(String token) {
+    public List<SimpleChatDto> getChatsByUser(String token) {
         return getChatsByUser(getIdByToken(token));
     }
 

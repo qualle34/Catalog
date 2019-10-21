@@ -1,17 +1,14 @@
 package com.senla.catalog.dto.chat;
 
-import java.util.List;
-
-public class ChatDto {
+public class SimpleChatDto {
 
     private long id;
     private String title;
-    private List<MessageDto> messages;
 
-    public ChatDto() {
+    public SimpleChatDto() {
     }
 
-    public ChatDto(String title) {
+    public SimpleChatDto(String title) {
         this.title = title;
     }
 
@@ -29,13 +26,5 @@ public class ChatDto {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<MessageDto> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<MessageDto> messages) {
-        this.messages = messages;
     }
 }

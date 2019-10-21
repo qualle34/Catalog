@@ -4,6 +4,7 @@ import com.senla.catalog.dto.chat.MessageDto;
 import com.senla.catalog.entity.Message;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface IMessageService extends IGenericService<Message, Long> {
@@ -16,7 +17,7 @@ public interface IMessageService extends IGenericService<Message, Long> {
 
     Message dtoToMessage(MessageDto dto);
 
-    List<MessageDto> messageListToDto(List<Message> messageList);
+    List<MessageDto> messageListToDto(Collection<Message> messageList);
 
     void add(MessageDto dto);
 

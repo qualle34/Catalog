@@ -10,3 +10,12 @@
 .comment {
   padding: 10px;
 }
+
+.price-input {
+  margin-bottom: 20px;
+}
+
+.btn-advert {
+  margin: 20px auto 0;
+  text-align: center;
+}

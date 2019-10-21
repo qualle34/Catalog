@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class Chat {
     private Set<User> userSet;
 
     @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
-    private Set<Message> messageSet;
+    private List<Message> messageList;
 
     public Chat() {
     }
@@ -63,12 +64,12 @@ public class Chat {
         this.userSet = userSet;
     }
 
-    public Set<Message> getMessageSet() {
-        return messageSet;
+    public List<Message> getMessageList() {
+        return messageList;
     }
 
-    public void setMessageSet(Set<Message> messageSet) {
-        this.messageSet = messageSet;
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
     }
 
     @Override

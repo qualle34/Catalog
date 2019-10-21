@@ -2,9 +2,12 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.chat.SimpleChatDto;
 import com.senla.catalog.entity.Chat;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
+import com.senla.catalog.serviceapi.IMessageService;
+import com.senla.catalog.serviceapi.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,12 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     @Autowired
     private IChatDao chatDao;
 
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private IMessageService messageService;
+
     @Override
     protected String getDaoClassName() {
         return "chatDao";
@@ -33,10 +42,14 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     }
 
     @Override
-    public ChatDto getDtoById(long id) {
+    public ChatDto getWithMessagesById(long id, String token) {
 
         try {
-            return chatToDto(chatDao.getById(id));
+            Chat chat = chatDao.getWithMessagesById(userService.getIdByToken(token), id);
+            ChatDto dto = new ChatDto(chat.getTitle());
+            dto.setId(chat.getId());
+            dto.setMessages(messageService.messageListToDto(chat.getMessageList()));
+            return dto;
 
         } catch (RuntimeException e) {
             logger.error("Get chat dto by id error: " + e.getMessage());
@@ -48,7 +61,7 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     public Chat getByUser(long userId, long chatId) {
 
         try {
-            return chatDao.getByUser(userId, chatId);
+            return chatDao.getById(userId, chatId);
 
         } catch (RuntimeException e) {
             logger.error("Get chat dto by id error: " + e.getMessage());
@@ -57,8 +70,8 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     }
 
     @Override
-    public List<ChatDto> chatsToDto(Collection<Chat> chatList) {
-        List<ChatDto> dtoList = new LinkedList<>();
+    public List<SimpleChatDto> chatsToDto(Collection<Chat> chatList) {
+        List<SimpleChatDto> dtoList = new LinkedList<>();
 
         for (Chat chat : chatList) {
             dtoList.add(chatToDto(chat));
@@ -67,8 +80,8 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
     }
 
     @Override
-    public ChatDto chatToDto(Chat chat) {
-        ChatDto dto = new ChatDto(chat.getTitle());
+    public SimpleChatDto chatToDto(Chat chat) {
+        SimpleChatDto dto = new SimpleChatDto(chat.getTitle());
         dto.setId(chat.getId());
         return dto;
     }

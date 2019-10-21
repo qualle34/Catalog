@@ -3,6 +3,9 @@ import {UserChatsService} from '../user-chats.service';
 import {Message} from '../../model/message.model';
 import {ActivatedRoute} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
+import {Chat} from '../../model/chat.model';
+import {NgForm} from '@angular/forms';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
@@ -10,18 +13,17 @@ import {CookieService} from 'ngx-cookie-service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  messages: Message[];
+  chat: Chat;
   message: Message;
   id: string;
 
   constructor(private userChatService: UserChatsService, private cookieService: CookieService, private route: ActivatedRoute) {
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
-
     this.getMessages();
   }
 
@@ -31,12 +33,11 @@ export class ChatComponent implements OnInit {
     this.message.text = event.target.querySelector('#text').value;
     this.message.chatId = Number(this.id);
     this.userChatService.addMessage(this.message, this.getToken());
-    this.getMessages();
   }
 
   getMessages() {
-    return this.userChatService.getChatMessages(this.id, this.getToken())
-      .subscribe(data => this.messages = data);
+    this.userChatService.getChat(this.id, this.getToken())
+      .subscribe(data => this.chat = data);
   }
 
   getToken(): string {

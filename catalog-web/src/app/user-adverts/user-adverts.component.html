@@ -3,6 +3,11 @@
 </nav>
 
 <div class="container">
+
+  <div>
+    <a href="my/add-advert"> Добавить </a>
+  </div>
+
   <div class="mb-4 advert-box" *ngFor="let advert of adverts">
     <a class="advert-link" href="/my/advert/{{ advert.id }}">
       <div class="card border-left-primary shadow h-100 py-2">

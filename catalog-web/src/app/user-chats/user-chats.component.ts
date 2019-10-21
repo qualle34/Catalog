@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Chat} from '../model/chat.model';
 import {UserChatsService} from './user-chats.service';
+import {SimpleChat} from '../model/simple-chat.model';
 
 @Component({
   selector: 'app-user-chat',
@@ -10,14 +10,17 @@ import {UserChatsService} from './user-chats.service';
 })
 
 export class UserChatsComponent implements OnInit {
-  chats: Chat[];
+  chats: SimpleChat[];
 
   constructor(private userChatService: UserChatsService, private cookieService: CookieService) {
   }
 
   ngOnInit() {
-    const token: string = this.cookieService.get('token');
-    return this.userChatService.getChats(token)
+    return this.userChatService.getChats(this.getToken())
       .subscribe(data => this.chats = data);
+  }
+
+  getToken(): string {
+    return this.cookieService.get('token');
   }
 }

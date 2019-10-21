@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class MessageService extends AbstractService<Message, Long> implements IM
     }
 
     @Override
-    public List<MessageDto> messageListToDto(List<Message> messageList) {
+    public List<MessageDto> messageListToDto(Collection<Message> messageList) {
         List<MessageDto> messageDtoList = new LinkedList<>();
 
         for (Message message : messageList) {

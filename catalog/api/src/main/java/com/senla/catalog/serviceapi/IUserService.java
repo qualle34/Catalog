@@ -1,13 +1,13 @@
 package com.senla.catalog.serviceapi;
 
-import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.chat.SimpleChatDto;
 import com.senla.catalog.dto.user.SimpleUserDto;
 import com.senla.catalog.dto.user.UserDto;
 import com.senla.catalog.dto.user.UserRatingDto;
 import com.senla.catalog.dto.user.UserRegistrationDto;
 import com.senla.catalog.entity.Creds;
-import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.entity.User;
+import com.senla.catalog.entity.UserRating;
 import com.senla.catalog.serviceapi.basic.IGenericService;
 
 import java.util.List;
@@ -26,9 +26,9 @@ public interface IUserService extends IGenericService<User, Long> {
 
     SimpleUserDto getSimpleDtoById(long id);
 
-    List<ChatDto> getChatsByUser(long userId);
+    List<SimpleChatDto> getChatsByUser(long userId);
 
-    List<ChatDto> getChatsByUser(String token);
+    List<SimpleChatDto> getChatsByUser(String token);
 
     UserDto userToDto(User user, Creds creds, UserRating rating);
 

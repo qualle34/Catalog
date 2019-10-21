@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+  <a class="sidebar-brand-text mx-5 mx-5-l" href="/"> Catalog.by</a>
+</nav>
+
+<div class="mb-4 advert-box advert-form">
+  <div class="card shadow h-100 py-2">
+    <div class="card-body">
+
+      <form class="user" (submit)="add($event)">
+
+        <div class="form-group">
+          <input name="title" type="text" class="form-control form-control-user" id="title"
+                 placeholder="Название товара">
+        </div>
+        <div class="form-group">
+          <input name="description" type="text" class="form-control form-control-user" id="description"
+                 placeholder="Описание">
+        </div>
+        <div class="form-group">
+          <input name="price" type="number" class="form-control form-control-user" id="price"
+                 placeholder="Цена">
+        </div>
+
+        <div class="form-group">
+          <input name="category" type="number" class="form-control form-control-user" id="category"
+                 placeholder="Категория">
+        </div>
+
+        <div class="form-group">
+          <input name="type" type="text" class="form-control form-control-user" id="type"
+                 placeholder="Тип">
+        </div>
+
+        <input type="submit" class="btn btn-success" value="Добавить">
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>

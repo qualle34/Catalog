@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Chat} from '../model/chat.model';
 import {Message} from '../model/message.model';
+import {SimpleChat} from '../model/simple-chat.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class UserChatsService {
   }
 
   getChats(token: string) {
-    return this.http.get<Chat[]>(this.url + '/chats', {headers: {'token': token}});
+    return this.http.get<SimpleChat[]>(this.url + '/chats', {headers: {'token': token}});
   }
 
-  getChatMessages(chatId: string, token: string) {
-    return this.http.get<Message[]>(this.url + '/chat?id=' + chatId, {headers: {'token': token}});
+  getChat(chatId: string, token: string) {
+    return this.http.get<Chat>(this.url + '/chat?id=' + chatId, {headers: {'token': token}});
   }
 
   addMessage(message: Message, token: string) {

@@ -20,4 +20,12 @@ export class UserAdvertsService {
   getUserAdvert(id: string, token: string) {
     return this.http.get<Advert>(this.url + '/advert?id=' + id, {headers: {'token': token}});
   }
+
+  addAdvert(advert: Advert, token: string) {
+    this.http.post(this.url + '/advert/add', advert, {headers: {'token': token}}).subscribe();
+  }
+
+  updateAdvert(advert: Advert, token: string) {
+    this.http.put(this.url + '/advert/update', {headers: {'token': token}}).subscribe();
+  }
 }

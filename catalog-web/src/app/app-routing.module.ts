@@ -13,6 +13,7 @@ import {ChatComponent} from './user-chats/chat/chat.component';
 import {AdvertComponent} from './home/advert/advert.component';
 import {UserAdvertsComponent} from './user-adverts/user-adverts.component';
 import {LogoutComponent} from './login/logout/logout.component';
+import {AddAdvertComponent} from './user-adverts/add-advert/add-advert.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'my/profile', component: UserProfileComponent},
   {path: 'my/adverts', component: UserAdvertsComponent},
   {path: 'my/advert/:id', component: UserAdvertComponent},
+  {path: 'my/add-advert', component: AddAdvertComponent},
   {path: 'my/chats', component: UserChatsComponent},
   {path: 'my/chat/:id', component: ChatComponent},
   {path: 'admin', component: AdminComponent},

@@ -12,17 +12,19 @@
 
       <div class="card-body">
         <p> Цена - {{ advert.price }} р.</p>
-        <p>
-          {{ advert.description }}
-        </p>
-        <a href="/profile/{{advert.userId}}">
-          Продавец
-        </a>
+        <input name="price" type="number" class="form-control form-control-user price-input" id="price"
+               placeholder="Новая цена" value="{{ advert.price }}">
+        <p> Описание </p>
+
+        <textarea name="description" class="form-control form-control-user" id="description"
+                  placeholder="Описание"> {{ advert.description }} </textarea>
+
+        <input type="submit" class="btn btn-success btn-advert" (click)="update($event)" value="Обновить">
+
       </div>
 
     </div>
   </div>
-
 
   <div class="col-xl-8 comment-box">
     <div class="card shadow mb-4">

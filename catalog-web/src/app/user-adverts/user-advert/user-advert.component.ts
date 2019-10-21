@@ -12,6 +12,7 @@ import {Advert} from '../../model/advert.model';
 
 export class UserAdvertComponent implements OnInit {
   advert: Advert;
+  newAdvert: Advert;
   id: string;
 
   constructor(private userAdvertsService: UserAdvertsService, private cookieService: CookieService, private route: ActivatedRoute) {
@@ -23,5 +24,17 @@ export class UserAdvertComponent implements OnInit {
       this.id = params.get('id');
     });
     this.userAdvertsService.getUserAdvert(this.id, token).subscribe(data => this.advert = data);
+  }
+
+  update(event) {
+    event.preventDefault();
+    this.newAdvert = new Advert();
+    this.newAdvert.price = event.target.querySelector('#price').value;
+    this.newAdvert.description = event.target.querySelector('#description').value;
+    this.userAdvertsService.updateAdvert(this.newAdvert, this.getToken());
+  }
+
+  getToken(): string {
+    return this.cookieService.get('token');
   }
 }

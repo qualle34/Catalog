@@ -2,6 +2,8 @@ package com.senla.catalog.controller;
 
 import com.senla.catalog.dto.chat.ChatDto;
 import com.senla.catalog.dto.chat.MessageDto;
+import com.senla.catalog.dto.chat.SimpleChatDto;
+import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IMessageService;
 import com.senla.catalog.serviceapi.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +21,17 @@ public class UserChatController {
     @Autowired
     private IMessageService messageService;
 
+    @Autowired
+    private IChatService chatService;
+
     @GetMapping("/chats")
-    public List<ChatDto> getChats(@RequestHeader("token") String token) {
+    public List<SimpleChatDto> getChats(@RequestHeader("token") String token) {
         return userService.getChatsByUser(token);
     }
 
     @GetMapping(value = "/chat", params = "id")
-    public List<MessageDto> getMessages(@RequestHeader("token") String token, @RequestParam int id) { // param - chat id
-        return messageService.getByChat(id, token);
+    public ChatDto getChat(@RequestHeader("token") String token, @RequestParam int id) { // param - chat id
+        return chatService.getWithMessagesById(id, token);
     }
 
     @PostMapping(value = "/chat/add")
