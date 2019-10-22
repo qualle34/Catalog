@@ -40,12 +40,36 @@
     </div>
   </div>
 
-  <router-outlet></router-outlet>
+  <div class="mb-4 col-xl-8 add-box">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
 
-  <footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-      <div class="copyright text-center my-auto">
-        <span>Copyright &copy; Catalog.by 2019</span>
+            <form id="sendForm" (submit)="addComment($event)">
+
+              <div class="form-group">
+                <input name="comment" type="text" class="form-control form-control-user" id="comment"
+                       placeholder="Текст...">
+              </div>
+
+              <input id="input" type="submit" class="btn btn-success" value="Добавить">
+
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>
+
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Catalog.by 2019</span>
+    </div>
+  </div>
+</footer>

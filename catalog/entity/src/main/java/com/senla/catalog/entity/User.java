@@ -67,9 +67,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Comment> commentSet;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_chat", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "chat_id"))
+    @ManyToMany(mappedBy = "userSet", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Set<Chat> chatSet;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

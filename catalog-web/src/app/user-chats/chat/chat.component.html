@@ -10,8 +10,8 @@
         <div class="line"></div>
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" *ngFor="let msg of chat.messages">
-              <div class="pos-l message"> {{ msg.text }} </div>
+            <div class="text-xs font-weight-normal-bold text-primary mb-1" *ngFor="let msg of chat.messages">
+              <div class="pos-l message"> {{ msg.userId }} - {{ msg.text }} </div>
             </div>
           </div>
         </div>
@@ -28,11 +28,11 @@
             <form id="sendForm" (submit)="send($event)">
 
               <div class="form-group">
-                <input name="text" type="text" class="form-control form-control-user" id="text"
+                <input name="message" type="text" class="form-control form-control-user" id="message"
                        placeholder="Текст...">
               </div>
 
-              <input id="input" type="submit" class="btn btn-success" onClick="reset()" value="Отправить">
+              <input id="input" type="submit" class="btn btn-success" value="Отправить">
 
             </form>
           </div>
@@ -43,12 +43,6 @@
 </div>
 
 <router-outlet></router-outlet>
-
-<script>
-    function reset() {
-        document.getElementById('sendForm').reset();
-    }
-</script>
 
 <footer class="sticky-footer bg-white">
   <div class="container my-auto">

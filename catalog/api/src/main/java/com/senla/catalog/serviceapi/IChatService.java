@@ -1,6 +1,7 @@
 package com.senla.catalog.serviceapi;
 
 import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.chat.NewChatDto;
 import com.senla.catalog.dto.chat.SimpleChatDto;
 import com.senla.catalog.entity.Chat;
 import com.senla.catalog.serviceapi.basic.IGenericService;
@@ -17,4 +18,6 @@ public interface IChatService extends IGenericService<Chat, Long> {
     List<SimpleChatDto> chatsToDto(Collection<Chat> chatList);
 
     SimpleChatDto chatToDto(Chat chat);
+
+    void add(NewChatDto dto, String token);
 }

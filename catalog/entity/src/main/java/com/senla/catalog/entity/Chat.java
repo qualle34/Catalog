@@ -1,14 +1,6 @@
 package com.senla.catalog.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +18,9 @@ public class Chat {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(mappedBy = "chatSet", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_chat", joinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> userSet;
 
     @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)

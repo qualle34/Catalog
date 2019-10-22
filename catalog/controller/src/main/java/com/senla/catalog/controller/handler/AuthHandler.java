@@ -34,6 +34,7 @@ public class AuthHandler implements AuthenticationSuccessHandler, Authentication
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         logger.info("Authentication Failure " + e.getMessage());
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         handle(request, response, "/login-error");
         clearAuthenticationAttributes(request);
     }

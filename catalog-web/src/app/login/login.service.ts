@@ -14,6 +14,6 @@ export class LoginService {
   }
 
   authorize(auth: Auth): Promise<Token> {
-    return this.http.post<Token>(this.url, auth).toPromise();
+    return this.http.post<Token>(this.url, auth).toPromise().catch(x => new Token());
   }
 }

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -9,10 +10,11 @@ import {CookieService} from 'ngx-cookie-service';
 
 export class LogoutComponent {
 
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private router: Router) {
   }
 
-  logout() {
+  async logout() {
     this.cookieService.delete('token');
+    await this.router.navigate(['/']);
   }
 }

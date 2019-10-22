@@ -2,8 +2,10 @@ package com.senla.catalog.service;
 
 import com.senla.catalog.daoapi.IChatDao;
 import com.senla.catalog.dto.chat.ChatDto;
+import com.senla.catalog.dto.chat.NewChatDto;
 import com.senla.catalog.dto.chat.SimpleChatDto;
 import com.senla.catalog.entity.Chat;
+import com.senla.catalog.entity.User;
 import com.senla.catalog.service.basic.AbstractService;
 import com.senla.catalog.serviceapi.IChatService;
 import com.senla.catalog.serviceapi.IMessageService;
@@ -12,10 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ChatService extends AbstractService<Chat, Long> implements IChatService {
@@ -84,5 +85,14 @@ public class ChatService extends AbstractService<Chat, Long> implements IChatSer
         SimpleChatDto dto = new SimpleChatDto(chat.getTitle());
         dto.setId(chat.getId());
         return dto;
+    }
+
+    @Override
+    @Transactional
+    public void add(NewChatDto dto, String token) {
+        User user = userService.getById(userService.getIdByToken(token));
+        User anotherUser = userService.getById(dto.getUserId());
+        Chat chat = new Chat(dto.getTitle(), new HashSet<>(Arrays.asList(user, anotherUser)));
+        add(chat);
     }
 }

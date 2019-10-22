@@ -29,10 +29,12 @@ export class ChatComponent implements OnInit {
 
   send(event) {
     event.preventDefault();
+
     this.message = new Message();
-    this.message.text = event.target.querySelector('#text').value;
+    this.message.text = event.target.querySelector('#message').value;
     this.message.chatId = Number(this.id);
     this.userChatService.addMessage(this.message, this.getToken());
+    event.target.querySelector('#message').value = '';
   }
 
   getMessages() {

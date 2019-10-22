@@ -252,10 +252,10 @@ public class AdvertService extends AbstractService<Advert, Long> implements IAdv
 
         try {
             Advert advert = advertDao.getById(dto.getId());
-            advert.setTitle(dto.getTitle());
-            advert.setDescription(dto.getDescription());
-            advert.setPrice(dto.getPrice());
-            advert.setType(dto.getType());
+            advert.setTitle(isNotEmpty(dto.getTitle()) ? dto.getTitle() : advert.getTitle());
+            advert.setDescription(isNotEmpty(dto.getDescription()) ? dto.getDescription() : advert.getDescription());
+            advert.setPrice(isNotEmpty(String.valueOf(dto.getPrice())) ? dto.getPrice() : advert.getPrice());
+            advert.setType(isNotEmpty(dto.getType().name()) ? dto.getType() : advert.getType());
             advertDao.update(advert);
 
         } catch (RuntimeException e) {
@@ -270,10 +270,10 @@ public class AdvertService extends AbstractService<Advert, Long> implements IAdv
 
         try {
             Advert advert = advertDao.getById(dto.getId(), userService.getIdByToken(token));
-            advert.setTitle(dto.getTitle());
-            advert.setDescription(dto.getDescription());
-            advert.setPrice(dto.getPrice());
-            advert.setType(dto.getType());
+            advert.setTitle(isNotEmpty(dto.getTitle()) ? dto.getTitle() : advert.getTitle());
+            advert.setDescription(isNotEmpty(dto.getDescription()) ? dto.getDescription() : advert.getDescription());
+            advert.setPrice(isNotEmpty(String.valueOf(dto.getPrice())) ? dto.getPrice() : advert.getPrice());
+            advert.setType(isNotEmpty(dto.getType().name()) ? dto.getType() : advert.getType());
             advertDao.update(advert);
 
         } catch (RuntimeException e) {
@@ -316,5 +316,9 @@ public class AdvertService extends AbstractService<Advert, Long> implements IAdv
         } else {
             return AdvertType.BUY;
         }
+    }
+
+    private boolean isNotEmpty(String value) {
+        return value != null && !value.equals("");
     }
 }

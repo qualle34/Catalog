@@ -14,7 +14,7 @@ export class UserAdvertsService {
   }
 
   getUserAdverts(token: string) {
-   return this.http.get<SimpleAdvert[]>(this.url + '/adverts', {headers: {'token': token}});
+    return this.http.get<SimpleAdvert[]>(this.url + '/adverts', {headers: {'token': token}});
   }
 
   getUserAdvert(id: string, token: string) {
@@ -26,6 +26,10 @@ export class UserAdvertsService {
   }
 
   updateAdvert(advert: Advert, token: string) {
-    this.http.put(this.url + '/advert/update', {headers: {'token': token}}).subscribe();
+    this.http.put(this.url + '/advert/update', advert, {headers: {'token': token}}).subscribe();
+  }
+
+  deleteAdvert(id: number, token: string) {
+    this.http.delete(this.url + '/advert/delete/' + id, {headers: {'token': token}}).subscribe();
   }
 }

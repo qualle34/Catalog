@@ -3,6 +3,7 @@ package com.senla.catalog.service.security.token;
 import com.senla.catalog.dto.auth.TokenDto;
 
 import java.util.Base64;
+import java.util.Objects;
 
 public class TokenUtil {
 
@@ -25,7 +26,7 @@ public class TokenUtil {
     }
 
     public static boolean isValid(String encodedToken) {
-        return encodedToken != null && !encodedToken.equals("") && Long.parseLong(getPart(encodedToken, 2)) > System.currentTimeMillis();
+        return encodedToken != null && !encodedToken.equals("") && Long.parseLong(Objects.requireNonNull(getPart(encodedToken, 2))) > System.currentTimeMillis();
     }
 
     private static String getPart(String encodedToken, int part) {

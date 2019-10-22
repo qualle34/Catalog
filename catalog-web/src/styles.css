@@ -9459,6 +9459,10 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
   font-weight: 400 !important
 }
 
+.font-weight-normal-bold {
+  font-weight: 600 !important
+}
+
 .font-weight-bold {
   font-weight: 700 !important
 }
@@ -9874,7 +9878,7 @@ a:focus {
 }
 
 .text-xs {
-  font-size: 0.75rem
+  font-size: 0.85rem
 }
 
 .text-lg {

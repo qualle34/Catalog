@@ -96,6 +96,7 @@ public class CommentService extends AbstractService<Comment, Long> implements IC
     public void add(CommentDto dto, String token) {
 
         if (TokenUtil.isValid(token)) {
+            dto.setUserId(userService.getIdByToken(token));
             add(dto);
 
         } else {

@@ -8,19 +8,29 @@
 
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h5 class="m-0 font-weight-bold text-primary">{{ advert.title }}</h5>
+        <button class="btn btn-danger" (click)="delete(advert.id)"> X</button>
       </div>
 
       <div class="card-body">
-        <p> Цена - {{ advert.price }} р.</p>
-        <input name="price" type="number" class="form-control form-control-user price-input" id="price"
-               placeholder="Новая цена" value="{{ advert.price }}">
-        <p> Описание </p>
+        <form (submit)="update($event)">
 
-        <textarea name="description" class="form-control form-control-user" id="description"
-                  placeholder="Описание"> {{ advert.description }} </textarea>
+          <input name="title" type="text" class="form-control form-control-user price-input" id="title"
+                 placeholder="Заголовок" value="{{ advert.title }}">
 
-        <input type="submit" class="btn btn-success btn-advert" (click)="update($event)" value="Обновить">
+          <p> Цена - {{ advert.price }} р.</p>
+          <input name="price" type="number" class="form-control form-control-user price-input" id="price"
+                 placeholder="Цена" value="{{ advert.price }}">
 
+          <p> Тип - {{ advert.type }} р.</p>
+          <input name="type" type="text" class="form-control form-control-user price-input" id="type"
+                 placeholder="Тип" value="{{ advert.type }}">
+
+          <p> Описание </p>
+          <textarea name="description" class="form-control form-control-user" id="description"
+                    placeholder="Описание"> {{ advert.description }} </textarea>
+
+          <input type="submit" class="btn btn-success btn-advert" value="Обновить">
+        </form>
       </div>
 
     </div>
@@ -52,3 +62,5 @@
     </div>
   </div>
 </footer>
+
+

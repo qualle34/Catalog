@@ -15,4 +15,8 @@ export class UserProfileService {
   getUser(token: string) {
     return this.http.get<User>(this.url, {headers: {'token': token}});
   }
+
+  deleteUser(token: string) {
+    return this.http.delete(this.url + '/delete', {headers: {'token': token}}).subscribe();
+  }
 }
