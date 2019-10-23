@@ -4,6 +4,7 @@ import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.dto.advert.AdvertDto;
 import com.senla.catalog.dto.advert.SimpleAdvertDto;
 import com.senla.catalog.entity.Advert;
+import com.senla.catalog.entity.Type;
 import com.senla.catalog.entity.VipInfo;
 import com.senla.catalog.entity.enums.AdvertType;
 import com.senla.catalog.service.basic.AbstractService;
@@ -189,7 +190,7 @@ public class AdvertService extends AbstractService<Advert, Long> implements IAdv
 
     @Override
     public Advert dtoToAdvert(AdvertDto dto) {
-        return new Advert(dto.getTitle(), dto.getDescription(), dto.getPrice(), dto.getType());
+        return new Advert(dto.getTitle(), dto.getDescription(), dto.getPrice());
     }
 
     @Override
@@ -210,6 +211,7 @@ public class AdvertService extends AbstractService<Advert, Long> implements IAdv
             Advert advert = dtoToAdvert(dto);
             advert.setUser(userService.getById(dto.getUserId()));
             advert.setCategory(categoryService.getById(dto.getCategoryId()));
+            advert.setType(advertDao.getTypeByName(dto.getType()));
             advertDao.add(advert);
 
         } catch (RuntimeException e) {

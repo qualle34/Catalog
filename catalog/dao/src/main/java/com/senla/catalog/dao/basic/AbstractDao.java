@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     protected abstract Class<T> getEntityClass();
 

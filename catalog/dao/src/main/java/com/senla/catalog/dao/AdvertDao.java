@@ -3,6 +3,7 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IAdvertDao;
 import com.senla.catalog.entity.Advert;
+import com.senla.catalog.entity.Type;
 import com.senla.catalog.entity.enums.AdvertType;
 import org.springframework.stereotype.Repository;
 
@@ -18,11 +19,8 @@ import java.util.List;
 @Repository
 public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
-    protected Class<Advert> getEntityClass() {
+    public Class<Advert> getEntityClass() {
         return Advert.class;
     }
 
@@ -55,8 +53,8 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
 
     @Override
     public List<Advert> getByType(AdvertType type) {
-        Query query = entityManager.createQuery("SELECT a FROM Advert a LEFT JOIN a.vipInfo v INNER JOIN a.user u INNER JOIN u.rating r " +
-                "WHERE a.type = :type " +
+        Query query = entityManager.createQuery("SELECT a FROM Advert a INNER JOIN a.type t LEFT JOIN a.vipInfo v INNER JOIN a.user u INNER JOIN u.rating r " +
+                "WHERE t.type = :type " +
                 "ORDER BY v.buyDate DESC, r.rating DESC", Advert.class);
         query.setParameter("type", type);
 
@@ -65,8 +63,8 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
 
     @Override
     public List<Advert> getByCategoryAndType(int categoryId, AdvertType type) {
-        Query query = entityManager.createQuery("SELECT a FROM Advert a LEFT JOIN a.vipInfo v INNER JOIN a.user u INNER JOIN u.rating r " +
-                "WHERE a.category.id = :categoryId and a.type = :type " +
+        Query query = entityManager.createQuery("SELECT a FROM Advert a INNER JOIN a.type t LEFT JOIN a.vipInfo v INNER JOIN a.user u INNER JOIN u.rating r " +
+                "WHERE a.category.id = :categoryId and t.type = :type " +
                 "ORDER BY v.buyDate DESC, r.rating DESC", Advert.class);
         query.setParameter("categoryId", categoryId);
         query.setParameter("type", type);
@@ -90,6 +88,14 @@ public class AdvertDao extends AbstractDao<Advert, Long> implements IAdvertDao {
         query.setParameter("userId", userId);
 
         return query.getResultList();
+    }
+
+    @Override
+    public Type getTypeByName(AdvertType type) {
+        Query query = entityManager.createQuery("SELECT t FROM Type t WHERE t.type = :type", Type.class);
+        query.setParameter("type", type);
+
+        return (Type) query.getSingleResult();
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.senla.catalog.dto.advert.SimpleAdvertDto;
 import com.senla.catalog.dto.advert.VipInfoDto;
 import com.senla.catalog.serviceapi.IAdvertService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,5 +46,10 @@ public class UserAdvertController {
     @PostMapping(value = "advert/add-vip")
     public void addVipInfo(@RequestHeader("token") String token, @RequestBody VipInfoDto dto) {
         advertService.addVip(dto.getId(), token);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity handleUserAdvertException() {
+        return new ResponseEntity(null, HttpStatus.FORBIDDEN);
     }
 }

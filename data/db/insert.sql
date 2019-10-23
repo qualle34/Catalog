@@ -63,35 +63,43 @@ INSERT INTO catalog.deal(seller_id, buyer_id, title, sale_date) values(10, 9, 'B
 
 INSERT INTO catalog.category(title) values('Авто');
 INSERT INTO catalog.category(title) values('Одежда');
-INSERT INTO catalog.category(title) values('Всё для дома');
 INSERT INTO catalog.category(title) values('Электроника');
-INSERT INTO catalog.category(title) values('Ремонт');  -- 5
+INSERT INTO catalog.category(title) values('Ремонт');
 INSERT INTO catalog.category(title) values('Сад и огород');
+INSERT INTO catalog.category(title) values('Мебель');
 INSERT INTO catalog.category(title) values('Хобби и игры');
 INSERT INTO catalog.category(title) values('Животные');
 INSERT INTO catalog.category(title) values('Недвижимость');
-INSERT INTO catalog.category(title) values('Другое');  -- 10
-INSERT INTO catalog.category(title) values('Мебель');
+INSERT INTO catalog.category(title) values('Другое');
 
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(5, 4, 'Телефон Nokia', 'Nokia 3310', 46.2, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(4, 2, 'Кроссовки Nike', 'Nike Air', 78.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(7, 8, 'Клетка для кролика', 'Размер: 1м х 0.5м', 16.0, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(2, 5, 'Дрель Bosch', 'GSR-13', 56.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(8, 7, 'Геймпад Sony', 'DualShock 4 white', 48.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(7, 1, 'Автомобиль Audi A7', 'Audi A7 2012', 35230.0, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(3, 2, 'Куртка Xiaomi', 'Xiaomi mi jacket', 95.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, type) values(3, 4, 'Куплю ноутбук', 'Xiaomi, Asus, Apple, Aser', 'BUY');
-INSERT INTO catalog.advert(user_id, category_id, title, description, type) values(10, 9, 'Жилой дом №3 по ул. Лидской в г.Гродно', 'Жилой дом №3 по ул. Лидской в г.Гродно., 3-комнатная квартира (площадь 78,3 м2)', 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(7, 2, 'Пуховик Gulliver', 'Пуховик фирменный Gulliver для мальчика! На капюшоне натуральный мех! В отличном состоянии! Носили одну зиму,быстро переросли размер! Ширина плеч-43,длина рукава-58,длина по спине-72! Размер 158-76-66! Наполнитель пух,перо! Торг!', 95.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(2, 2, 'Детский рюкзак', 'Хорошее качество и состояние....', 5.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(1, 10, 'Кофейный автомат Vista SMC-180 FTB', 'Требуется профилактика и установка монетоприемника,за остальными подробностями по телефону.', 245.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(3, 7, 'Аккумуляторы 18650', 'Продаю 4 аккумулятора 18650, китайская маркировка 5800 mAh ни о чем не говорит, реально держат тысячу. Продаю, потому что нужна ёмкость больше, а кому нужны такие, звоните, пишите. Могу продать отдельно по штуке за 2 рубля, по два - 1,5 р штука', 9.2, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(4, 4, 'Xiaomi redmi note 4', 'Android, экран 5.5" IPS (1080x1920), Qualcomm Snapdragon 625 MSM8953, ОЗУ 3 ГБ, флэш-память 32 ГБ, карты памяти, камера 13 Мп, аккумулятор 4100 мАч, 2 SIMПлатформа Qualcomm Snapdragon Процессор Qualcomm Snapdragon 625 MSM8953 Тактовая частота процессора 2 000 МГцКоличество ядер 8 (4+4)Графический ускоритель Adreno 506Частота ГПУ 650 МГц Поддержка карт памяти microSD, microSDHC, microSDXC', 395.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(5, 5, 'Люстра тройная на потолок', 'Отличное состояние.Смотрите другие мои объявления', 32.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, type) values(6, 9, 'Двухкомнатная квартира в центре', 'Лида Лидский район проспект Победы', 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, type) values(7, 9, 'Куплю квартиру в центре', 'В Минске', 'BUY');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(8, 1, 'Volkswagen Golf', 'Автомобиль пригнан в 2010г. Пробег 168т из них 68т по РБ. Я вторая владелеца. Предыдущая тоже женщина). В авто все функции работают. Делать ничего не нужно. Сел и поехал. Продажа в связи с приобретением жилья.', 95.4, 'SELL');
-INSERT INTO catalog.advert(user_id, category_id, title, description, price, type) values(9, 4, 'Аквариум 40 литров', 'Аквариум 40 литров фирмы АкваМир 500*230*350 дшв без крышки500*230*400 дшв размеры с крышкой толщина стекла 5 мм все кромки полированные', 95.4, 'SELL');
+INSERT INTO catalog.type(name) values('SELL');
+INSERT INTO catalog.type(name) values('BUY');
+
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(5, 3, 1, 'Телефон Nokia', 'Nokia 3310', 46.2);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(4, 2, 1, 'Кроссовки Nike', 'Nike Air', 78.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(7, 8, 1, 'Клетка для кролика', 'Размер: 1м х 0.5м', 16.0);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(2, 4, 1, 'Дрель Bosch', 'GSR-13', 56.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(8, 7, 1, 'Геймпад Sony', 'DualShock 4 white', 48.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(7, 1, 1, 'Автомобиль Audi A7', 'Audi A7 2012', 35230.0);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(3, 2, 1, 'Куртка Xiaomi', 'Xiaomi mi jacket', 95.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description) values(3, 3, 2, 'Куплю ноутбук', 'Xiaomi, Asus, Apple, Aser');
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description) values(10, 9, 1, 'Жилой дом №3 по ул. Лидской в г.Гродно', 'Жилой дом №3 по ул. Лидской в г.Гродно., 3-комнатная квартира (площадь 78,3 м2)');
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(7, 2, 1, 'Пуховик Gulliver', 'Пуховик фирменный Gulliver для мальчика! На капюшоне натуральный мех! В отличном состоянии! Носили одну зиму,быстро переросли размер! Ширина плеч-43,длина рукава-58,длина по спине-72! Размер 158-76-66! Наполнитель пух,перо! Торг!', 95.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(2, 2, 1, 'Детский рюкзак', 'Хорошее качество и состояние....', 5.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(1, 10, 1, 'Кофейный автомат Vista SMC-180 FTB', 'Требуется профилактика и установка монетоприемника,за остальными подробностями по телефону.', 245.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(3, 7, 1, 'Аккумуляторы 18650', 'Продаю 4 аккумулятора 18650, китайская маркировка 5800 mAh ни о чем не говорит, реально держат тысячу. Продаю, потому что нужна ёмкость больше, а кому нужны такие, звоните, пишите. Могу продать отдельно по штуке за 2 рубля, по два - 1,5 р штука', 9.2);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(4, 3, 1, 'Xiaomi redmi note 4', 'Android, экран 5.5" IPS (1080x1920), Qualcomm Snapdragon 625 MSM8953, ОЗУ 3 ГБ, флэш-память 32 ГБ, карты памяти, камера 13 Мп, аккумулятор 4100 мАч, 2 SIMПлатформа Qualcomm Snapdragon Процессор Qualcomm Snapdragon 625 MSM8953 Тактовая частота процессора 2 000 МГцКоличество ядер 8 (4+4)Графический ускоритель Adreno 506Частота ГПУ 650 МГц Поддержка карт памяти microSD, microSDHC, microSDXC', 395.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(5, 4, 1, 'Люстра тройная на потолок', 'Отличное состояние.Смотрите другие мои объявления', 32.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description) values(6, 9, 1, 'Двухкомнатная квартира в центре', 'Лида Лидский район проспект Победы');
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description) values(7, 9, 2, 'Куплю квартиру в центре', 'В Минске');
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(8, 1, 1, 'Volkswagen Golf', 'Автомобиль пригнан в 2010г. Пробег 168т из них 68т по РБ. Я вторая владелеца. Предыдущая тоже женщина). В авто все функции работают. Делать ничего не нужно. Сел и поехал. Продажа в связи с приобретением жилья.', 95.4);
+INSERT INTO catalog.advert(user_id, category_id, type_id, title, description, price) values(9, 8, 1, 'Аквариум 40 литров', 'Аквариум 40 литров фирмы АкваМир 500*230*350 дшв без крышки500*230*400 дшв размеры с крышкой толщина стекла 5 мм все кромки полированные', 95.4);
+
+INSERT INTO catalog.comment(advert_id, user_id, text) values(1, 1, 'Топ телефон');
+INSERT INTO catalog.comment(advert_id, user_id, text) values(3, 5, 'Можно больше информации?');
+INSERT INTO catalog.comment(advert_id, user_id, text) values(7, 4, 'Большой пробег');
+INSERT INTO catalog.comment(advert_id, user_id, text) values(8, 10, 'Топ за свои деньги');
+INSERT INTO catalog.comment(advert_id, user_id, text) values(3, 7, 'Для небольшого сада сойдет');
 
 INSERT INTO catalog.vip_info values(6, '2019-09-08');
 INSERT INTO catalog.vip_info values(7, '2019-09-01');
@@ -151,9 +159,3 @@ INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(9, 5, 'П�
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(9, 8, 'Здрасте', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(10, 10, 'Привет', '2019-07-13 09:34:30');
 INSERT INTO catalog.message(chat_id, user_id, text, send_date) values(10, 9, 'Можно скидку?', '2019-07-13 09:34:30');
-
-INSERT INTO catalog.comment(advert_id, user_id, text) values(1, 1, 'Топ телефон');
-INSERT INTO catalog.comment(advert_id, user_id, text) values(2, 5, 'Вор');
-INSERT INTO catalog.comment(advert_id, user_id, text) values(7, 4, 'Большой пробег');
-INSERT INTO catalog.comment(advert_id, user_id, text) values(8, 10, 'Топ за свои деньги');
-INSERT INTO catalog.comment(advert_id, user_id, text) values(3, 7, 'Для небольшого сада сойдет');

@@ -3,7 +3,9 @@ package com.senla.catalog.dao;
 import com.senla.catalog.dao.basic.AbstractDao;
 import com.senla.catalog.daoapi.IUserDao;
 import com.senla.catalog.entity.Creds;
+import com.senla.catalog.entity.Role;
 import com.senla.catalog.entity.User;
+import com.senla.catalog.entity.enums.UserRole;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -115,6 +117,14 @@ public class UserDao extends AbstractDao<User, Long> implements IUserDao {
         query.select(root).where(builder.equal(root.get("id"), id));
 
         return entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
+    public Role getRoleByName(UserRole role) {
+        Query query = entityManager.createQuery("SELECT r FROM Role r WHERE r.role = :name ");
+        query.setParameter("name", role);
+
+        return (Role) query.getSingleResult();
     }
 
     @Override

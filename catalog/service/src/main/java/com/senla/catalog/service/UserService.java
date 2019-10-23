@@ -147,7 +147,7 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
     public User dtoToUser(UserDto dto) {
         User user = new User(dto.getFirstname(), dto.getLastname(), dto.getBirthdate(), dto.getPhone(), dto.getLocation());
         user.setCreds(new Creds(dto.getLogin(), encoder.encode(dto.getPassword()), dto.getEmail()));
-        user.setRoleSet(new HashSet<>(Collections.singletonList(UserRole.USER)));
+        user.setRoleSet(new HashSet<>(Collections.singletonList(userDao.getRoleByName(UserRole.USER))));
         user.setRating(new UserRating(0, 0));
         return user;
     }
@@ -187,7 +187,7 @@ public class UserService extends AbstractService<User, Long> implements IUserSer
             User user = new User();
             user.setFirstname(dto.getFirstname());
             user.setCreds(new Creds(dto.getLogin(), encoder.encode(dto.getPassword()), dto.getEmail()));
-            user.getRoleSet().add(UserRole.USER);
+            user.setRoleSet(new HashSet<>(Collections.singletonList(userDao.getRoleByName(UserRole.USER))));
             user.setRating(new UserRating(0, 0));
 
             userDao.add(user);

@@ -53,7 +53,7 @@ public class User {
     @OneToOne(mappedBy = "user", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserRating rating;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roleSet = new HashSet<>();
@@ -175,16 +175,12 @@ public class User {
         return roles;
     }
 
-    public void setRoleSet(Set<UserRole> roleSet) {
-        Set<Role> roles = new HashSet<>();
-        for (UserRole role : roleSet) {
-            roles.add(new Role(role));
-        }
-        this.roleSet = roles;
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
     }
 
-    public void addRole(UserRole role) {
-        this.roleSet.add(new Role(role));
+    public void addRole(Role role) {
+        this.roleSet.add(role);
     }
 
     public Set<Deal> getDealSet() {

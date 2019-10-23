@@ -2,6 +2,7 @@ package com.senla.catalog.daoapi;
 
 import com.senla.catalog.daoapi.basic.IGenericDao;
 import com.senla.catalog.entity.Advert;
+import com.senla.catalog.entity.Type;
 import com.senla.catalog.entity.enums.AdvertType;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface IAdvertDao extends IGenericDao<Advert, Long> {
     List<Advert> getByTitleAndType(String title, AdvertType type);
 
     List<Advert> getByUser(long userId);
+
+    Type getTypeByName(AdvertType type);
 
     Advert getWithCommentsById(long id);
 

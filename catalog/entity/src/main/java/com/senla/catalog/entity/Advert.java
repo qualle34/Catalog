@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
@@ -38,11 +36,7 @@ public class Advert {
     @Column(name = "price")
     private double price;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    private AdvertType type;
-
-    @OneToOne(mappedBy = "advert", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "advert", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private VipInfo vipInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,24 +47,27 @@ public class Advert {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "type_id")
+    private Type type;
+
     @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> commentSet;
 
     public Advert() {
     }
 
-    public Advert(String title, String description, double price, AdvertType type) {
+    public Advert(String title, String description, double price) {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.type = type;
     }
 
     public Advert(String title, String description, double price, AdvertType type, User user, Category category) {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.type = type;
+        this.type = new Type(type);
         this.user = user;
         this.category = category;
     }
@@ -108,10 +105,14 @@ public class Advert {
     }
 
     public AdvertType getType() {
-        return type;
+        return this.type.getType();
     }
 
     public void setType(AdvertType type) {
+        this.type = new Type(type);
+    }
+
+    public void setType(Type type) {
         this.type = type;
     }
 

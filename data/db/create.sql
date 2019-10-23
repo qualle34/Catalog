@@ -47,19 +47,29 @@ CREATE TABLE IF NOT EXISTS `catalog`.`category` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table `catalog`.`type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `catalog`.`type` (
+  `type_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`type_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `catalog`.`advert`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `catalog`.`advert` (
   `advert_id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
   `category_id` INT NULL,
+  `type_id` INT NULL,
   `title` VARCHAR(45) NOT NULL,
   `description` TEXT NOT NULL,
   `price` DECIMAL(12,2) NULL DEFAULT 0,
-  `type` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`advert_id`, `user_id`),
   INDEX `user_advert_fk_idx` (`user_id` ASC) VISIBLE,
   INDEX `category_advert_fk_idx` (`category_id` ASC) VISIBLE,
+  INDEX `type_advert_fk_idx` (`type_id` ASC) VISIBLE,
   CONSTRAINT `user_advert_fk`
     FOREIGN KEY (`user_id`)
     REFERENCES `catalog`.`user` (`user_id`)
@@ -69,6 +79,11 @@ CREATE TABLE IF NOT EXISTS `catalog`.`advert` (
     FOREIGN KEY (`category_id`)
     REFERENCES `catalog`.`category` (`category_id`)
     ON DELETE SET NULL
+    ON UPDATE NO ACTION,
+  CONSTRAINT `type_advert_fk`
+    FOREIGN KEY (`type_id`)
+    REFERENCES `catalog`.`type` (`type_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
